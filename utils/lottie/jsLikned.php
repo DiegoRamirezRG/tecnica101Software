@@ -1,0 +1,1 @@
+<script src="utils/lottie/lottiePlayer.js"></script>
