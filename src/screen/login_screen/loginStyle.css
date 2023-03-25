@@ -1,4 +1,77 @@
+@font-face {
+    font-family: Montserrat-Bold;
+    src: url('../../assets/fonts/Montserrat-Bold.ttf');
+}
+
+@font-face {
+    font-family: Montserrat-Regular;
+    src: url('../../assets/fonts/Montserrat-Regular.ttf');
+}
+
 * {
     padding: 0px;
     margin: 0px;
+    font-family: Montserrat-Regular;
+}
+
+body{
+    background-image: url('../../assets/img/loginBackground.jpg');
+    background-repeat: no-repeat;
+    background-size: 105%;
+    background-position: center;
+    background-color: #AEBEFF;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.neumoprhCard{
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+h1{
+    font-family: Montserrat-Bold;
+    font-size: 45px;
+    margin-top: 30px;
+}
+
+.welcomeMessage{
+    font-size: 20px;
+}
+
+.formContainer{
+    margin: 30px 20px;
+}
+
+.inputs{
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 20px 30px;
+    margin: 30px 0px;
+}
+
+.mainLogo{
+    width: 70%;
+}
+
+.sideImg{
+    width: 80%;
+}
+
+.btnDiv{
+    margin: 30px 0px;
+}
+
+button{
+    font-family: Montserrat-Bold;
+}
+
+.warning{
+    margin-top: 15px;
+    font-size: 15px;
 }
