@@ -9,7 +9,7 @@ CREATE TABLE user_table (
     name VARCHAR(100),
     last_name VARCHAR(100),
     mothersLast_name VARCHAR(100),
-    phone INT(12),
+    phone VARCHAR(12),
     type ENUM('Control', 'Admin', 'Perfecto', 'Maestro', 'GOD')
 );
 
