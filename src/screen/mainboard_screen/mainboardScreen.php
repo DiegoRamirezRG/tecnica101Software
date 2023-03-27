@@ -18,6 +18,8 @@ if(!isset($_SESSION['sessionUser'])) {
     <title>Mainboard</title>
 </head>
 <body>
-    
+    <?php
+    var_dump($_SESSION['sessionUser']);
+    ?>
 </body>
 </html>
