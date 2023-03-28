@@ -62,3 +62,21 @@ body{
         font-size: 13px;
     }
 }
+
+@media (max-height: 720px){
+    .welcomeBlack {
+        font-size: 30px;
+    }
+
+    .messageWelcome{
+        font-size: 15px;
+    }
+
+    .disclaimer{
+        display: none;
+    }
+
+    .glassmorph{
+        padding: 30px 15px;
+    }
+}

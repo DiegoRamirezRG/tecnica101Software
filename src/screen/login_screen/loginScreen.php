@@ -51,16 +51,16 @@ if(isset($_SESSION['sessionUser'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 30px">
+                    <div class="row" style="margin-top: 30px; margin-bottom: 10px">
                         <a class="text-center" href="">Olvide mi contraseña</a>
                     </div>
                 </div>
                 <div class="row d-flex flex-row justify-content-center align-items-center" style="height: 18%">
                     <div class="col-12 col-sm-9 col-lg-6">
-                        <button class="btn btn-lg btn-primary w-75" id="loginBtn">Iniciar Sesion</button>
+                        <button class="btn btn-lg btn-responsive btn-primary w-75 button" id="loginBtn" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Iniciar Sesion</button>
                     </div>
                     <div class="col-12 col-sm-9 col-lg-6">
-                        <button class="btn btn-lg btn-outline-primary w-75">Pide Acceso</button>
+                        <button class="btn btn-lg btn-responsive btn-outline-primary w-75" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pide Acceso</button>
                     </div>
                 </div>
                 <div class="col-lg-10 col-sm-10 mx-auto">
@@ -81,6 +81,8 @@ if(isset($_SESSION['sessionUser'])) {
 
             $("#loginBtn").on('click', function(){
 
+                event.preventDefault();
+
                 if($("#emailInput").val() == ''){
                     alert("Email vacio");
                     return false;
@@ -99,17 +101,17 @@ if(isset($_SESSION['sessionUser'])) {
                         email: $("#emailInput").val(),
                         password: $("#passwordInput").val()
                     }),
-                    ataType: "html",
+                    dataType: "html",
                     async: false,
                     success: function(response){
                         if(response = 'Logged'){
                             window.location = '../mainboard_screen/mainboardScreen.php'
-                        }else{
-                            alert("Error al hacer login");
                         }
+
+                        alert("Error al hacer login");
+                        return false;
                     }
                 })
-
             });
         });
     </script>
