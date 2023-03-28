@@ -10,7 +10,7 @@ CREATE TABLE user_table (
     last_name VARCHAR(100),
     mothersLast_name VARCHAR(100),
     phone VARCHAR(12),
-    type ENUM('Control', 'Admin', 'Perfecto', 'Maestro', 'GOD')
+    type ENUM('Control', 'Coordinador', 'Perfecto', 'Maestro', 'GOD')
 );
 
 DROP TABLE IF EXISTS group_table;

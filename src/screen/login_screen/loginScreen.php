@@ -89,7 +89,7 @@ if(isset($_SESSION['sessionUser'])) {
                 }
 
                 if($("#passwordInput").val() == ''){
-                    alert("Password vacia");
+                    alert('Contraseña Vacia')
                     return false;
                 }
 
@@ -104,12 +104,12 @@ if(isset($_SESSION['sessionUser'])) {
                     dataType: "html",
                     async: false,
                     success: function(response){
-                        if(response = 'Logged'){
-                            window.location = '../mainboard_screen/mainboardScreen.php'
+                        if (response == 'Failed') {
+                            alert("Error al hacer login");
+                            return false;
+                        } else if (response == 'Success') {
+                            window.location = '../mainboard_screen/mainboardScreen.php';
                         }
-
-                        alert("Error al hacer login");
-                        return false;
                     }
                 })
             });
