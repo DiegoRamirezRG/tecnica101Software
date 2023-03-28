@@ -1,0 +1,82 @@
+@font-face {
+    font-family: MontserratBold;
+    src: url('../../assets/fonts/Montserrat-Bold.ttf');
+}
+
+@font-face {
+    font-family: MontserratReg;
+    src: url('../../assets/fonts/Montserrat-Regular.ttf');
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: MontserratReg;
+}
+
+body{
+    background-image: url('../../assets/img/loginBackground.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.glassmorph{
+    height: 90%;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 45px 30px;
+}
+
+.welcomeBlack{
+    font-family: MontserratBold;
+    font-size: 45px;
+}
+
+.messageWelcome {
+    font-size: 20px;
+}
+
+.inputs{
+    background-color: white;
+    padding: 20px 10px;
+    border-radius: 5px;
+}
+
+.disclaimer {
+    font-size: 10px;
+}
+
+/*MEDIA QUERYS*/
+@media (min-width: 1400px) {
+    body {
+        background-size: 105%;
+    }
+}
+
+@media (min-width: 768px){
+    .disclaimer{
+        font-size: 13px;
+    }
+}
+
+@media (max-height: 720px){
+    .welcomeBlack {
+        font-size: 30px;
+    }
+
+    .messageWelcome{
+        font-size: 15px;
+    }
+
+    .disclaimer{
+        display: none;
+    }
+
+    .glassmorph{
+        padding: 30px 15px;
+    }
+}
