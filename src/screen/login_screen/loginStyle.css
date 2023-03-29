@@ -50,6 +50,10 @@ body{
     font-size: 10px;
 }
 
+.toast-body {
+    background-color: rgba(255, 255, 255, 1);
+}
+
 /*MEDIA QUERYS*/
 @media (min-width: 1400px) {
     body {
