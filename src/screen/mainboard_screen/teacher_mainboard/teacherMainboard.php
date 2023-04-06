@@ -17,11 +17,13 @@ require_once('../../../components/toast/toast.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOD mainboard</title>
+    <title>Teacher mainboard</title>
     <link rel="icon" href="../../../assets/img/tecnicaMainLogo.svg" type="image/svg+xml">
 
-    <link rel="stylesheet" href="./godMainboardStyle.css">
+    <link rel="stylesheet" href="./teacherMainboard.css">
     <link rel="stylesheet" href="../../../components/navbar/navbar.css">
+    <link rel="stylesheet" href="../../../components/bottonBar/bottomNav.css">
+
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -41,7 +43,10 @@ require_once('../../../components/toast/toast.php');
         </div>
     </section>
 
+    <?php include('../../../components/bottonBar/bottomNav.php')?>
     <?php  showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
+
+    <script src="../../../components/bottonBar/bottomNav.js"></script>
     <script src="../../../components/navbar/navbar.js"></script>
     <script>
         $(document).ready(function(){
