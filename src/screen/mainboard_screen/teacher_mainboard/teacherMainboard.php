@@ -37,8 +37,10 @@ require_once('../../../components/toast/toast.php');
 
     <section class="home">
         <div class="text">
-            <div class="container-fluid bg-danger">
-                <h1>Teachers Mainboard</h1>
+            <div class="container-fluid maxConainer">
+                <div class="container mainContent">
+                    
+                </div>
             </div>
         </div>
     </section>

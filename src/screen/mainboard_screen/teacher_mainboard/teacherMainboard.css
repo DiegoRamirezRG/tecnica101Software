@@ -2,7 +2,24 @@ body{
     background-color: #E4E9F7 !important;
 }
 
+.maxConainer{
+    height: 95vh;
+}
+
+.mainContent{
+    padding: 50px;
+}
+
 @media (max-width: 600px) {
+
+    .maxConainer{
+        height: 87vh;
+    }
+
+    .mainContent{
+        padding: 30px;
+    }
+
     .sidebar{
         display: none;
     }
