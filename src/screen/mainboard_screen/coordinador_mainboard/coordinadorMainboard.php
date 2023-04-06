@@ -17,7 +17,7 @@ require_once('../../../components/toast/toast.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOD mainboard</title>
+    <title>Coordinador mainboard</title>
     <link rel="icon" href="../../../assets/img/tecnicaMainLogo.svg" type="image/svg+xml">
 
     <link rel="stylesheet" href="./godMainboardStyle.css">
@@ -36,7 +36,7 @@ require_once('../../../components/toast/toast.php');
     <section class="home">
         <div class="text">
             <div class="container-fluid bg-danger">
-                <h1>God Mainboard</h1>
+                <h1>Coordinador Mainboard</h1>
             </div>
         </div>
     </section>

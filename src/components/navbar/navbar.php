@@ -22,19 +22,19 @@
             <li class="">
                 <a href="#">
                     <i class='bx bx-bar-chart-alt-2 icon' ></i>
-                    <span class="text nav-text">Revenue</span>
+                    <span class="text nav-text">Estadisticas</span>
                 </a>
             </li>
             <li class="">
                 <a href="#">
                     <i class='bx bx-bell icon'></i>
-                    <span class="text nav-text">Notifications</span>
+                    <span class="text nav-text">Notificaciones</span>
                 </a>
             </li>
             <li class="">
                 <a href="#">
                     <i class='bx bx-pie-chart-alt icon' ></i>
-                    <span class="text nav-text">Analytics</span>
+                    <span class="text nav-text">Analiticas</span>
                 </a>
             </li>
         </div>

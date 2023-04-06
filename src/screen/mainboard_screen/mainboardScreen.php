@@ -11,16 +11,20 @@ $type = $_SESSION['sessionUser']['type'];
 
 switch($type){
     case 'Control':
-        //Navigation to Control Escolar Mainboard
+        //Navigation to Control Mainboard
+        header("Location: ./principal_mainboard/principalMainboard.php");
         break;
     case 'Coordinador':
         //Navigation to Coordinador Mainboard
+        header("Location: ./coordinador_mainboard/coordinadorMainboard.php");
         break;
-    case 'Perfecto':
+    case 'Prefecto':
         //Navigation to Perfecto Mainboard
+        header("Location: ./prefect_mainboard/prefectMainboard.php");
         break;
     case 'Maestro':
         //Navigation to Perfecto Mainboard
+        header("Location: ./teacher_mainboard/teacherMainboard.php");
         break;
     case 'GOD':
         header("Location: ./god_mainboard/godMainboard.php");
