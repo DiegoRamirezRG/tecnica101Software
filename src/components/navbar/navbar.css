@@ -201,7 +201,7 @@ body.dark .sidebar header .toggle{
 }
 body.dark .sidebar li a:hover .icon,
 body.dark .sidebar li a:hover .text{
-    color: var(--text-color);
+    color: white;
 }
 
 .sidebar .menu-bar{
