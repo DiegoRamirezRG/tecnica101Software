@@ -27,6 +27,10 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../components/navbar/navbar.css">
     <link rel="stylesheet" href="../../components/bottonBar/bottomNav.css">
 
+    <!--- CSS de paginas ajax--->
+    <link rel="stylesheet" href="../../pages/home_page/homeStyle.css">
+
+
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
@@ -64,10 +68,8 @@ $type = $_SESSION['sessionUser']['type'];
     ?>
     <section class="home">
         <div class="text">
-            <div class="container-fluid maxConainer">
-                <div class="container mainContent">
-                    
-                </div>
+            <div class="container-fluid maxConainer" id="MainContent">
+
             </div>
         </div>
     </section>
@@ -107,6 +109,8 @@ $type = $_SESSION['sessionUser']['type'];
     <script>
         $(document).ready(function(){
 
+            loadDOM();
+
             $("#logout").on('click', function(){
                 $.ajax({
                     type: "POST",
@@ -143,8 +147,29 @@ $type = $_SESSION['sessionUser']['type'];
                         }
                     }
                 })
-            })
-        })
+            });
+
+            $("#home, #homeBottom").on('click', function(){
+                loadHome();
+            });
+
+            //Loading Components functions
+
+            function loadDOM(){
+                const DOMPage = localStorage.getItem('currentPage');
+                if(DOMPage === null){
+                    loadHome();
+                }else if(DOMPage === 'homePage'){
+                    loadHome();
+                }
+            }
+
+            function loadHome(){
+                $("#MainContent").load('../../pages/home_page/homePage.php');
+                localStorage.setItem('currentPage', 'homePage');
+            }
+            
+        });
     </script>
 </body>
 </html>

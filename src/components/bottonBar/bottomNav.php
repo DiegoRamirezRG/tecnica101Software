@@ -4,7 +4,7 @@ function renderOpt($props){
     ?>
     <li class="bottom-item">
         <label for="<?php echo $props['id']?>" class="bottom-option">
-            <input type="radio" id="<?php echo $props['id']?>" name="bottomNavOpt" checked>
+            <input type="radio" id="<?php echo $props['id']?>" name="bottomNavOpt">
             <i class='bx <?php echo $props['icon']?> icon' id="<?php echo $props['id']?>Icon" ></i>
         </label>
         <div class="indicator" id="<?php echo $props['id']?>Indicator"></div>

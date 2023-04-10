@@ -262,6 +262,7 @@ body.dark .switch::before{
     background-color: var(--body-color);
     transition: var(--tran-05);
     padding: 20px 50px;
+    overflow-y: hidden;
 }
 
 .sidebar.close ~ .home{

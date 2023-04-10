@@ -3,7 +3,7 @@
 function renderSideOpt($props){
     ?>
     <li class="">
-        <a href="#">
+        <a href="#" id="<?php echo $props['id']?>">
             <i class='bx <?php echo $props['icon']?> icon' ></i>
             <span class="text nav-text"><?php echo $props['title']?></span>
         </a>

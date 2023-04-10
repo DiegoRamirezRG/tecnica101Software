@@ -14,10 +14,6 @@ function toggleIndicator(input) {
     }
 }
 
-if(localStorage.getItem('selectedRadioIndex') === null){
-    localStorage.setItem('selectedRadioIndex', 'home');
-}
-
 const inputs = document.querySelectorAll('input[name="bottomNavOpt"]');
 inputs.forEach(input => {
     input.addEventListener('click', () => {
@@ -34,17 +30,11 @@ inputs.forEach(input => {
     });
 });
 
+if(localStorage.getItem('selectedRadioIndex') !== ''){
+    const selected = localStorage.getItem('selectedRadioIndex');
 
-const selectedRadioIndex = localStorage.getItem('selectedRadioIndex');
-if (selectedRadioIndex !== null) {
-    const inputToClick = document.querySelector('#'+selectedRadioIndex+'Indicator');
-    if(inputToClick === null){
-        inputToClick = '#homeIndicator';
-    }else if(inputToClick === '#logoutBottomIndicator'){
-        inputToClick = '#homeIndicator';
-    }
-    inputToClick.style.visibility = 'visible';
-
-    const icon = document.querySelector('#'+selectedRadioIndex+'Icon');
+    const icon = document.querySelector('#'+selected+'Icon');
+    const indicator = icon.parentNode.nextElementSibling;
     icon.style.color = '#dc3545';
+    indicator.style.visibility = 'visible';
 }

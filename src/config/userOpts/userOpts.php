@@ -39,22 +39,22 @@ $teacherBottomOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'homeBottom'
     ),
     array (
         'icon' => 'bx-user',
         'title' => 'Alumnos',
-        'id' => 'students'
+        'id' => 'studentsBottom'
     ),
     array(
         'icon' => 'bx-category',
         'title' => 'Grupos',
-        'id' => 'groups'
+        'id' => 'groupsBottom'
     ),
     array(
         'icon' => 'bx-book-bookmark',
         'title' => 'Materias',
-        'id' => 'classes'
+        'id' => 'classesBottom'
     ),
     array(
         'icon' => 'bx-log-out',
@@ -97,22 +97,22 @@ $controlBottomOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'homeBotoom'
     ),
     array(
         'icon' => 'bx-user-voice',
         'title' => 'Maestros',
-        'id' => 'teachers'
+        'id' => 'teachersBotoom'
     ),
     array(
         'icon' => 'bx-star',
         'title' => 'Administrativos',
-        'id' => 'admins'
+        'id' => 'adminsBotoom'
     ),
     array(
         'icon' => 'bx-timer',
         'title' => 'Ciclo Escolar',
-        'id' => 'cycle'
+        'id' => 'cycleBotoom'
     ),
     array(
         'icon' => 'bx-log-out',
@@ -160,22 +160,22 @@ $coordinadorBottomOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'homeBottom'
     ),
     array (
         'icon' => 'bx-user',
         'title' => 'Alumnos',
-        'id' => 'students'
+        'id' => 'studentsBottom'
     ),
     array(
         'icon' => 'bx-category',
         'title' => 'Grupos',
-        'id' => 'groups'
+        'id' => 'groupsBottom'
     ),
     array (
         'icon' => 'bx-stats',
         'title' => 'Conductas',
-        'id' => 'conduct'
+        'id' => 'conductBottom'
     ),
     array(
         'icon' => 'bx-log-out',
@@ -218,22 +218,22 @@ $prefectoBottomOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'homeBottom'
     ),
     array (
         'icon' => 'bx-user',
         'title' => 'Alumnos',
-        'id' => 'students'
+        'id' => 'studentsBottom'
     ),
     array(
         'icon' => 'bx-category',
         'title' => 'Grupos',
-        'id' => 'groups'
+        'id' => 'groupsBottom'
     ),
     array (
         'icon' => 'bx-stats',
         'title' => 'Conductas',
-        'id' => 'conduct'
+        'id' => 'conductBottom'
     ),
     array(
         'icon' => 'bx-log-out',
@@ -256,7 +256,7 @@ $godBottomOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'homeBottom'
     ),
     array(
         'icon' => 'bx-log-out',
