@@ -1,0 +1,43 @@
+body{
+    background-color: #E4E9F7 !important;
+}
+
+.maxConainer{
+    height: 95vh;
+}
+
+.mainContent{
+    padding: 50px;
+}
+
+@media (max-width: 600px) {
+
+    .maxConainer{
+        height: 87vh;
+    }
+
+    .mainContent{
+        padding: 30px;
+    }
+
+    .sidebar{
+        display: none;
+    }
+
+    .home{
+        padding: 10px !important;
+        height: calc(100% - 100px) !important;
+    }
+
+    .bottomNav{
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        z-index: 99;
+    }
+
+    .sidebar.close ~ .home{
+        width: 100% !important;
+        left: 0px !important;
+    }
+}

@@ -6,6 +6,8 @@ if(isset($_SESSION['sessionUser'])) {
     exit();
 }
 
+require_once('../../components/toast/toast.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +16,7 @@ if(isset($_SESSION['sessionUser'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Layout</title>
+    <link rel="icon" href="../../assets/img/tecnicaMainLogo.svg" type="image/svg+xml">
 
     <link rel="stylesheet" href="./loginStyle.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -52,15 +55,15 @@ if(isset($_SESSION['sessionUser'])) {
                         </div>
                     </div>
                     <div class="row" style="margin-top: 30px; margin-bottom: 10px">
-                        <a class="text-center" href="">Olvide mi contraseña</a>
+                        <a class="text-center" href="" style="color: #dc3545; ">Olvide mi contraseña</a>
                     </div>
                 </div>
                 <div class="row d-flex flex-row justify-content-center align-items-center" style="height: 18%">
                     <div class="col-12 col-sm-9 col-lg-6">
-                        <button class="btn btn-lg btn-responsive btn-primary w-75 button" id="loginBtn" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Iniciar Sesion</button>
+                        <button class="btn btn-lg btn-responsive btn-danger w-75 button" id="loginBtn" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ">Iniciar Sesion</button>
                     </div>
                     <div class="col-12 col-sm-9 col-lg-6">
-                        <button class="btn btn-lg btn-responsive btn-outline-primary w-75" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pide Acceso</button>
+                        <button class="btn btn-lg btn-responsive btn-outline-danger w-75" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pide Acceso</button>
                     </div>
                 </div>
                 <div class="col-lg-10 col-sm-10 mx-auto">
@@ -76,6 +79,8 @@ if(isset($_SESSION['sessionUser'])) {
             </div>
         </div>
     </div>
+    <?php  showToast('emptyEmail', 'Email Vacio', 'El email no puede estar vacio'); ?>
+    <?php  showToast('emptyPassword', 'Contraseña Vacia', 'La contraseña no puede estar vacia'); ?>
     <script>
         $(document).ready(function(){
 
@@ -84,12 +89,12 @@ if(isset($_SESSION['sessionUser'])) {
                 event.preventDefault();
 
                 if($("#emailInput").val() == ''){
-                    alert("Email vacio");
+                    $("#emptyEmail").toast('show');
                     return false;
                 }
 
                 if($("#passwordInput").val() == ''){
-                    alert("Password vacia");
+                    $("#emptyPassword").toast('show');
                     return false;
                 }
 
@@ -104,12 +109,12 @@ if(isset($_SESSION['sessionUser'])) {
                     dataType: "html",
                     async: false,
                     success: function(response){
-                        if(response = 'Logged'){
-                            window.location = '../mainboard_screen/mainboardScreen.php'
+                        if (response == 'Failed') {
+                            $("#badLogin").toast('show');
+                            return false;
+                        } else if (response == 'Success') {
+                            window.location = '../mainboard_screen/mainboardScreen.php';
                         }
-
-                        alert("Error al hacer login");
-                        return false;
                     }
                 })
             });

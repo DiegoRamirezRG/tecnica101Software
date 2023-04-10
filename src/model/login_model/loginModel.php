@@ -34,6 +34,15 @@ class loginModel{
         }
     }
 
+    public function logout(){
+        session_destroy();
+        if($_SESSION['sessionUser']){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 }
 
 ?>
