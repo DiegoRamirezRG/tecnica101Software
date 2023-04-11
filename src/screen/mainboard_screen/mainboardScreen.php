@@ -29,6 +29,11 @@ $type = $_SESSION['sessionUser']['type'];
 
     <!--- CSS de paginas ajax--->
     <link rel="stylesheet" href="../../pages/home_page/homeStyle.css">
+    <link rel="stylesheet" href="../../pages//student_page/studentStyle.css">
+
+    <!---Datatables--->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
 
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
@@ -41,27 +46,18 @@ $type = $_SESSION['sessionUser']['type'];
     <?php 
     switch($type){
         case 'Control':
-            //Navigation to Control Mainboard
-            // header("Location: ./principal_mainboard/principalMainboard.php");
             renderNavBar($controlSidebarOpts);
             break;
         case 'Coordinador':
-            //Navigation to Coordinador Mainboard
-            // header("Location: ./coordinador_mainboard/coordinadorMainboard.php");
             renderNavBar($coordinadorSidebarOpts);
             break;
         case 'Prefecto':
-            //Navigation to Perfecto Mainboard
-            // header("Location: ./prefect_mainboard/prefectMainboard.php");
             renderNavBar($prefectoSidebarOpts);
             break;
         case 'Maestro':
-            //Navigation to Perfecto Mainboard
-            // header("Location: ./teacher_mainboard/teacherMainboard.php");
             renderNavBar($teacherSidebarOpts);
             break;
         case 'GOD':
-            // header("Location: ./god_mainboard/godMainboard.php");
             renderNavBar($godSidebarOpts);
             break;
     }
@@ -76,27 +72,18 @@ $type = $_SESSION['sessionUser']['type'];
     <?php 
     switch($type){
         case 'Control':
-            //Navigation to Control Mainboard
-            // header("Location: ./principal_mainboard/principalMainboard.php");
             renderBottomBar($controlBottomOpts);
             break;
         case 'Coordinador':
-            //Navigation to Coordinador Mainboard
-            // header("Location: ./coordinador_mainboard/coordinadorMainboard.php");
             renderBottomBar($coordinadorBottomOpts);
             break;
         case 'Prefecto':
-            //Navigation to Perfecto Mainboard
-            // header("Location: ./prefect_mainboard/prefectMainboard.php");
             renderBottomBar($prefectoBottomOpts);
             break;
         case 'Maestro':
-            //Navigation to Perfecto Mainboard
-            // header("Location: ./teacher_mainboard/teacherMainboard.php");
             renderBottomBar($teacherBottomOpts);
             break;
         case 'GOD':
-            // header("Location: ./god_mainboard/godMainboard.php");
             renderBottomBar($godBottomOpts);
             break;
     }
@@ -149,9 +136,14 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
-            $("#home, #homeBottom").on('click', function(){
+            $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
                 loadHome();
             });
+
+            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
+                loadStudnets();
+                loadStudentData();
+            })
 
             //Loading Components functions
 
@@ -161,12 +153,72 @@ $type = $_SESSION['sessionUser']['type'];
                     loadHome();
                 }else if(DOMPage === 'homePage'){
                     loadHome();
+                }else if(DOMPage === 'studentPage'){
+                    loadStudnets();
+                    loadStudentData();
                 }
             }
 
             function loadHome(){
                 $("#MainContent").load('../../pages/home_page/homePage.php');
                 localStorage.setItem('currentPage', 'homePage');
+            }
+
+            function loadStudnets(){
+                $("#MainContent").load('../../pages/student_page/studentPage.php');
+                localStorage.setItem('currentPage', 'studentPage');
+            }
+
+            //Live Tipe Student Searcher
+            $(document).on('keyup', "#searchStudent", function(){
+                loadStudentData();
+            })
+
+            $(document).on('change', "#filterTurno, #filterGrado, #filterGrupo", function(){
+                loadStudentData();
+            });
+
+            //Load data Tables
+
+            function loadStudentData(){
+
+                let nameSearched = '';
+                let groupSearched = '';
+                let gradeSearched = '';
+                let shiftSearched = '';
+
+                if($("#searchStudent").val() !== '' && $("#searchStudent").val() !== undefined){
+                    nameSearched = $("#searchStudent").val();
+                }
+
+                if($("#filterTurno").val() !== '' && $("#filterTurno").val() !== undefined){
+                    shiftSearched = $("#filterTurno").val();
+                }
+
+                if($("#filterGrado").val() !== '' && $("#filterGrado").val() !== undefined){
+                    gradeSearched = $("#filterGrado").val();
+                }
+
+                if($("#filterGrupo").val() !== '' && $("#filterGrupo").val() !== undefined){
+                    groupSearched = $("#filterGrupo").val();
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadStudentData',
+                        name: nameSearched,
+                        turno: shiftSearched,
+                        grado: gradeSearched,
+                        grupo: groupSearched
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(data){
+                        $("#studentTableBody").html(data);
+                    }
+                })
             }
             
         });

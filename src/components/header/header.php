@@ -5,7 +5,7 @@ function loadHeader(){
         <div class="column headerInnerContainer">
             <div class="welcomeMessage">
                 <h1>¡Hola Bienvenid@!</h1>
-                <h3>Maestro Douglas Adil Ramirez Reyes</h3>
+                <h3><?php echo $_SESSION['sessionUser']['type']?> User | <b>Douglas Adil Ramirez Reyes</b></h3>
             </div>
             <div class="actions d-none d-xl-flex">
                 <div class="image">

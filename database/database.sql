@@ -28,7 +28,7 @@ CREATE TABLE grade_table (
 DROP TABLE IF EXISTS shift_table;
 CREATE TABLE shift_table (
     id_shift INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(5)
+    name VARCHAR(15)
 );
 
 DROP TABLE IF EXISTS class_table;
