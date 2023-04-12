@@ -55,3 +55,30 @@ insert into  student_table (name, last_name, mothersLast_name, grade_fk, group_f
 insert into  student_table (name, last_name, mothersLast_name, grade_fk, group_fk, shift_fk) values ('Bran', 'Feaver', 'Ploughwright', 2, 4, 1);
 insert into  student_table (name, last_name, mothersLast_name, grade_fk, group_fk, shift_fk) values ('Evelina', 'Gibbings', 'Sinnat', 2, 2, 2);
 insert into  student_table (name, last_name, mothersLast_name, grade_fk, group_fk, shift_fk) values ('Myrtle', 'Notman', 'Goodbairn', 2, 1, 2);
+
+INSERT INTO class_table(name) VALUES ('Matematicas I'), ('Español I');
+
+INSERT INTO class_teacher_table(teacher_fk, grade_fk, group_fk, shift_fk, class_fk) VALUES (5, 2, 5, 1, 1);
+
+--DATE = yyyy-mm-dd
+INSERT INTO attendance_table (day, class_teacher_fk, student_fk, status) VALUES 
+('2023-04-10', 1, 9, 'Asistencia'),
+('2023-04-10', 1, 18, 'Asistencia'),
+('2023-04-10', 1, 26, 'Asistencia'),
+('2023-04-11', 1, 9, 'Falta'),
+('2023-04-11', 1, 18, 'Retraso'),
+('2023-04-11', 1, 26, 'Justificacion');
+
+INSERT INTO conduct_table(student_fk, description, value) VALUES 
+(9, 'Initialize Conduct', 'Bueno'),
+(18, 'Initialize Conduct', 'Bueno'),
+(26, 'Initialize Conduct', 'Bueno'),
+(9, 'Entrego tareas a tiempo', 'Bueno'),
+(18, 'Entrego tareas sucias', 'Regular'),
+(26, 'No Entrego tareas', 'Malo'),
+(9, 'Se mio en clase', 'Regular'),
+(18, 'No se asea', 'Malo'),
+(26, 'Se peleo con la maestra', 'Malo'),
+(9, 'Participo en clase', 'Regular'),
+(18, 'Gano el torneo intersecundario', 'Bueno'),
+(26, 'Comprende el ingles', 'Bueno');

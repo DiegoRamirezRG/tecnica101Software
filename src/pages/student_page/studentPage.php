@@ -1,13 +1,14 @@
+
 <div class="container">
     <div class="studentMaxContainer tab-content">
         <div class="filterContainer pt-4">
             <h2>Administracion de Alumnos</h2>
             <div class="col-sm-12 col-xs-12 col-md-12 col-lg-8 pt-4">
-                <div class="row">
-                    <div class="col-9">
+                <div class="row d-flex flex-wrap">
+                    <div class="col-xs-12 col-9">
                         <input class="form-control me-2" type="search" placeholder="Buscar Alumno" aria-label="Search" id="searchStudent">
                     </div>
-                    <div class="col-3">
+                    <div class="col-xs-12 col-3">
                         <button class="btn btn-outline-primary sizableBtn" type="submit"></button>
                     </div>
                 </div>

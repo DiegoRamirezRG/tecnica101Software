@@ -5,6 +5,7 @@ require_once '../../config/userOpts/userOpts.php';
 require_once '../../components/navbar/navbar.php';
 require_once '../../components/bottonBar/bottomNav.php';
 require_once '../../components/toast/toast.php';
+require_once '../../components/modal/modal.php';
 
 if(!isset($_SESSION['sessionUser'])) {
     header("Location: ../login_screen/loginScreen.php");
@@ -26,6 +27,7 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="./mainboardStyle.css">
     <link rel="stylesheet" href="../../components/navbar/navbar.css">
     <link rel="stylesheet" href="../../components/bottonBar/bottomNav.css">
+    <link rel="stylesheet" href="../../components/modal/modal.css">
 
     <!--- CSS de paginas ajax--->
     <link rel="stylesheet" href="../../pages/home_page/homeStyle.css">
@@ -89,6 +91,8 @@ $type = $_SESSION['sessionUser']['type'];
     }
     ?>
 
+
+    <?php createModal();?>
     <?php  showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -177,6 +181,47 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('change', "#filterTurno, #filterGrado, #filterGrupo", function(){
                 loadStudentData();
             });
+
+            //Handle Click Row TR
+
+            $("#modal").on('shown.bs.modal', function(){
+                loadStudentAssistance(localStorage.getItem('clickedRow'));
+            })
+
+            $(document).on('click', '#studentTableBody tr', function(){
+                localStorage.setItem('clickedRow', this.id);
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadModalBody',
+                        id_alumno: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(modalBody){
+                        $("#modalBody").html(modalBody);
+                        $("#modal").modal('show');
+                    }
+                })
+            });
+
+            function loadStudentAssistance(id){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadAssistance',
+                        id_alumno: id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(dataTr){
+                        console.log(dataTr);
+                        $("#assistanceTable").append(dataTr);
+                    }
+                })
+            }
 
             //Load data Tables
 
