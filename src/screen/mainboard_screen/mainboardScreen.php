@@ -93,6 +93,10 @@ $type = $_SESSION['sessionUser']['type'];
 
 
     <?php createModal();?>
+    <?php editUserModal();?>
+    <?php alertUpdateData();?>
+    <?php alertSuccessData();?>
+    <?php assitanceModal();?>
     <?php  showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -140,6 +144,132 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Edit Student Data
+            $(document).on('click', "#editData", function(){
+                $("#modal").hide();
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadChangeInfo',
+                        id_student: localStorage.getItem('clickedRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#modalStudentEdit").html(response);
+                        $("#editStudentDataModal").modal('show');
+                    }
+                })
+            });
+
+            //Asistencia
+            $(document).on('click', "#assitanceM, #assitanceH", function(){
+                $("#modal").modal('hide');
+                $("#assistance").modal('show');
+            });
+
+            $(document).on('click', '#assitanceModal', function(){
+                $("#assistance").modal('hide');
+                $("#modal").modal('show');
+            })
+
+            //Update data
+
+            $(document).on('click', '#confirm', function(){
+
+                let name = $("#updatedName").val();
+                let apPat = $("#updatedLastName").val();
+                let apMat = $("#updatedMotherLastName").val();
+                let turno = $("#updatedTurno").val();
+                let grado = $("#updatedGrado").val();
+                let grupo = $("#updatedGrupo").val();
+
+                if(name == ''){
+                    alert('El nombre no puede ser vacio');
+                    $("#updatedName").focus();
+                    return;
+                }
+
+                if(apPat == ''){
+                    alert('El apellido paterno no puede ser vacio');
+                    $("#updatedLastName").focus();
+                    return;
+                }
+
+                if(apMat == ''){
+                    alert('El apellido materno no puede ser vacio');
+                    $("#updatedMotherLastName").focus();
+                    return;
+                }
+
+                if(turno == ''){
+                    alert('El turno no puede ser vacio');
+                    $("#updatedTurno").focus();
+                    return;
+                }
+
+                if(grado == ''){
+                    alert('El grado no puede ser vacio');
+                    $("#updatedGrado").focus();
+                    return;
+                }
+
+                if(grupo == ''){
+                    alert('El grupo no puede ser vacio');
+                    $("#updatedGrupo").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'updateStudent',
+                        id_student: localStorage.getItem('clickedRow'),
+                        name: name,
+                        apPt: apPat,
+                        apMt: apMat,
+                        turno: turno,
+                        grado: grado,
+                        grupo: grupo
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function (response){
+                        if(response == 'Success'){
+                            showSucess();
+                        }else{
+                            showFailed();
+                        }
+                    }
+                })
+                
+            })
+            
+            $(document).on('click', '#closeSuccess', function(){
+                closeAllModals();
+            })
+
+            $(document).on('click', "#updateData", function(){
+                $("#editStudentDataModal").modal('hide');
+                $("#confirmUpdate").modal('show');
+            })
+
+            $(document).on('click','#cancelUpdate', function(){
+                $("#editStudentDataModal").modal('hide');
+                $("#modal").show();
+            })
+
+            $(document).on('click', '#cancelConfirm', function(){
+                $("#confirmUpdate").hide();
+                $("#editStudentDataModal").modal('show');
+            })
+
+            $(document).on('click', "#closeModalStudent", function(){
+                closeAllModals();
+            })
+
             $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
                 loadHome();
             });
@@ -148,6 +278,24 @@ $type = $_SESSION['sessionUser']['type'];
                 loadStudnets();
                 loadStudentData();
             })
+
+            function closeAllModals(){
+                $("#modal").modal('hide');
+                $("#editStudentDataModal").modal('hide');
+                $("#confirmUpdate").modal('hide');
+                $("#successUpdate").modal('hide');
+                $("#alertFailedData").modal('hide');
+            }
+
+            function showSucess(){
+                $("#confirmUpdate").hide();
+                $("#successUpdate").modal('show');
+            }
+
+            function showFailed(){
+                $("#confirmUpdate").hide();
+                $("#alertFailedData").modal('show');
+            }
 
             //Loading Components functions
 
@@ -218,7 +366,7 @@ $type = $_SESSION['sessionUser']['type'];
                     async: false,
                     success: function(dataTr){
                         console.log(dataTr);
-                        $("#assistanceTable").append(dataTr);
+                        $("#assistanceTable").html(dataTr);
                     }
                 })
             }
