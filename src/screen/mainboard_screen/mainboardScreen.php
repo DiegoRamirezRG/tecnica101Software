@@ -610,7 +610,6 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if(DOMPage === 'studentPage'){
                     loadStudnets();
                     loadStudentData();
-                    loadStudentData();
                 }
             }
 
