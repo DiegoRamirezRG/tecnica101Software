@@ -62,22 +62,19 @@ if($_POST['function'] == 'loadModalBody'){
         if($result->num_rows > 0){
         foreach($result as $row);
             ?>
-            <div class="modalHeader w-100 d-flex align-items-center justify-content-between">
-                <div class="col-1 d-flex justify-content-center">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" class="img-fluid rounded" alt="">
-                </div>
-                <div class="col-10">
+            <div class="modalHeader d-flex flex-column justify-content-between">
+                <div class="col-11 col-md-10 d-flex flex-column jusitfy-content-center mx-auto">
                     <div class="row">
                         <h2><?php echo $row['name']?></h2>
                     </div>
-                    <div class="row d-flex flex-wrap">
-                        <div class="col-5 d-flex justify-content-between">
+                    <div class="row w-100 d-flex flex-wrap mx-auto justify-content-between">
+                        <div class="col-12 col-md-5 d-flex justify-content-between">
                             <span class="badge rounded-pill bg-dark fs-5"><?php echo $row['turno']?></span>
                             <span class="badge rounded-pill bg-warning fs-5"><?php echo $row['grado']?></span>
                             <span class="badge rounded-pill bg-danger fs-5"><?php echo $row['grupo']?></span>
                         </div>
                         <div class="col-12 col-sm-7 d-flex justify-content-center justify-content-sm-end">
-                            <button class="btn btn-outline-warning btn-rounded w-75 adaptapBtn" id="editData">Editar</button>
+                            <button class="btn btn-outline-warning btn-rounded w-75 w-md-50 w-lg-25 adaptapBtn" id="editData">Editar</button>
                         </div>
                     </div>
                 </div>
@@ -694,6 +691,24 @@ if($_POST['function'] == "submitNewConductData"){
 
         $result = $conn->query($query);
         
+        if(mysqli_affected_rows($conn) > 0){
+            echo "Success";
+        }else{
+            echo "Failed";
+        }
+
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+if($_POST['function'] == 'registerNewStudent'){
+    try {
+
+        $query ="INSERT INTO student_table (name, last_name, mothersLast_name, grade_fk, group_fk, shift_fk) VALUE ('".$_POST['name']."', '".$_POST['lastname']."', '".$_POST['motherL']."', ".$_POST['grade'].", ".$_POST['group'].", ".$_POST['shift'].")";
+
+        $result = $conn->query($query);
+
         if(mysqli_affected_rows($conn) > 0){
             echo "Success";
         }else{

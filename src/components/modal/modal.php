@@ -178,7 +178,79 @@ function addConductModal(){
 
 function addNewStudent(){
     ?>
-    
+    <div class="modal fade" tabindex="-1" id="addNewStudentModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body" id="addNewStudentModalBody">
+                <div class="col-12 col-md-10 d-flex flex-column justify-content-center mx-auto">
+                    <div class="row mt-3 mb-3 text-center">
+                        <h2>Añadir nuevo estudiante</h2>
+                    </div>
+                    <div class="row flex-wrap">
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Nombre" id="newStudentname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Apeido Paterno" id="newStudentLastname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-wrap">
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Apeido Materno" id="newStudentMLastname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <select class="form-select" id="newStudentShift">
+                                    <option selected value="">Turno</option>
+                                    <option value="1">Matutino</option>
+                                    <option value="2">Vespertino</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <select class="form-select" id="newStudentGrade">
+                                    <option selected value="">Grado</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <select class="form-select" id="newStudentGroup">
+                                    <option selected value="">Grupo</option>
+                                    <option value="1">A</option>
+                                    <option value="2">B</option>
+                                    <option value="3">C</option>
+                                    <option value="4">D</option>
+                                    <option value="5">E</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-3">
+                        <div class="col text-center">
+                            <button class="btn btn-primary" id="newStudentButton">Registrar Alumno</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger" id="addNewStudentClose">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <?php
 }
 

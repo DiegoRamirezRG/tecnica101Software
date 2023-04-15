@@ -99,10 +99,13 @@ $type = $_SESSION['sessionUser']['type'];
     <?php assitanceModal();?>
     <?php conductModal();?>
     <?php addConductModal();?>
+    <?php addNewStudent();?>
     <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedAddConduct', 'Error al agregar conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedNewStudent', 'Error al agregar al Estudiante', 'Ha ocurrido un error al nuevo estudiante, si esto persiste, comunicate con el administrador.'); ?>
     <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
     <?php showSucessToast('successConductUpdate', 'Agregado de data exitosa', 'La conducta se agrego correctamente')?>
+    <?php showSucessToast('successNewStudent', 'Agregado de data exitosa', 'El alumno se agrego correctamente')?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
@@ -170,6 +173,85 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Añadir estudiante
+            $(document).on('click', '#newStudentBtn', function(){
+                $("#addNewStudentModal").modal('show');
+            });
+
+            $(document).on('click', '#addNewStudentClose', function(){
+                $("#addNewStudentModal").modal('hide');
+            });
+
+            $(document).on('click', "#newStudentButton", function(){
+
+                if($("#newStudentname").val() == ""){
+                    alert('El Nombre no puede estar vacio');
+                    $("#newStudentname").focus();
+                    return;
+                }
+
+                if($("#newStudentLastname").val() == ""){
+                    alert('El Apeido Paterno no puede estar vacio');
+                    $("#newStudentLastname").focus();
+                    return;
+                }
+
+                if($("#newStudentMLastname").val() == ""){
+                    alert('El Apeido Materno no puede estar vacio');
+                    $("#newStudentMLastname").focus();
+                    return;
+                }
+
+                if($("#newStudentShift").val() == ""){
+                    alert('El Turno no puede estar vacio');
+                    $("#newStudentShift").focus();
+                    return;
+                }
+
+                if($("#newStudentGrade").val() == ""){
+                    alert('El Grado no puede estar vacio');
+                    $("#newStudentGrade").focus();
+                    return;
+                }
+
+                if($("#newStudentGroup").val() == ""){
+                    alert('El Grupo no puede estar vacio');
+                    $("#newStudentGrade").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'registerNewStudent',
+                        name: $("#newStudentname").val(),
+                        lastname: $("#newStudentLastname").val(),
+                        motherL: $("#newStudentMLastname").val(),
+                        grade: $("#newStudentGrade").val(),
+                        group: $("#newStudentGroup").val(),
+                        shift: $("#newStudentShift").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#newStudentname").val('');
+                            $("#newStudentLastname").val('');
+                            $("#newStudentMLastname").val('');
+                            $("#newStudentGrade").val('');
+                            $("#newStudentGroup").val('');
+                            $("#newStudentShift").val('');
+
+                            $("#addNewStudentModal").modal('hide');
+                            $("#successNewStudent").toast('show');
+                            loadStudentData();
+                        }else{
+                            $("#failedNewStudent").toast('show');
+                        }
+                    }
+                })
+            })
 
             //Conudcta
             $(document).on('click', "#seeConduct", function(){
@@ -528,6 +610,7 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if(DOMPage === 'studentPage'){
                     loadStudnets();
                     loadStudentData();
+                    loadStudentData();
                 }
             }
 
@@ -632,7 +715,6 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             }
-            
         });
     </script>
 </body>
