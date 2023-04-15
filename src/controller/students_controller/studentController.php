@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include_once('../../config/database/conexion.php');
 
 if($_POST['function'] == 'loadStudentData'){
@@ -108,10 +110,10 @@ if($_POST['function'] == 'loadModalBody'){
                                 </div>
                                 <div class="col-4">
                                     <div class="row">
-                                        <button class="btn btn-outline-danger" id="assitanceM">Modificar</button>
+                                        <button class="btn btn-outline-danger" id="assitanceM" btnAction="modificar">Modificar</button>
                                     </div>
                                     <div class="row">
-                                        <button class="btn btn-outline-success mt-2" id="assitanceH">Historico</button>
+                                        <button class="btn btn-outline-success mt-2" id="assitanceH" btnAction="historico">Historico</button>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +126,7 @@ if($_POST['function'] == 'loadModalBody'){
                                     <p class="fs-3 mt-3 ml-3"><?php
                                     $conducta = round_num($row['conducta']);
                                     if($conducta == 0){
-                                        echo 'Demonio';
+                                        echo 'Excelente';
                                     }
                                     if($conducta == 1){
                                         echo 'Malo';
@@ -138,7 +140,7 @@ if($_POST['function'] == 'loadModalBody'){
                                     ?></p>
                                 </div>
                                 <div class="div"></div>
-                                <button class="btn btn-outline-primary w-75">Editar</button>
+                                <button class="btn btn-outline-primary w-75" id="seeConduct">Ver Conducta</button>
                             </div>
                         </div>
                     </div>
@@ -317,9 +319,387 @@ if($_POST['function'] == 'updateStudent'){
 
 if($_POST['function'] == 'loadAssitanceModal'){
     try {
+
+        $query = "SELECT ct.id_class, ct.name FROM class_teacher_table as ctt, student_table as st, class_table as ct WHERE ctt.shift_fk = st.shift_fk AND ctt.grade_fk = st.grade_fk AND ctt.group_fk = st.group_fk AND ctt.class_fk = ct.id_class AND st.id_student = ".$_POST['id_student']."";
+
+        $result = $conn->query($query);
+
+        if($result->num_rows > 0){
+            ?>
+                <div class="container d-flex justify-content-center mt-3 mb-3">
+                    <div class="col-10">
+                        <div class="row text-center">
+                            <h2><?php echo($_POST['method'] == 'modificar' ? 'Modificar' : 'Historico')?></h2>
+                        </div>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-md-4">
+                                <input class="form-control" type="date" name="" id="searchedDate" placeholder="DD/MM/AAAA">
+                            </div>
+                            <div class="col-md-4 mt-4 mt-md-0">
+                                <select class="form-select" aria-label="Default select example" id="selectedMonth">
+                                    <option selected value="">Mes</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mt-4 mt-md-0">
+                                <select class="form-select" aria-label="Default select example" id="selectedClass">
+                                    <option selected value="">Materia</option>
+                                    <?php 
+                                        foreach ($result as $class) {
+                                            ?>
+                                                <option value="<?php echo $class['id_class']?>"><?php echo $class['name']?></option>
+                                            <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="container tableContainer">
+                                <table class="customAssistanceTable table table-striped" id="tableActionAssistance">
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+
+        }else{
+            ?>
+                <div class="container d-flex justify-content-center mt-3 mb-3">
+                    <div class="col-10">
+                        <div class="row text-center">
+                            <h2><?php echo($_POST['method'] == 'modificar' ? 'Modificar' : 'Historico')?></h2>
+                        </div>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-md-4">
+                                <input class="form-control" type="date" name="" id="searchedDate" placeholder="DD/MM/AAAA">
+                            </div>
+                            <div class="col-md-4 mt-4 mt-md-0">
+                                <select class="form-select" aria-label="Default select example" id="selectedMonth">
+                                    <option selected value="">Mes</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mt-4 mt-md-0">
+                                <select class="form-select" aria-label="Default select example" id="selectedClass">
+                                    <option selected value="">Materia</option>
+                                    <option value="">Aun no tiene materias</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="container tableContainer">
+                                <table class="customAssistanceTable table-striped-columns" id="tableActionAssistance">
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+        }
+
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+if($_POST['function'] == 'loadAssistanceTable'){
+
+    try {
+
+        $dia ="";
+        $mes = "";
+        $materia = "";
+
+        if($_POST['searchedDay'] != ''){
+            $dia = " AND a.day LIKE '".$_POST['searchedDay']."'";
+        }
+
+        if($_POST['searchedMonth'] != ''){
+            $mes = " AND MONTH(a.day) LIKE '".$_POST['searchedMonth']."'";
+        }
+
+        if($_POST['searchedClass'] != ''){
+            $materia = " AND ct.id_class LIKE '".$_POST['searchedClass']."'";
+        }
+
+        $query = "SELECT a.id_attendance as id, a.day, LEFT(a.status, 1) as status FROM class_teacher_table as ctt, student_table as st, class_table as ct, attendance_table as a WHERE ctt.shift_fk = st.shift_fk AND ctt.grade_fk = st.grade_fk AND ctt.group_fk = st.group_fk AND ctt.class_fk = ct.id_class AND a.class_teacher_fk = ctt.id_class_teacher AND a.student_fk = st.id_student AND st.id_student = ".$_POST['id_student']."".$dia.$mes.$materia;
+
+        $result = $conn->query($query);
+
+        if($result->num_rows > 0){    
+            ?>
+                <thead class="assitanceTableHeader">
+                    <tr>
+                        <?php 
+                            foreach ($result as $header) {
+                                ?>
+                                    <th class="custom-th"><?php echo $header['day']?></th>
+                                <?php
+                            }
+                        ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <?php 
+
+                            if($_POST['method'] == 'modificar'){
+                                foreach ($result as $mod) {
+                                    ?>
+                                        <td class="custom-th">
+                                            <select class="form-control customSelect" aria-label="Default select example" id="<?php echo $mod['id']?>">
+                                                <option value="Asistencia" <?php echo ($mod['status'] == 'A') ? 'selected' : ''?>>A</option>
+                                                <option value="Retraso" <?php echo ($mod['status'] == 'R') ? 'selected' : ''?>>R</option>
+                                                <option value="Falta" <?php echo ($mod['status'] == 'F') ? 'selected' : ''?>>F</option>
+                                                <option value="Justificacion" <?php echo ($mod['status'] == 'J') ? 'selected' : ''?>>J</option>
+                                                <option value="Baja" <?php echo ($mod['status'] == 'B') ? 'selected' : ''?>>B</option>
+                                            </select>
+                                        </td>
+                                    <?php
+                                }
+                            }else{
+                                foreach ($result as $his) {
+                                    ?>
+                                        <th class="custom-th"><?php echo $his['status']?></th>
+                                    <?php
+                                }
+                            }
+                        ?>
+                    </tr>
+                </tbody>
+            <?php
+        }
+
+
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+if($_POST['function'] == 'updateAssistance'){
+    try {
+
+        $query = "UPDATE attendance_table SET status = '".$_POST['updated']."' WHERE id_attendance = ".$_POST['asistanceId']."";
+
+        $result = $conn->query($query);
+        if(mysqli_affected_rows($conn)  > 0){
+            echo 'Success';
+        }else{
+            echo 'Failed';
+        }
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+if($_POST['function'] == 'loadConductModal'){
+    try {
+
+        $query = "SELECT AVG(CASE value WHEN 'Malo' THEN 1 WHEN 'Regular' THEN 2 WHEN 'Bueno' THEN 3 ELSE 0 END) as conducta FROM conduct_table WHERE student_fk = ".$_POST['id_student']."";
+
+        $queryClassesConduct = "SELECT DISTINCT COALESCE(user_table.type, '') AS kind, COALESCE(class_table.name, '') AS class FROM conduct_table LEFT JOIN user_table ON conduct_table.person = user_table.id_user LEFT JOIN class_teacher_table ON conduct_table.class_teacher_fk = class_teacher_table.id_class_teacher LEFT JOIN class_table ON class_teacher_table.class_fk = class_table.id_class WHERE conduct_table.student_fk = ".$_POST['id_student']."";
+
+        $result = $conn->query($query);
+        $resultClasses = $conn->query($queryClassesConduct);
+
+        foreach($result as $data);
+
         ?>
-        <h1>Si jalo</h1>
+            <div class="container">
+                <div class="col">
+                    <div class="row">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <i class='bx bxs-face fs-1'></i>
+                            <p class="fs-3 mt-3 ml-3"><?php
+                                    $conducta = round_num($data['conducta']);
+                                    if($conducta == 0){
+                                        echo 'Excelente';
+                                    }
+                                    if($conducta == 1){
+                                        echo 'Malo';
+                                    }
+                                    if($conducta == 2){
+                                        echo 'Regular';
+                                    }
+                                    if($conducta == 3){
+                                        echo 'Bueno';
+                                    }
+                                ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="conductTableContainer">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Descripcion</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="conductTableBody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-3">
+                        <div class="col-sm-10 col-md-6 col-12">
+                            <button class="btn btn-primary w-100" id="addNewConductData">Añadir Registro</button>
+                        </div>
+                        <div class="col-sm-10 col-md-6 col-12 mt-3 mt-md-0">
+                            <select class="form-select w-100" aria-label="Default select example" id="selectedFilter">
+                                <option selected value="">Materia</option>
+                                <?php
+                                    foreach($resultClasses as $who){
+                                        ?>
+                                            <option value="<?php echo ($who['kind'] == "" ? $who['class'] : $who['kind'])?>"><?php echo ($who['kind'] == "" ? $who['class'] : $who['kind'])?></option>
+                                        <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <?php
+
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+if($_POST['function'] == 'loadConductTableBody'){
+    try {
+
+        $where = "";
+        if($_POST['where'] != ""){
+            $where = " AND (user_table.type = '".$_POST['where']."' OR class_table.name LIKE '%".$_POST['where']."%')";
+        }
+
+        $query = "SELECT id_conduct, description, value, DAY(day) as dia, MONTH(day) as mes FROM conduct_table WHERE student_fk = ".$_POST['id_student']."";
+
+        $queryMax = "SELECT conduct_table.id_conduct AS id_conduct, conduct_table.description AS description, conduct_table.value, DAY(conduct_table.day) as dia, MONTH(conduct_table.day) as mes, COALESCE(user_table.type, '') AS type_or_teacher, COALESCE(class_table.name, '') AS class_name FROM conduct_table LEFT JOIN user_table ON conduct_table.person = user_table.id_user LEFT JOIN class_teacher_table ON conduct_table.class_teacher_fk = class_teacher_table.id_class_teacher LEFT JOIN class_table ON class_teacher_table.class_fk = class_table.id_class WHERE conduct_table.student_fk = ".$_POST['id_student']."".$where;
+
+        $result = $conn->query($queryMax);
+        if($result->num_rows > 0){
+
+            foreach($result as $data){
+                ?>
+                    <tr id="<?php echo $data['id_conduct']?>">
+                        <td><?php echo $data['dia']."/".$data['mes']?></td>
+                        <td><?php echo $data['value']?></td>
+                        <td><?php echo $data['description']?></td>
+                    </tr>
+                <?php
+            }
+
+        }else{
+            ?>
+                <tr>
+                    <td>Aun</td>
+                    <td>No Existe</td>
+                    <td>Data</td>
+                </tr>
+            <?php
+        }
+
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+if($_POST['function'] == 'loadSubmitAsConduct'){
+    try {
+        
+        $teacherWhere = '';
+
+        $query = "SELECT cl.name as name, ctt.id_class_teacher as class FROM student_table as st, class_table as cl, class_teacher_table as ctt WHERE cl.id_class = ctt.class_fk AND ctt.shift_fk = st.shift_fk AND ctt.grade_fk = st.grade_fk AND ctt.group_fk = st.group_fk AND st.id_student = ".$_POST['id_student']." AND ctt.teacher_fk = ".$_SESSION['sessionUser']['id_user']."";
+
+        $result = $conn->query($query);
+        
+        if($result->num_rows > 0){
+
+            ?>
+            <select class="form-select" aria-label="Default select example" id="selectedSubmitAs">
+                <option selected value="">Agregar Conducta Como</option>
+                <option data-entity="Other" value="<?php echo $_SESSION['sessionUser']['id_user']?>"><?php echo $_SESSION['sessionUser']['type']?></option>
+                <?php
+                
+                foreach ($result as $opts) {
+                    ?>
+                        <option data-entity="Maestro" value="<?php echo $opts['class']?>"><?php echo $opts['name']?></option>
+                    <?php
+                }
+                
+                ?>
+            </select>
+            <?php
+
+        }else{
+            ?>
+                <select class="form-select" aria-label="Default select example" id="selectedSubmitAs">
+                    <option selected value="">Agregar Conducta Como</option>    
+                    <option data-entity="Other" value="<?php echo $_SESSION['sessionUser']['id_user']?>"><?php echo $_SESSION['sessionUser']['type']?></option>
+                </select>
+            <?php
+        }
+
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+if($_POST['function'] == "submitNewConductData"){
+    try {
+
+        $value = '';
+        $column = '';
+
+        if($_POST['asEntity'] == 'Maestro'){
+            $value = $_POST['asValue'];
+            $column = "class_teacher_fk";
+        }else{
+            $value = $_POST['asValue'];
+            $column = "person";
+        }
+
+        $query = "INSERT INTO conduct_table(student_fk, description, value, $column) VALUE (".$_POST['id_user'].", '".$_POST['description']."', '".$_POST['value']."', $value)";
+
+        $result = $conn->query($query);
+        
+        if(mysqli_affected_rows($conn) > 0){
+            echo "Success";
+        }else{
+            echo "Failed";
+        }
+
     } catch (\Throwable $th) {
         echo $th;
     }

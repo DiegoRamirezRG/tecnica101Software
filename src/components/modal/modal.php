@@ -103,8 +103,7 @@ function assitanceModal(){
     <div class="modal fade" tabindex="-1" id="assistance" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-body">
-                <p class="text-center">Historico</p>
+            <div class="modal-body" id="assitanceModalBody">
             </div>
             <div class="modal-footer text-center">
                 <button type="button" class="btn btn-danger" id="assitanceModal">Cerrar</button>
@@ -114,4 +113,73 @@ function assitanceModal(){
     </div>
     <?php
 }
+
+function conductModal(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="conductModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body" id="conductModalBody">
+
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger" id="conducModalClose">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function addConductModal(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="addConductModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body" id="conductModalBody">
+                <div class="col">
+                    <div class="row mt-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" for="idScoreConduct"><i class='bx bxs-face fs-1'></i></span>
+                            <select class="form-select" aria-label="Default select example" id="idScoreConduct">
+                                <option selected value="">Selecciona El Puntaje</option>
+                                <option value="Malo">Malo</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Bueno">Bueno</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="form-group">
+                            <label for="newConductDesc">Descripcion</label>
+                            <textarea class="form-control mt-1" id="newConductDesc" rows="3" placeholder="El alumno hizo . . ."></textarea>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="form-group" id="submitAs">
+                            
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="form-group d-flex justify-content-center">
+                            <button class="btn btn-success" id="submitConduct">Añadir Conducta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger" id="addConductModalClose">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function addNewStudent(){
+    ?>
+    
+    <?php
+}
+
 ?>

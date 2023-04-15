@@ -35,6 +35,43 @@
     cursor: pointer;
 }
 
+.tableContainer{
+    overflow-x: scroll;
+}
+
+.customAssistanceTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    padding: 0px !important;
+    text-align: center;
+}
+
+
+.assitanceTableHeader .custom-th{
+    writing-mode: vertical-rl;
+    text-align: center;
+    transform: rotate(-180deg);
+    width: 60px !important;
+}
+
+.customSelect{
+    -webkit-appearance: none!important;
+    -moz-appearance: none!important;
+    -ms-appearance: none!important;
+    -o-appearance: none!important;
+    appearance: none!important;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+.conductTableContainer{
+    height: 50vh;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+
 @media (max-width: 1400px) {
     .sizableBtn:before{
         content: "Añadir";

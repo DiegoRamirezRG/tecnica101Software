@@ -45,9 +45,9 @@
             <table id="studentsTable" class="table table-bordered table-striped table-hover nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>G/G/T</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">G/G/T</th>
                     </tr>
                 </thead>
                 <tbody id="studentTableBody" class="tbodyHover">

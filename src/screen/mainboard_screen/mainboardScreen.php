@@ -97,7 +97,12 @@ $type = $_SESSION['sessionUser']['type'];
     <?php alertUpdateData();?>
     <?php alertSuccessData();?>
     <?php assitanceModal();?>
-    <?php  showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
+    <?php conductModal();?>
+    <?php addConductModal();?>
+    <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedAddConduct', 'Error al agregar conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
+    <?php showSucessToast('successConductUpdate', 'Agregado de data exitosa', 'La conducta se agrego correctamente')?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
@@ -144,6 +149,8 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+
+
             //Edit Student Data
             $(document).on('click', "#editData", function(){
                 $("#modal").hide();
@@ -163,16 +170,223 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+
+            //Conudcta
+            $(document).on('click', "#seeConduct", function(){
+
+                $("#modal").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadConductModal',
+                        id_student: localStorage.getItem('clickedRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#conductModalBody").html(response);
+                        $("#conductModal").modal('show');
+                    }
+                })
+            });
+
+            $(document).on('click', '#addNewConductData', function(){
+                $("#conductModal").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadSubmitAsConduct',
+                        id_student: localStorage.getItem('clickedRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#submitAs").html(response);
+                        $("#addConductModal").modal('show');
+                    }
+                }) 
+            });
+
+            $("#submitConduct").on('click', function(){
+
+                let selected = $('#selectedSubmitAs option:selected');
+                let entity = selected.data('entity');
+
+                if($("#idScoreConduct").val() == ""){
+                    alert('El Puntaje no puede ser vacio');
+                    $("#idScoreConduct").focus();
+                    return;
+                }
+
+                if($("#newConductDesc").val() == ""){
+                    alert('La Descripcion no puede estar vacia');
+                    $("#newConductDesc").focus();
+                    return;
+                }
+
+                if($("#selectedSubmitAs").val() == ""){
+                    alert('Necesita tener un tipo de usuario seleccionado');
+                    $("#newConductDesc").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: "submitNewConductData",
+                        id_user: localStorage.getItem('clickedRow'),
+                        description: $("#newConductDesc").val(),
+                        value: $("#idScoreConduct").val(),
+                        asValue: $("#selectedSubmitAs").val(),
+                        asEntity: entity
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successConductUpdate").toast('show')
+                            $("#addConductModal").modal('hide');
+                            $("#conductModal").modal('show');
+                        }else{
+                            $("#failedAddConduct").toast('show')
+                            $("#addConductModal").modal('hide');
+                            $("#conductModal").modal('show');
+                        }
+                    }
+                })
+            })
+
+            $("#addConductModalClose").on('click', function(){
+                $("#addConductModal").modal('hide');
+                $("#conductModal").modal('show');
+            })
+
+            $(document).on('click', '#conducModalClose', function(){
+                $("#conductModal").modal('hide');
+                $("#modal").modal('show');
+            });
+
+            $("#conductModal").on('shown.bs.modal', function(){
+                loadHistoricConductTableBody(localStorage.getItem('clickedRow'));
+            });
+
+            $(document).on('change', '#selectedFilter', function(){
+                loadHistoricConductTableBody(localStorage.getItem('clickedRow'));
+            });
+
+            function loadHistoricConductTableBody(student_id){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadConductTableBody',
+                        id_student: student_id,
+                        where: $("#selectedFilter").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#conductTableBody").html(response);
+                    }
+                })
+            }
+
+
+
             //Asistencia
             $(document).on('click', "#assitanceM, #assitanceH", function(){
                 $("#modal").modal('hide');
-                $("#assistance").modal('show');
+                let method = $(this).attr('btnAction');
+                localStorage.setItem('assistanceTableMethod', method);
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadAssitanceModal',
+                        method: method,
+                        id_student: localStorage.getItem('clickedRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#assitanceModalBody").html(response);
+                        $("#assistance").modal('show');
+                    }
+                })
             });
 
             $(document).on('click', '#assitanceModal', function(){
                 $("#assistance").modal('hide');
                 $("#modal").modal('show');
             })
+
+            $("#assistance").on('shown.bs.modal', function(){
+                loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
+            })
+
+            $(document).on('change', "#searchedDate", function(){
+                let date = $(this).val();
+                if(date!=""){
+                    loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
+                }else{
+                    //Do nothin
+                }
+            });
+
+            $(document).on('change', '#selectedMonth', function(){
+                if($(this).val() != ""){
+                    loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
+                }
+            });
+
+            $(document).on('change', '#selectedClass', function(){
+                if($(this).val() != ""){
+                    loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
+                }
+            });
+
+            $(document).on('change', '#tableActionAssistance tr td select', function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'updateAssistance',
+                        updated: $(this).val(),
+                        asistanceId: $(this).attr('id')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(msg){
+                        console.log(msg);
+                        if(msg === 'Success'){
+                            $("#toastSuccessUpdate").toast('show');
+                        }
+                    }
+                })
+            });
+
+            function loadHistoricData(id_student, method){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadAssistanceTable',
+                        id_student: id_student,
+                        method: method,
+                        searchedDay: $("#searchedDate").val(),
+                        searchedMonth: $("#selectedMonth").val(),
+                        searchedClass: $("#selectedClass").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function (response){
+                        $("#tableActionAssistance").html(response);
+                    }
+                });
+            }
 
             //Update data
 
@@ -249,6 +463,12 @@ $type = $_SESSION['sessionUser']['type'];
             
             $(document).on('click', '#closeSuccess', function(){
                 closeAllModals();
+                loadStudentData();
+            });
+
+            $(document).on('click', '#closeFailed', function(){
+                closeAllModals();
+                loadStudentData();
             })
 
             $(document).on('click', "#updateData", function(){
@@ -365,7 +585,6 @@ $type = $_SESSION['sessionUser']['type'];
                     dataType: 'html',
                     async: false,
                     success: function(dataTr){
-                        console.log(dataTr);
                         $("#assistanceTable").html(dataTr);
                     }
                 })
