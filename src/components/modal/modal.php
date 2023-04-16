@@ -254,4 +254,71 @@ function addNewStudent(){
     <?php
 }
 
+function addNewTeacherModal(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="addNewTeacherModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-12 col-md-10 d-flex flex-column justify-content-center mx-auto">
+                    <div class="row mt-3 mb-3 text-center">
+                        <h2>Añadir nuevo Profesor</h2>
+                    </div>
+                    <div class="row flex-wrap">
+                        <label class="mb-1">Informacion Personal</label>
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Nombre" id="newTeacherName">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Apeido Paterno" id="newTeacherLastname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-wrap">
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Apeido Materno" id="newTeacherMLastname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="tel" class="form-control" placeholder="Telefono" id="newTeacherPhone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="mb-1">Crendenciales</label>
+                        <div class="col-12 text-center mb-3">
+                            <input type="email" class="form-control" placeholder="maestro@correo.com" id="newTeacherEmail">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center mb-3">
+                            <input type="password" class="form-control" placeholder="Contraseña" id="newTeacherPassword">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center mb-3">
+                            <input type="password" class="form-control" placeholder="Verifica la contraseña" id="newTeacherConfirmPassword">
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-3">
+                        <div class="col text-center">
+                            <button class="btn btn-primary" id="newTeacherButton">Registrar Profesor</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger" id="addNewTeacherClose">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 ?>

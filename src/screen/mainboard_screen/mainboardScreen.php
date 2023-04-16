@@ -31,7 +31,8 @@ $type = $_SESSION['sessionUser']['type'];
 
     <!--- CSS de paginas ajax--->
     <link rel="stylesheet" href="../../pages/home_page/homeStyle.css">
-    <link rel="stylesheet" href="../../pages//student_page/studentStyle.css">
+    <link rel="stylesheet" href="../../pages/student_page/studentStyle.css">
+    <link rel="stylesheet" href="../../pages/teacher_page/teacherStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -100,15 +101,21 @@ $type = $_SESSION['sessionUser']['type'];
     <?php conductModal();?>
     <?php addConductModal();?>
     <?php addNewStudent();?>
+    <?php addNewTeacherModal();?>
+
+
     <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedAddConduct', 'Error al agregar conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedNewStudent', 'Error al agregar al Estudiante', 'Ha ocurrido un error al nuevo estudiante, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedNewTeacher', 'Error al agregar al Profesor', 'Ha ocurrido un error al nuevo profesor, si esto persiste, comunicate con el administrador.'); ?>
     <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
     <?php showSucessToast('successConductUpdate', 'Agregado de data exitosa', 'La conducta se agrego correctamente')?>
     <?php showSucessToast('successNewStudent', 'Agregado de data exitosa', 'El alumno se agrego correctamente')?>
+    <?php showSucessToast('successNewTeacher', 'Agregado de data exitosa', 'El profesor se agrego correctamente')?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
+
     <script>
         $(document).ready(function(){
 
@@ -152,8 +159,140 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            ///TEACHER
+            ///TEACHER
+            ///TEACHER
+
+            //Show New Teacher Modal
+            $(document).on('click', '#newTeacherBtn', function(){
+                $("#addNewTeacherModal").modal('show');
+            });
+
+            //Hide New Teacher Modal
+            $(document).on('click', '#addNewTeacherClose', function(){
+                $("#addNewTeacherModal").modal('hide');
+            });
+
+            //Lunch live search
+            $(document).on('change', '#filterGradoTeacher, #filterGrupoTeacher, #filterTurnoTeacher', function(){
+                loadTeachersTable();
+            })
+
+            $(document).on('keyup', '#classSearched, #teacherSearched', function(){
+                loadTeachersTable();
+            })
+
+            //LoadTeacherTable
+            function loadTeachersTable(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadTable',
+                        grade: $("#filterGradoTeacher").val(),
+                        group: $("#filterGrupoTeacher").val(),
+                        shift: $("#filterTurnoTeacher").val(),
+                        class: $("#classSearched").val(),
+                        name:  $("#teacherSearched").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#teachersTableBody").html(response);
+                    }
+                })
+            };
+
+            //Register a New Teacher
+            $(document).on('click', '#newTeacherButton', function(){
+
+                if($("#newTeacherName").val() == ""){
+                    alert('El nombre no puede ser vacio');
+                    $("#newTeacherName").focus();
+                    return;
+                }
+
+                if($("#newTeacherLastname").val() == ""){
+                    alert('El Apeido Paterno no puede ser vacio');
+                    $("#newTeacherLastname").focus();
+                    return;
+                }
+
+                if($("#newTeacherMLastname").val() == ""){
+                    alert('El Apeido Materno no puede ser vacio');
+                    $("#newTeacherMLastname").focus();
+                    return;
+                }
+
+                if($("#newTeacherPhone").val() == ""){
+                    alert('El Telefono no puede ser vacio');
+                    $("#newTeacherPhone").focus();
+                    return;
+                }
+
+                if($("#newTeacherEmail").val() == ""){
+                    alert('El Correo no puede ser vacio');
+                    $("#newTeacherEmail").focus();
+                    return;
+                }
+
+                if($("#newTeacherPassword").val() == ""){
+                    alert('La Contraseña no puede ser vacia');
+                    $("#newTeacherPassword").focus();
+                    return;
+                }
+
+                if($("#newTeacherConfirmPassword").val() == ""){
+                    alert('La Confirmacion de Contraseña no puede ser vacia');
+                    $("#newTeacherConfirmPassword").focus();
+                    return;
+                }
+
+                if($("#newTeacherPassword").val() != $("#newTeacherConfirmPassword").val()){
+                    alert('Las Contraseñas no coinciden');
+                    $("#newTeacherPassword").focus();
+                    $("#newTeacherConfirmPassword").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'createNewTeacher',
+                        name: $("#newTeacherName").val(),
+                        lastname: $("#newTeacherLastname").val(),
+                        mothersLN: $("#newTeacherMLastname").val(),
+                        phone: $("#newTeacherPhone").val(),
+                        email: $("#newTeacherEmail").val(),
+                        password: $("#newTeacherPassword").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == "Success"){
+                            $("#addNewTeacherModal").modal('hide');
+                            $("#successNewTeacher").toast('show');
+
+                            $("#newTeacherName").val('');
+                            $("#newTeacherLastname").val('');
+                            $("#newTeacherMLastname").val('');
+                            $("#newTeacherPhone").val('');
+                            $("#newTeacherEmail").val('');
+                            $("#newTeacherPassword").val('');
+
+                            loadTeachersTable();
+                        }else{
+                            $("#failedNewTeacher").toast('show');
+                        }
+                    }
+                })
+            });
 
 
+            /////
+            /////
+            /////
             //Edit Student Data
             $(document).on('click', "#editData", function(){
                 $("#modal").hide();
@@ -572,15 +711,6 @@ $type = $_SESSION['sessionUser']['type'];
                 closeAllModals();
             })
 
-            $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
-                loadHome();
-            });
-
-            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
-                loadStudnets();
-                loadStudentData();
-            })
-
             function closeAllModals(){
                 $("#modal").modal('hide');
                 $("#editStudentDataModal").modal('hide');
@@ -610,8 +740,26 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if(DOMPage === 'studentPage'){
                     loadStudnets();
                     loadStudentData();
+                }else if(DOMPage === 'teacherPage'){
+                    loadTeachers();
+                    loadTeachersTable();
                 }
             }
+
+            $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
+                loadHome();
+            });
+
+            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
+                loadStudnets();
+                loadStudentData();
+            })
+
+            $(document).on('click', '#teachersCardComponent, #teachers, #teachersBottom', function(){
+                loadTeachers();
+                loadTeachersTable();
+            });
+
 
             function loadHome(){
                 $("#MainContent").load('../../pages/home_page/homePage.php');
@@ -621,6 +769,11 @@ $type = $_SESSION['sessionUser']['type'];
             function loadStudnets(){
                 $("#MainContent").load('../../pages/student_page/studentPage.php');
                 localStorage.setItem('currentPage', 'studentPage');
+            }
+
+            function loadTeachers(){
+                $("#MainContent").load('../../pages/teacher_page/teacherPage.php');
+                localStorage.setItem('currentPage', 'teacherPage');
             }
 
             //Live Tipe Student Searcher
