@@ -102,16 +102,25 @@ $type = $_SESSION['sessionUser']['type'];
     <?php addConductModal();?>
     <?php addNewStudent();?>
     <?php addNewTeacherModal();?>
+    <?php loadTeacherDetailsModal();?>
+    <?php assignClassTeacher();?>
+    <?php editTeacher();?>
 
 
     <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedAddConduct', 'Error al agregar conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedAddConduct', 'Error al agregar Conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedNewStudent', 'Error al agregar al Estudiante', 'Ha ocurrido un error al nuevo estudiante, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedNewTeacher', 'Error al agregar al Profesor', 'Ha ocurrido un error al nuevo profesor, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedAssignClass', 'Error al asignar la Materia', 'Ha ocurrido un error al asignar la materia al profesor, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
+
+
     <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
     <?php showSucessToast('successConductUpdate', 'Agregado de data exitosa', 'La conducta se agrego correctamente')?>
     <?php showSucessToast('successNewStudent', 'Agregado de data exitosa', 'El alumno se agrego correctamente')?>
     <?php showSucessToast('successNewTeacher', 'Agregado de data exitosa', 'El profesor se agrego correctamente')?>
+    <?php showSucessToast('successNewAssignClass', 'Agregado de data exitosa', 'Se le asigno la materia al profesor correctamente')?>
+    <?php showSucessToast('successUpdateDate', 'Agregado de data exitosa', 'Se actualizaco al profesor correctamente')?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
@@ -289,6 +298,267 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Show Detail Modal
+            $(document).on('click', '#teachersTableBody tr', function(){
+                localStorage.setItem('teacherRow', this.id);
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadTeacherDetails',
+                        id_user: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#teacherDetailsModalBody").html(response);
+                        $("#teacherDetailsModal").modal('show');
+                    }
+                })
+            });
+
+            //Load Classess
+            $("#teacherDetailsModal").on('shown.bs.modal', function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadTableBody',
+                        id_user: localStorage.getItem('teacherRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#tableClassTeacherBody").html(response);
+                    }
+                })
+            });
+
+            //Hide Detail Modal
+            $(document).on('click', '#closeTeacherDetailsModal', function(){
+                $("#teacherDetailsModal").modal('hide');
+            });
+
+            //Add Assign Class
+            $(document).on('click', '#assignTeacherBtn', function(){
+                $("#teacherDetailsModal").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadClasses',
+                        id_user: localStorage.getItem('teacherRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#assignClassTeacherModalBody").html(response);
+                        $("#assignClassTeacherModal").modal('show');
+                    }
+                })
+            });
+
+            //Reload The modal
+            function reloadAssignModal(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadClasses',
+                        id_user: localStorage.getItem('teacherRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#assignClassTeacherModalBody").html(response);
+                    }
+                })
+            }
+
+            //Change of Inputs Selected for Filter
+            $(document).on('change', '#selectedShift, #selectedGrade, #selectedGroup', function(){
+                if($("#selectedShift").val() == ""){
+                    return;
+                }
+
+                if($("#selectedGrade").val() == ""){
+                    return;
+                }
+
+                if($("#selectedGroup").val() == ""){
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadSelected',
+                        shift: $("#selectedShift").val(),
+                        grade: $("#selectedGrade").val(),
+                        group: $("#selectedGroup").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classTeacherBody").html(response);
+                    }
+                })
+            })
+
+            //Close Assign Class
+            $(document).on('click', '#closeAssignClassTeacher', function(){
+                $("#assignClassTeacherModal").modal('hide');
+                $("#teacherDetailsModal").modal('show');
+            });
+
+
+            //Assign Class ON bd
+            $(document).on('click', '#assignTeacherSendBtn', function(){
+
+                if($("#selectedShift").val() == ""){
+                    alert('No puede ser vacio');
+                    $("#selectedShift").focus();
+                    return;
+                }
+                if($("#selectedGrade").val() == ""){
+                    alert('No puede ser vacio');
+                    $("#selectedGrade").focus();
+                    return;
+                }
+                if($("#selectedGroup").val() == ""){
+                    alert('No puede ser vacio');
+                    $("#selectedGroup").focus();
+                    return;
+                }
+                if($("#selectedClass").val() == ""){
+                    alert('No puede ser vacio');
+                    $("#selectedClass").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'assignTeacherClass',
+                        id_teacher: localStorage.getItem('teacherRow'),
+                        shift: $("#selectedShift").val(),
+                        grade: $("#selectedGrade").val(),
+                        group: $("#selectedGroup").val(),
+                        class: $("#selectedClass").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            reloadAssignModal();
+                            $("#successNewAssignClass").toast('show');
+                        }else{
+                            console.log(response);
+                            $("#failedAssignClass").toast('show');
+                        }
+                    }
+                })
+            });
+
+            //Load Update Modal
+            $(document).on('click', '#editTeacherBtn', function(){
+                $("#teacherDetailsModal").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadUpdateModal',
+                        id_user: localStorage.getItem('teacherRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){    
+                        $("#editTeacherBody").html(response);
+                        $("#editTeacherModal").modal('show');
+                    }
+                })
+            });
+            
+            function loadUpdateModalFunc(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'loadUpdateModal',
+                        id_user: localStorage.getItem('teacherRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){    
+                        $("#editTeacherBody").html(response);
+                        $("#editTeacherModal").modal('show');
+                    }
+                })
+            }
+
+            //Hide Update Modal
+            $(document).on('click', '#editTeacherClose', function(){
+                $("#editTeacherModal").modal('hide');
+                $("#teacherDetailsModal").modal('show');
+            });
+
+            $(document).on('click', '#editTeacherButton', function(){
+                
+                if($("#editTeacherName").val() == ""){
+                    alert('Error Campos Vacios');
+                    $("#editTeacherName").focus()
+                    return;
+                }
+                if($("#editTeacherLastname").val() == ""){
+                    alert('Error Campos Vacios');
+                    $("#editTeacherLastname").focus()
+                    return;
+                }
+                if($("#editTeacherMLastname").val() == ""){
+                    alert('Error Campos Vacios');
+                    $("#editTeacherMLastname").focus()
+                    return;
+                }
+                if($("#editTeacherPhone").val() == ""){
+                    alert('Error Campos Vacios');
+                    $("#editTeacherPhone").focus()
+                    return;
+                }
+                if($("#editTeacherEmail").val() == ""){
+                    alert('Error Campos Vacios');
+                    $("#editTeacherEmail").focus()
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/teachers_controller/teachersController.php',
+                    data: ({
+                        function: 'updateTeacherInfo',
+                        name: $("#editTeacherName").val(),
+                        last_name: $("#editTeacherLastname").val(),
+                        mothersL: $("#editTeacherMLastname").val(),
+                        phone: $("#editTeacherPhone").val(),
+                        email: $("#editTeacherEmail").val(),
+                        id_user: localStorage.getItem('teacherRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#editTeacherModal").modal('hide');
+                            $("#teacherDetailsModal").modal('show');
+                            loadTeachersTable();
+                            $("#successUpdateDate").toast('show');
+                        }else{
+                            $("#failedUpdateTeacher").toast('show');
+                        }
+                    }
+                })
+
+            });
 
             /////
             /////

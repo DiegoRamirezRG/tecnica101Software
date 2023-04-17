@@ -321,4 +321,55 @@ function addNewTeacherModal(){
     <?php
 }
 
+function editTeacher(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="editTeacherModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body" id="editTeacherBody">
+                
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger" id="editTeacherClose">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function loadTeacherDetailsModal(){
+    ?>
+    <div class="modal fade" id="teacherDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="teacherDetailsModalBody">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="closeTeacherDetailsModal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function assignClassTeacher(){
+    ?>
+    <div class="modal fade" id="assignClassTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="assignClassTeacherModalBody">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="closeAssignClassTeacher">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 ?>
