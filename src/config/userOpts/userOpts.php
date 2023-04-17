@@ -71,6 +71,11 @@ $controlSidebarOpts = array(
         'title' => 'Home',
         'id' => 'home'
     ),
+    array (
+        'icon' => 'bx-user',
+        'title' => 'Alumnos',
+        'id' => 'students'
+    ),
     array(
         'icon' => 'bx-user-voice',
         'title' => 'Maestros',
@@ -97,22 +102,22 @@ $controlBottomOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'homeBotoom'
+        'id' => 'homeBottom'
+    ),
+    array (
+        'icon' => 'bx-user',
+        'title' => 'Alumnos',
+        'id' => 'studentsBottom'
     ),
     array(
         'icon' => 'bx-user-voice',
         'title' => 'Maestros',
-        'id' => 'teachersBotoom'
+        'id' => 'teachersBottom'
     ),
     array(
         'icon' => 'bx-star',
         'title' => 'Administrativos',
-        'id' => 'adminsBotoom'
-    ),
-    array(
-        'icon' => 'bx-timer',
-        'title' => 'Ciclo Escolar',
-        'id' => 'cycleBotoom'
+        'id' => 'adminsBottom'
     ),
     array(
         'icon' => 'bx-log-out',

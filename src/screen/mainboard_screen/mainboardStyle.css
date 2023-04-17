@@ -25,7 +25,7 @@ body{
     }
 
     .home{
-        padding: 10px !important;
+        padding: 10px 0px !important;
         height: calc(100% - 100px) !important;
     }
 
