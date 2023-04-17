@@ -44,23 +44,50 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
     gap: 15px;
-    height: 80vh;
+    height: 70vh;
     overflow-x: hidden;
 }
 
 .card{
-    height: 300px;
+    height: 280px;
+    border-radius: 20px !important;
+    overflow: hidden;
+}
+
+.card:hover{
+    cursor: pointer !important;
+    border: 3px solid #dc3545;
+    filter: drop-shadow(0px 4px 10px rgba(220, 53, 69, 0.1));;
 }
 
 @media (max-width: 800px) {
     .welcomeMessage{
         width: 100%;
+        text-align: center;
+        height: 8vh;
+        padding: 0px !important;
+    }
+
+    .welcomeMessage h1{
+        font-size: 20px;
+    }
+
+    .welcomeMessage h3{
+        font-size: 18px !important;
+    }
+
+    .card{
+        height: 200px;
+    }
+
+    .cardImg{
+        height: 150px;
     }
 
     .cards{
         margin-top: 15px;
         grid-template-columns: repeat(1, 1fr) !important;
-        height: 60vh !important;
+        height: 70vh !important;
         overflow-x: hidden;
     }
 }

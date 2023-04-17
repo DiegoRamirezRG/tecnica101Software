@@ -1,0 +1,32 @@
+.sizableBtnTeacher:before{
+    content: "Añadir Profesor";
+}
+
+@media (max-width: 1400px) {
+    .sizableBtnTeacher:before{
+        content: "Añadir";
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .sizableBtnTeacher:before{
+        content: "Añadir";
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .sizableBtnTeacher:before{
+        content: "Añadir";
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 416px) {
+    .sizableBtnTeacher{
+        width: 100%;
+        font-size: 10px;
+    }
+}

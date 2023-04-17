@@ -28,7 +28,7 @@ CREATE TABLE grade_table (
 DROP TABLE IF EXISTS shift_table;
 CREATE TABLE shift_table (
     id_shift INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(5)
+    name VARCHAR(15)
 );
 
 DROP TABLE IF EXISTS class_table;
@@ -53,7 +53,10 @@ CREATE TABLE conduct_table (
     id_conduct INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     student_fk INT,
     description TEXT,
-    value ENUM('Malo', 'Regular', 'Bueno')
+    value ENUM('Malo', 'Regular', 'Bueno'),
+    class_teacher_fk INT NULL DEFAULT NULL,
+    person INT NULL DEFAULT NULL,
+    day DATE DEFAULT NOW()
 );
 
 DROP TABLE IF EXISTS class_teacher_table;

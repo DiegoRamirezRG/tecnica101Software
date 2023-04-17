@@ -1,0 +1,11 @@
+@media (max-width: 570px) {
+    .adaptapBtn{
+        margin-top: 20px !important;
+    }
+}
+
+@media (min-width: 571px) {
+    .adaptapBtn{
+        width: 200px !important;
+    }
+}
