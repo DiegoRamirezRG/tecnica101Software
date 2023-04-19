@@ -33,17 +33,21 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../pages/home_page/homeStyle.css">
     <link rel="stylesheet" href="../../pages/student_page/studentStyle.css">
     <link rel="stylesheet" href="../../pages/teacher_page/teacherStyle.css">
+    <link rel="stylesheet" href="../../pages/cycle_page/cycleStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
-
+    <!---Bootstrap--->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+    <!---Lottie Files--->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body>
     <?php 
@@ -105,6 +109,11 @@ $type = $_SESSION['sessionUser']['type'];
     <?php loadTeacherDetailsModal();?>
     <?php assignClassTeacher();?>
     <?php editTeacher();?>
+    <?php newClassModal();?>
+    <?php loadEditClassModal();?>
+    <?php confirmationFinishCycle();?>
+    <?php confirmationPLusFinishCycle();?>
+    <?php loadingModal();?>
 
 
     <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
@@ -113,6 +122,9 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedNewTeacher', 'Error al agregar al Profesor', 'Ha ocurrido un error al nuevo profesor, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedAssignClass', 'Error al asignar la Materia', 'Ha ocurrido un error al asignar la materia al profesor, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedNewClass', 'Error al agregar la Data', 'Ha ocurrido un error al agregar la data de la nueva materia, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedUpdateClass', 'Error al modificar la Data', 'Ha ocurrido un error al modificar la data de la materia, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedFinishCycle', 'Error al terminar el Ciclo escolar', 'Ha ocurrido un error al terminar el ciclo escolar, porfavor comuniquese con el administrador'); ?>
 
 
     <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
@@ -121,6 +133,9 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successNewTeacher', 'Agregado de data exitosa', 'El profesor se agrego correctamente')?>
     <?php showSucessToast('successNewAssignClass', 'Agregado de data exitosa', 'Se le asigno la materia al profesor correctamente')?>
     <?php showSucessToast('successUpdateDate', 'Agregado de data exitosa', 'Se actualizaco al profesor correctamente')?>
+    <?php showSucessToast('successnewClass', 'Agregado de data exitosa', 'Se agrego la nueva materia correctamente')?>
+    <?php showSucessToast('successUpdateClass', 'Agregado de data exitosa', 'Se actualizo la materia correctamente')?>
+    <?php showSucessToast('successFinishCycle', 'Fin de Ciclo Exitoso', 'Felicidades !!!')?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
@@ -143,6 +158,7 @@ $type = $_SESSION['sessionUser']['type'];
                         if(result == 'Failed'){
                             $("#failedLogout").toast('show');
                         }else{
+                            localStorage.clear();
                             location.reload();
                         }
                     }
@@ -163,6 +179,196 @@ $type = $_SESSION['sessionUser']['type'];
                             $("#failedLogout").toast('show');
                         }else{
                             location.reload();
+                        }
+                    }
+                })
+            });
+
+            ///Scholar Cycle
+            ///Scholar Cycle
+            ///Scholar Cycle
+
+            //Load Clases Option
+            $(document).on('click', '#adminClasses', function(){
+                loadClassesCycle();
+                LoadClassessTableCyclo();
+            });
+
+            //Search Debounce
+            $(document).on('keyup', '#classSearchedCycle', function(){
+                LoadClassessTableCyclo();
+            })
+
+            //Show New class Modal
+            $(document).on('click', '#addNewClassCycle', function(){
+                $("#newClassModal").modal('show');
+            });
+
+            //Hide New Class Modal
+            $(document).on('click', '#closeNewClassModal', function(){
+                $("#newClassModal").modal('hide');
+            });
+
+            //Add New Class
+            $(document).on('click', '#addNewClassTriggerCycle', function(){
+
+                if($("#newClassInputName").val() == ""){
+                    alert('El nombre no puede estar vacio');
+                    $("#newClassInputName").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'createNewClass',
+                        name: $("#newClassInputName").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Sucess'){
+                            $("#newClassInputName").val('');
+                            $("#successnewClass").toast('show');
+                            $("#newClassModal").modal('hide');
+                            LoadClassessTableCyclo();
+                        }else{
+                            console.log(response);
+                            $("#failedNewClass").toast('show');
+                        }
+                    }
+                })
+
+            })
+
+            //Load Classes
+            function loadClassesCycle(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'loadClassesContainer'
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#loadOptionsContainer").html(response);
+                    }
+                })
+            }
+
+            //Load Classes Table Body
+            function LoadClassessTableCyclo(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'loadTableBody',
+                        name: $("#classSearchedCycle").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classesCycleTableBody").html(response);
+                    }
+                })
+            }
+
+            //Click on TR of classes body
+            $(document).on('click', '#classesCycleTableBody tr', function(){
+                name = $(this).text().replace(/\n|\r/g, '').trim().replace(/\s+/g, ' ');
+                id = $(this).attr('id');
+                localStorage.setItem('selectedClassId', id);
+                localStorage.setItem('selectedClassName', name);
+                loadEditClassModal();
+            });
+
+            //Close edit Class Modal
+            $(document).on('click', "#closeEditClassModal", function(){
+                $("#editClassModal").modal('hide');
+                localStorage.setItem('selectedClassId', '');
+                localStorage.setItem('selectedClassName', '');
+            })
+
+            //Load Edit Class Modal Function
+            function loadEditClassModal(){
+                $("#editClassInputName").val(localStorage.getItem('selectedClassName'));
+                $("#editClassModal").modal('show');
+            }
+
+            //Update Class Name 
+            $(document).on('click', '#editClassTriggerCycle', function(){
+                if($("#editClassInputName").val() == ""){
+                    alert('El nombre de la materia no puede ser vacio');
+                    $("#editClassInputName").focus();
+                    return;
+                }
+                
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'updateClassNameData',
+                        name: $("#editClassInputName").val(),
+                        id_class: localStorage.getItem('selectedClassId')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successUpdateClass").toast('show');
+                            localStorage.setItem('selectedClassId', '');
+                            localStorage.setItem('selectedClassName', '');
+                            $("#editClassModal").modal('hide');
+                            LoadClassessTableCyclo();
+                        }else{
+                            $("#failedUpdateClass").toast('show');
+                        }
+                    }
+                })
+            });
+
+            //Finish Cycle
+            $(document).on('click', '#finishCycleBtn', function(){
+                $("#confirmFinishCycle").modal('show');
+            });
+
+            //Cancel Finish Cycle
+            $(document).on('click', '#cancelConfirmFinishCycle', function(){
+                $("#confirmFinishCycle").modal('hide');
+            });
+
+            //Finish Cycle Plus
+            $(document).on('click', '#confirmFinishCycle', function(){
+                $("#confirmFinishCycle").modal('hide');
+                $("#confirmPlusFinishCycle").modal('show');
+            });
+
+            //Cancel Finish Cycle Plus
+            $(document).on('click', '#cancelConfirmPlusFinishCycle', function(){
+                $("#confirmPlusFinishCycle").modal('hide');
+            });
+
+            //Confirm Finish Cycle
+            $(document).on('click', '#yeahIWannFinishCycle', function(){
+                $("#confirmPlusFinishCycle").modal('hide');
+                $("#loadingFInish").modal('show');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'finishCycle',
+                    }),
+                    dataType: 'html',
+                    async: true,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successFinishCycle").toast('show');
+                            $("#loadingFInish").modal('hide');
+                        }else{
+                            $("#failedFinishCycle").toast('show');
+                            $("#loadingFInish").modal('hide');
                         }
                     }
                 })
@@ -664,7 +870,6 @@ $type = $_SESSION['sessionUser']['type'];
 
             //Conudcta
             $(document).on('click', "#seeConduct", function(){
-
                 $("#modal").modal('hide');
                 $.ajax({
                     method: 'POST',
@@ -1013,6 +1218,8 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if(DOMPage === 'teacherPage'){
                     loadTeachers();
                     loadTeachersTable();
+                }else if(DOMPage === 'cyclePage'){
+                    loadCycleAdmin();
                 }
             }
 
@@ -1030,6 +1237,10 @@ $type = $_SESSION['sessionUser']['type'];
                 loadTeachersTable();
             });
 
+            $(document).on('click', '#cycleCardComponent, #cycle', function(){
+                loadCycleAdmin();
+            })
+
 
             function loadHome(){
                 $("#MainContent").load('../../pages/home_page/homePage.php');
@@ -1044,6 +1255,11 @@ $type = $_SESSION['sessionUser']['type'];
             function loadTeachers(){
                 $("#MainContent").load('../../pages/teacher_page/teacherPage.php');
                 localStorage.setItem('currentPage', 'teacherPage');
+            }
+
+            function loadCycleAdmin(){
+                $("#MainContent").load('../../pages/cycle_page/cyclePage.php');
+                localStorage.setItem('currentPage', 'cyclePage');
             }
 
             //Live Tipe Student Searcher

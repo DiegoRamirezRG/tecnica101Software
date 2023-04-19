@@ -372,4 +372,126 @@ function assignClassTeacher(){
     <?php
 }
 
+function newClassModal(){
+    ?>
+    <div class="modal fade" id="newClassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="col-12 col-sm-9 mt-3">
+                        <div class="row text-center">
+                            <h1>Nueva Materia</h1>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <label for="newClassInputName" class="form-label">Nombre de la Materia:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Añadir materia" id="newClassInputName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-3 d-flex justify-content-center">
+                            <div class="col-7">
+                                <button class="btn btn-primary w-100" id="addNewClassTriggerCycle">Añadir Materia</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="closeNewClassModal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function loadEditClassModal(){
+    ?>
+    <div class="modal fade" id="editClassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="col-12 col-sm-9 mt-3">
+                        <div class="row text-center">
+                            <h1>Editar Materia</h1>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <label for="editClassInputName" class="form-label">Nombre de la Materia:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Editar materia" id="editClassInputName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-3 d-flex justify-content-center">
+                            <div class="col-7">
+                                <button class="btn btn-primary w-100" id="editClassTriggerCycle">Editar Materia</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="closeEditClassModal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function confirmationFinishCycle(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="confirmFinishCycle" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-danger text-center"><b>¿Estás seguro de que deseas Finalizar el Ciclo Escolar?</b></h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">¡Advertencia! Al finalizar el ciclo escolar, es probable que se borren las asistencias, las materias asignadas y otros datos, como archivos de planeaciones y registros de trabajo de los alumnos. Ademas los estudiantes pasaran de grado academico.</p>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-warning" id="confirmFinishCycle">Confirmar</button>
+                <button type="button" class="btn btn-danger" id="cancelConfirmFinishCycle">Cancelar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function confirmationPLusFinishCycle(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="confirmPlusFinishCycle" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body text-center">
+                <h1 class="modal-title text-danger display-1"><b>¿Esta usted completamente SEGURO?</b></h1>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-warning" id="yeahIWannFinishCycle">Si</button>
+                <button type="button" class="btn btn-danger" id="cancelConfirmPlusFinishCycle">No</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function loadingModal(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="loadingFInish" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center d-flex flex-column justify-content-center align-content-center mx-auto">
+                    <lottie-player src="../../assets/animations/loading2.json"  background="transparent"  speed="1"  style="height: 150px;"  loop  autoplay></lottie-player>
+                    <h3 style="color: #dc3545;"><b>CARGANDO</b></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 ?>
