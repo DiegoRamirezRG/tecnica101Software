@@ -494,4 +494,82 @@ function loadingModal(){
     <?php
 }
 
+function changeProfilePassword(){
+    ?>
+    <div class="modal fade" id="changeProfilePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="col-12 col-sm-9 mt-3">
+                        <div class="row text-center">
+                            <h1>Cambiar Contraseña</h1>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <label for="currentPassword" class="form-label">Ingresa tu contraseña actual</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" placeholder="Contraseña Actual" id="currentPassword">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col">
+                                <label for="newChangePassword" class="form-label">Ingresa la nueva contraseña</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" placeholder="Nueva Contraseña" id="newChangePassword">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <label for="newChangePasswordConfirm" class="form-label">Confirma la nueva contraseña</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" placeholder="Nueva Contraseña" id="newChangePasswordConfirm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-3 d-flex justify-content-center">
+                            <div class="col-7">
+                                <button class="btn btn-primary w-100" id="changePasswordsButnModal">Cambiar Contraseña</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="closeChangePasswordModal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function loadCropImage(){
+    ?>
+        <div class="modal fade" tabindex="-1" id="cropProfileImageModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-body">
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <img src="" id="sample_image" class="cropImage"/>
+                            </div>
+                            <div class="col-md-4 d-flex flex-column justify-content-start align-items-center">
+                                <div class="preview"></div>
+                                <p class="h5 text-center w-75">Esto sera la foto que se seleccionara</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-success" id="cropProfileBtn">Recortar</button>
+                    <button type="button" class="btn btn-danger" id="cancelCropBtn">Cancelar</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    <?php
+}
+
 ?>

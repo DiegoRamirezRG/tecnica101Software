@@ -34,6 +34,7 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../pages/student_page/studentStyle.css">
     <link rel="stylesheet" href="../../pages/teacher_page/teacherStyle.css">
     <link rel="stylesheet" href="../../pages/cycle_page/cycleStyle.css">
+    <link rel="stylesheet" href="../../pages/config_page/configStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -48,6 +49,15 @@ $type = $_SESSION['sessionUser']['type'];
 
     <!---Lottie Files--->
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!---Cropper--->
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.js"></script>
+
+    <!---Drop zone--->
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     <?php 
@@ -114,6 +124,8 @@ $type = $_SESSION['sessionUser']['type'];
     <?php confirmationFinishCycle();?>
     <?php confirmationPLusFinishCycle();?>
     <?php loadingModal();?>
+    <?php changeProfilePassword();?>
+    <?php loadCropImage();?>
 
 
     <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
@@ -125,6 +137,9 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedNewClass', 'Error al agregar la Data', 'Ha ocurrido un error al agregar la data de la nueva materia, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedUpdateClass', 'Error al modificar la Data', 'Ha ocurrido un error al modificar la data de la materia, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedFinishCycle', 'Error al terminar el Ciclo escolar', 'Ha ocurrido un error al terminar el ciclo escolar, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdateProfile', 'Error al acutializar el perfil', 'Ha ocurrido un error actualizar perfil, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdatePassword', 'Error al acutializar la contraseña', 'Ha ocurrido un error al actualizar la contraseña, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdateProfileImage', 'Error al acutializar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, porfavor comuniquese con el administrador'); ?>
 
 
     <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
@@ -136,6 +151,9 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successnewClass', 'Agregado de data exitosa', 'Se agrego la nueva materia correctamente')?>
     <?php showSucessToast('successUpdateClass', 'Agregado de data exitosa', 'Se actualizo la materia correctamente')?>
     <?php showSucessToast('successFinishCycle', 'Fin de Ciclo Exitoso', 'Felicidades !!!')?>
+    <?php showSucessToast('successUpdateProfile', 'Actualizado de data Exitoso', 'Se actualizo el perfil correctamente')?>
+    <?php showSucessToast('successUpdatePassword', 'Actualizado de data Exitoso', 'Se actualizo la contrasñea correctamente')?>
+    <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
 
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
@@ -183,6 +201,189 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             });
+
+            //Config Profile
+            //Config Profile
+            //Config Profile
+
+            $(document).on('click', '#updateProfileBtn', function(){
+
+
+                if($("#updateProfileName").val() == ""){
+                    alert('El Nombre no puede ser vacio');
+                    $("#updateProfileName").focus();
+                    return;
+                }
+                if($("#updateProfileLastName").val() == ""){
+                    alert('El Apeido Paterno no puede ser vacio');
+                    $("#updateProfileLastName").focus();
+                    return;
+                }
+                if($("#updateProfileMothersLastName").val() == ""){
+                    alert('El Apeido Materno no puede ser vacio');
+                    $("#updateProfileMothersLastName").focus();
+                    return;
+
+                }
+                if($("#updateProfilePhone").val() == ""){
+                    alert('El Telefono no puede ser vacio');
+                    $("#updateProfilePhone").focus();
+                    return;
+                }
+
+                $("#loadingFInish").modal('show');
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/config_controller/configController.php',
+                    data: ({
+                        function: 'updateProfileData',
+                        name: $("#updateProfileName").val(),
+                        last_name: $("#updateProfileLastName").val(),
+                        mothersLast_name: $("#updateProfileMothersLastName").val(),
+                        phone: $("#updateProfilePhone").val()
+                    }),
+                    dataType: 'html',
+                    async: true,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successUpdateProfile").toast('show');
+                            location.reload();
+                        }else{
+                            $("#failedUpdateProfile").toast('show');
+                        }
+                    }
+                });
+            });
+
+            //Open Change Password Modal
+            $(document).on('click', '#changeProfilePasswordActionBtn', function(){
+                $("#changeProfilePasswordModal").modal('show');
+            });
+
+            //Close Change Password Modal
+            $(document).on('click', '#closeChangePasswordModal', function(){
+                $("#changeProfilePasswordModal").modal('hide');
+            });
+
+            //Change Password Function
+            $(document).on('click', '#changePasswordsButnModal', function(){
+                if($("#currentPassword").val() == ""){
+                    alert('El no puede ser vacio')
+                    $("#currentPassword").focus();
+                    return;
+                }
+                if($("#newChangePassword").val() == ""){
+                    alert('El no puede ser vacio')                
+                    $("#newChangePassword").focus();
+                    return;
+                }
+                if($("#newChangePasswordConfirm").val() == ""){
+                    alert('El no puede ser vacio')                
+                    $("#newChangePasswordConfirm").focus();
+                    return;
+                }
+
+                if($("#newChangePassword").val() != $("#newChangePasswordConfirm").val()){
+                    alert('Las contraseñas no coinciden');
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/config_controller/configController.php',
+                    data: ({
+                        function: 'updatePassword',
+                        currentPassword: $("#currentPassword").val(),
+                        newPassword: $("#newChangePassword").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successUpdatePassword").toast('show');
+                            $("#currentPassword").val('');
+                            $("#newChangePassword").val('');
+                            $("#newChangePasswordConfirm").val('');
+                            $("#changeProfilePasswordModal").modal('hide');
+                        }else{
+                            $("#failedUpdatePassword").toast('show');
+                        }
+                    }
+                })
+            });
+
+            //Upload a image
+            //Initialize var
+
+            var modalCrop = $('#cropProfileImageModal');
+            var imageCrop = document.getElementById('sample_image');
+            var cropper;
+
+            //GET img and open Modal
+            $(document).on('change', '#file', function(event){
+                var files = event.target.files;
+
+                var done = function(url){
+                    imageCrop.src = url;
+                    modalCrop.modal('show');
+                }
+
+                if(files && files.length > 0){
+                    reader = new FileReader();
+                    reader.onload = function(event){
+                        done(reader.result);
+                    }
+                    reader.readAsDataURL(files[0]);
+                }
+            });
+
+            //On open modal
+            $("#cropProfileImageModal").on('shown.bs.modal', function(){
+                cropper = new Cropper(imageCrop, {
+                    aspectRatio: 1,
+                    viewMode: 3,
+                    preview:'.preview'
+                });
+            }).on('hidden.bs.modal', function(){
+                cropper.destroy();
+                cropper = null;
+            });
+
+            $("#cropProfileBtn").on('click', function(){
+                canvas = cropper.getCroppedCanvas({
+                    width:400,
+                    height:400
+                });
+
+                canvas.toBlob(function(blob){
+                    url = URL.createObjectURL(blob);
+                    var reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = function(){
+                        base64data = reader.result;
+                        $.ajax({
+                            method: 'POST',
+                            url: '../../controller/config_controller/configController.php',
+                            data: ({
+                                function: 'loadImage',
+                                image: base64data
+                            }),
+                            async: true,
+                            success: function(response){
+                                if(response){
+                                    modalCrop.modal('hide');
+                                    loadSettings();
+                                    $('#output').attr('src', response);
+                                    $("#successUpdateProfileImage").toast('show');
+                                }else{
+                                    $("#failedUpdateProfileImage").toast('show')
+                                }
+                            }
+                        })
+                    }
+                })
+            })
 
             ///Scholar Cycle
             ///Scholar Cycle
@@ -353,7 +554,6 @@ $type = $_SESSION['sessionUser']['type'];
             //Confirm Finish Cycle
             $(document).on('click', '#yeahIWannFinishCycle', function(){
                 $("#confirmPlusFinishCycle").modal('hide');
-                $("#loadingFInish").modal('show');
                 $.ajax({
                     method: 'POST',
                     url: '../../controller/cycle_controller/cycleController.php',
@@ -365,13 +565,11 @@ $type = $_SESSION['sessionUser']['type'];
                     success: function(response){
                         if(response == 'Success'){
                             $("#successFinishCycle").toast('show');
-                            $("#loadingFInish").modal('hide');
                         }else{
                             $("#failedFinishCycle").toast('show');
-                            $("#loadingFInish").modal('hide');
                         }
                     }
-                })
+                });
             });
 
             ///TEACHER
@@ -1220,6 +1418,8 @@ $type = $_SESSION['sessionUser']['type'];
                     loadTeachersTable();
                 }else if(DOMPage === 'cyclePage'){
                     loadCycleAdmin();
+                }else if(DOMPage === 'settingsPage'){
+                    loadSettings();
                 }
             }
 
@@ -1227,7 +1427,7 @@ $type = $_SESSION['sessionUser']['type'];
                 loadHome();
             });
 
-            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
+            $(document).on('click', '   ', function(){
                 loadStudnets();
                 loadStudentData();
             })
@@ -1239,7 +1439,11 @@ $type = $_SESSION['sessionUser']['type'];
 
             $(document).on('click', '#cycleCardComponent, #cycle', function(){
                 loadCycleAdmin();
-            })
+            });
+
+            $(document).on('click', '#settings, #settingsCardComponent', function(){
+                loadSettings();
+            });
 
 
             function loadHome(){
@@ -1260,6 +1464,11 @@ $type = $_SESSION['sessionUser']['type'];
             function loadCycleAdmin(){
                 $("#MainContent").load('../../pages/cycle_page/cyclePage.php');
                 localStorage.setItem('currentPage', 'cyclePage');
+            }
+
+            function loadSettings(){
+                $("#MainContent").load('../../pages/config_page/configPage.php');
+                localStorage.setItem('currentPage', 'settingsPage');
             }
 
             //Live Tipe Student Searcher
