@@ -107,6 +107,7 @@ $type = $_SESSION['sessionUser']['type'];
     ?>
 
 
+    <!---Modal Calls--->
     <?php createModal();?>
     <?php editUserModal();?>
     <?php alertUpdateData();?>
@@ -128,6 +129,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php loadCropImage();?>
 
 
+    <!---Error Toast Declaration--->
     <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedAddConduct', 'Error al agregar Conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedNewStudent', 'Error al agregar al Estudiante', 'Ha ocurrido un error al nuevo estudiante, si esto persiste, comunicate con el administrador.'); ?>
@@ -142,6 +144,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedUpdateProfileImage', 'Error al acutializar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, porfavor comuniquese con el administrador'); ?>
 
 
+    <!---Success Toast Declaration--->
     <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
     <?php showSucessToast('successConductUpdate', 'Agregado de data exitosa', 'La conducta se agrego correctamente')?>
     <?php showSucessToast('successNewStudent', 'Agregado de data exitosa', 'El alumno se agrego correctamente')?>
@@ -155,6 +158,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successUpdatePassword', 'Actualizado de data Exitoso', 'Se actualizo la contrasñea correctamente')?>
     <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
 
+    <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
 
@@ -163,6 +167,13 @@ $type = $_SESSION['sessionUser']['type'];
 
             loadDOM();
 
+
+
+            // Session Functions
+            // Session Functions
+            // Session Functions
+
+            //Logout Function
             $("#logout").on('click', function(){
                 $.ajax({
                     type: "POST",
@@ -183,6 +194,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Logout Bottom Function
             $("#logoutBottom").on('click', function(){
                 $.ajax({
                     type: "POST",
@@ -201,6 +213,78 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             });
+
+            //Loading Components functions
+            //Loading Components functions
+            //Loading Components functions
+
+            function loadDOM(){
+                const DOMPage = localStorage.getItem('currentPage');
+                if(DOMPage === null){
+                    loadHome();
+                }else if(DOMPage === 'homePage'){
+                    loadHome();
+                }else if(DOMPage === 'studentPage'){
+                    loadStudnets();
+                    loadStudentData();
+                }else if(DOMPage === 'teacherPage'){
+                    loadTeachers();
+                    loadTeachersTable();
+                }else if(DOMPage === 'cyclePage'){
+                    loadCycleAdmin();
+                }else if(DOMPage === 'settingsPage'){
+                    loadSettings();
+                }
+            }
+
+            //Trigger clicks to load
+            $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
+                loadHome();
+            });
+
+            $(document).on('click', '   ', function(){
+                loadStudnets();
+                loadStudentData();
+            })
+
+            $(document).on('click', '#teachersCardComponent, #teachers, #teachersBottom', function(){
+                loadTeachers();
+                loadTeachersTable();
+            });
+
+            $(document).on('click', '#cycleCardComponent, #cycle', function(){
+                loadCycleAdmin();
+            });
+
+            $(document).on('click', '#settings, #settingsCardComponent', function(){
+                loadSettings();
+            });
+
+            //Function to load
+            function loadHome(){
+                $("#MainContent").load('../../pages/home_page/homePage.php');
+                localStorage.setItem('currentPage', 'homePage');
+            }
+
+            function loadStudnets(){
+                $("#MainContent").load('../../pages/student_page/studentPage.php');
+                localStorage.setItem('currentPage', 'studentPage');
+            }
+
+            function loadTeachers(){
+                $("#MainContent").load('../../pages/teacher_page/teacherPage.php');
+                localStorage.setItem('currentPage', 'teacherPage');
+            }
+
+            function loadCycleAdmin(){
+                $("#MainContent").load('../../pages/cycle_page/cyclePage.php');
+                localStorage.setItem('currentPage', 'cyclePage');
+            }
+
+            function loadSettings(){
+                $("#MainContent").load('../../pages/config_page/configPage.php');
+                localStorage.setItem('currentPage', 'settingsPage');
+            }
 
             //Config Profile
             //Config Profile
@@ -885,6 +969,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
             
+            //Update Modal Load and Show
             function loadUpdateModalFunc(){
                 $.ajax({
                     method: 'POST',
@@ -908,6 +993,7 @@ $type = $_SESSION['sessionUser']['type'];
                 $("#teacherDetailsModal").modal('show');
             });
 
+            //Edit teacher Button Trigger
             $(document).on('click', '#editTeacherButton', function(){
                 
                 if($("#editTeacherName").val() == ""){
@@ -964,9 +1050,10 @@ $type = $_SESSION['sessionUser']['type'];
 
             });
 
-            /////
-            /////
-            /////
+            ///// STUDENT
+            ///// STUDENT
+            ///// STUDENT
+
             //Edit Student Data
             $(document).on('click', "#editData", function(){
                 $("#modal").hide();
@@ -1085,6 +1172,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Add Conduct
             $(document).on('click', '#addNewConductData', function(){
                 $("#conductModal").modal('hide');
                 $.ajax({
@@ -1103,6 +1191,7 @@ $type = $_SESSION['sessionUser']['type'];
                 }) 
             });
 
+            //Send Conduct to BD
             $("#submitConduct").on('click', function(){
 
                 let selected = $('#selectedSubmitAs option:selected');
@@ -1153,24 +1242,29 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             })
 
+            //Close conduct modal
             $("#addConductModalClose").on('click', function(){
                 $("#addConductModal").modal('hide');
                 $("#conductModal").modal('show');
             })
 
+            //Close and show modal student
             $(document).on('click', '#conducModalClose', function(){
                 $("#conductModal").modal('hide');
                 $("#modal").modal('show');
             });
 
+            //Load Conduct Detail
             $("#conductModal").on('shown.bs.modal', function(){
                 loadHistoricConductTableBody(localStorage.getItem('clickedRow'));
             });
 
+            //Filter fOR Conduct
             $(document).on('change', '#selectedFilter', function(){
                 loadHistoricConductTableBody(localStorage.getItem('clickedRow'));
             });
 
+            //Load conduct detail
             function loadHistoricConductTableBody(student_id){
                 $.ajax({
                     method: 'POST',
@@ -1187,8 +1281,6 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             }
-
-
 
             //Asistencia
             $(document).on('click', "#assitanceM, #assitanceH", function(){
@@ -1212,15 +1304,18 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Hide Assistance show student Modal
             $(document).on('click', '#assitanceModal', function(){
                 $("#assistance").modal('hide');
                 $("#modal").modal('show');
             })
 
+            //Load Assistance Detail
             $("#assistance").on('shown.bs.modal', function(){
                 loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
             })
 
+            //Change live searched date 
             $(document).on('change', "#searchedDate", function(){
                 let date = $(this).val();
                 if(date!=""){
@@ -1230,18 +1325,21 @@ $type = $_SESSION['sessionUser']['type'];
                 }
             });
 
+            //Change live searched month
             $(document).on('change', '#selectedMonth', function(){
                 if($(this).val() != ""){
                     loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
                 }
             });
 
+            //Change live searched class
             $(document).on('change', '#selectedClass', function(){
                 if($(this).val() != ""){
                     loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
                 }
             });
 
+            //Update the assitenace
             $(document).on('change', '#tableActionAssistance tr td select', function(){
                 $.ajax({
                     method: 'POST',
@@ -1262,6 +1360,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Load assistance detail Modal
             function loadHistoricData(id_student, method){
                 $.ajax({
                     method: 'POST',
@@ -1282,8 +1381,7 @@ $type = $_SESSION['sessionUser']['type'];
                 });
             }
 
-            //Update data
-
+            //Update User data
             $(document).on('click', '#confirm', function(){
 
                 let name = $("#updatedName").val();
@@ -1355,35 +1453,42 @@ $type = $_SESSION['sessionUser']['type'];
                 
             })
             
+            //Close Modal
             $(document).on('click', '#closeSuccess', function(){
                 closeAllModals();
                 loadStudentData();
             });
 
+            //Close failed
             $(document).on('click', '#closeFailed', function(){
                 closeAllModals();
                 loadStudentData();
             })
 
+            //Update data modal trigger
             $(document).on('click', "#updateData", function(){
                 $("#editStudentDataModal").modal('hide');
                 $("#confirmUpdate").modal('show');
             })
 
+            //Cancel update open student modal
             $(document).on('click','#cancelUpdate', function(){
                 $("#editStudentDataModal").modal('hide');
                 $("#modal").show();
             })
 
+            //cancel confirm update, edit student show
             $(document).on('click', '#cancelConfirm', function(){
                 $("#confirmUpdate").hide();
                 $("#editStudentDataModal").modal('show');
             })
 
+            //Close student modal
             $(document).on('click', "#closeModalStudent", function(){
                 closeAllModals();
             })
 
+            //Close all modals Force
             function closeAllModals(){
                 $("#modal").modal('hide');
                 $("#editStudentDataModal").modal('hide');
@@ -1392,83 +1497,16 @@ $type = $_SESSION['sessionUser']['type'];
                 $("#alertFailedData").modal('hide');
             }
 
+            //Show succes update modal
             function showSucess(){
                 $("#confirmUpdate").hide();
                 $("#successUpdate").modal('show');
             }
 
+            //Show Failed Update modal
             function showFailed(){
                 $("#confirmUpdate").hide();
                 $("#alertFailedData").modal('show');
-            }
-
-            //Loading Components functions
-
-            function loadDOM(){
-                const DOMPage = localStorage.getItem('currentPage');
-                if(DOMPage === null){
-                    loadHome();
-                }else if(DOMPage === 'homePage'){
-                    loadHome();
-                }else if(DOMPage === 'studentPage'){
-                    loadStudnets();
-                    loadStudentData();
-                }else if(DOMPage === 'teacherPage'){
-                    loadTeachers();
-                    loadTeachersTable();
-                }else if(DOMPage === 'cyclePage'){
-                    loadCycleAdmin();
-                }else if(DOMPage === 'settingsPage'){
-                    loadSettings();
-                }
-            }
-
-            $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
-                loadHome();
-            });
-
-            $(document).on('click', '   ', function(){
-                loadStudnets();
-                loadStudentData();
-            })
-
-            $(document).on('click', '#teachersCardComponent, #teachers, #teachersBottom', function(){
-                loadTeachers();
-                loadTeachersTable();
-            });
-
-            $(document).on('click', '#cycleCardComponent, #cycle', function(){
-                loadCycleAdmin();
-            });
-
-            $(document).on('click', '#settings, #settingsCardComponent', function(){
-                loadSettings();
-            });
-
-
-            function loadHome(){
-                $("#MainContent").load('../../pages/home_page/homePage.php');
-                localStorage.setItem('currentPage', 'homePage');
-            }
-
-            function loadStudnets(){
-                $("#MainContent").load('../../pages/student_page/studentPage.php');
-                localStorage.setItem('currentPage', 'studentPage');
-            }
-
-            function loadTeachers(){
-                $("#MainContent").load('../../pages/teacher_page/teacherPage.php');
-                localStorage.setItem('currentPage', 'teacherPage');
-            }
-
-            function loadCycleAdmin(){
-                $("#MainContent").load('../../pages/cycle_page/cyclePage.php');
-                localStorage.setItem('currentPage', 'cyclePage');
-            }
-
-            function loadSettings(){
-                $("#MainContent").load('../../pages/config_page/configPage.php');
-                localStorage.setItem('currentPage', 'settingsPage');
             }
 
             //Live Tipe Student Searcher
@@ -1476,16 +1514,17 @@ $type = $_SESSION['sessionUser']['type'];
                 loadStudentData();
             })
 
+            //Live tipe student filter
             $(document).on('change', "#filterTurno, #filterGrado, #filterGrupo", function(){
                 loadStudentData();
             });
 
             //Handle Click Row TR
-
             $("#modal").on('shown.bs.modal', function(){
                 loadStudentAssistance(localStorage.getItem('clickedRow'));
             })
 
+            //Load modal Student Detail
             $(document).on('click', '#studentTableBody tr', function(){
                 localStorage.setItem('clickedRow', this.id);
                 $.ajax({
@@ -1504,6 +1543,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Load Student detail modal asistance section
             function loadStudentAssistance(id){
                 $.ajax({
                     method: 'POST',
@@ -1521,7 +1561,6 @@ $type = $_SESSION['sessionUser']['type'];
             }
 
             //Load data Tables
-
             function loadStudentData(){
 
                 let nameSearched = '';
