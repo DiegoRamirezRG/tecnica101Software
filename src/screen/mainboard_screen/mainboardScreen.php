@@ -163,8 +163,8 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successUpdateProfile', 'Actualizado de data Exitoso', 'Se actualizo el perfil correctamente')?>
     <?php showSucessToast('successUpdatePassword', 'Actualizado de data Exitoso', 'Se actualizo la contrasñea correctamente')?>
     <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
-    <?php showSucessToast('successUpdateDate', 'Agregado de data exitosa', 'Se actualizaco al profesor correctamente') ?>
     <?php showSucessToast('successUpdateSchoolControlDate', 'Agregado de data exitosa', 'Se actualizaco al administrativo correctamente') ?>
+    <?php showSucessToast('successNewAdminCreation', 'Agregado de data exitosa', 'Se registro al administrativo correctamente') ?>
 
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -253,7 +253,7 @@ $type = $_SESSION['sessionUser']['type'];
                 loadHome();
             });
 
-            $(document).on('click', '   ', function(){
+            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
                 loadStudnets();
                 loadStudentData();
             })
@@ -1739,6 +1739,7 @@ $type = $_SESSION['sessionUser']['type'];
                             $("#newSchoolControlConfirmPassword").val('');
 
                             loadSchoolControlTable();
+                            $("#successNewAdminCreation").toast('show');
                         } else {
                             $("#failedNewSchoolControl").toast('show');
                         }
