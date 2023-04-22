@@ -35,6 +35,7 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../pages/teacher_page/teacherStyle.css">
     <link rel="stylesheet" href="../../pages/cycle_page/cycleStyle.css">
     <link rel="stylesheet" href="../../pages/config_page/configStyle.css">
+    <link rel="stylesheet" href="../../pages/schoolControl_page/schoolControlStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -127,6 +128,9 @@ $type = $_SESSION['sessionUser']['type'];
     <?php loadingModal();?>
     <?php changeProfilePassword();?>
     <?php loadCropImage();?>
+    <?php addNewSchoolControlModal(); ?>
+    <?php loadSchoolControlDetailsModal(); ?>
+    <?php editSchoolControl(); ?>
 
 
     <!---Error Toast Declaration--->
@@ -142,6 +146,8 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedUpdateProfile', 'Error al acutializar el perfil', 'Ha ocurrido un error actualizar perfil, porfavor comuniquese con el administrador'); ?>
     <?php showToast('failedUpdatePassword', 'Error al acutializar la contraseña', 'Ha ocurrido un error al actualizar la contraseña, porfavor comuniquese con el administrador'); ?>
     <?php showToast('failedUpdateProfileImage', 'Error al acutializar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedUpdateSchoolControl', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del Administrativo, si esto persiste, comunicate con el administrador.'); ?>
 
 
     <!---Success Toast Declaration--->
@@ -157,6 +163,8 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successUpdateProfile', 'Actualizado de data Exitoso', 'Se actualizo el perfil correctamente')?>
     <?php showSucessToast('successUpdatePassword', 'Actualizado de data Exitoso', 'Se actualizo la contrasñea correctamente')?>
     <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
+    <?php showSucessToast('successUpdateSchoolControlDate', 'Agregado de data exitosa', 'Se actualizaco al administrativo correctamente') ?>
+    <?php showSucessToast('successNewAdminCreation', 'Agregado de data exitosa', 'Se registro al administrativo correctamente') ?>
 
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -234,6 +242,9 @@ $type = $_SESSION['sessionUser']['type'];
                     loadCycleAdmin();
                 }else if(DOMPage === 'settingsPage'){
                     loadSettings();
+                }else if (DOMPage === 'schoolControlPage') {
+                    loadSchoolControl();
+                    loadSchoolControlTable();
                 }
             }
 
@@ -258,6 +269,11 @@ $type = $_SESSION['sessionUser']['type'];
 
             $(document).on('click', '#settings, #settingsCardComponent', function(){
                 loadSettings();
+            });
+            
+            $(document).on('click', '#adminsCardComponent, #admins, #adminsBottom', function() {
+                loadSchoolControl();
+                loadSchoolControlTable();
             });
 
             //Function to load
@@ -284,6 +300,11 @@ $type = $_SESSION['sessionUser']['type'];
             function loadSettings(){
                 $("#MainContent").load('../../pages/config_page/configPage.php');
                 localStorage.setItem('currentPage', 'settingsPage');
+            }
+            
+            function loadSchoolControl() {
+                $("#MainContent").load('../../pages/schoolControl_page/schoolControlPage.php')
+                localStorage.setItem('currentPage', 'schoolControlPage');
             }
 
             //Config Profile
@@ -1601,6 +1622,252 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             }
+            
+            ///SchoolControl
+            ///SchoolControl
+            ///SchoolControl
+
+            //Show New SchoolControl Modal
+            $(document).on('click', '#newSchoolControlBtn', function() {
+                $("#addNewSchoolControlModal").modal('show');
+            });
+
+            //Hide New SchoolControl Modal
+            $(document).on('click', '#addNewSchoolControlClose', function() {
+                $("#addNewSchoolControlModal").modal('hide');
+            });
+
+            //Lunch live search
+            $(document).on('keyup', '#schoolControlSearched', function() {
+                loadSchoolControlTable();
+            })
+
+            //LoadSchoolControlTable
+            function loadSchoolControlTable() {
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'schoolControlLoadTable',
+                        name: $("#schoolControlSearched").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#schoolControlTableBody").html(response);
+                    }
+                })
+            };
+
+            //Register a New SchoolControl User
+            $(document).on('click', '#newSchoolControlButton', function() {
+
+                if ($("#newSchoolControlName").val() == "") {
+                    alert('El nombre no puede ser vacio');
+                    $("#newSchoolControlName").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlLastname").val() == "") {
+                    alert('El Apellido Paterno no puede ser vacio');
+                    $("#newSchoolControlLastname").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlMLastname").val() == "") {
+                    alert('El Apellido Materno no puede ser vacio');
+                    $("#newSchoolControlMLastname").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlPhone").val() == "") {
+                    alert('El Telefono no puede ser vacio');
+                    $("#newSchoolControlPhone").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlEmail").val() == "") {
+                    alert('El Correo no puede ser vacio');
+                    $("#newSchoolControlEmail").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlPassword").val() == "") {
+                    alert('La Contraseña no puede ser vacia');
+                    $("#newSchoolControlPassword").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlConfirmPassword").val() == "") {
+                    alert('La Confirmacion de Contraseña no puede ser vacia');
+                    $("#newSchoolControlConfirmPassword").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlPassword").val() != $("#newSchoolControlConfirmPassword").val()) {
+                    alert('Las Contraseñas no coinciden');
+                    $("#newSchoolControlPassword").focus();
+                    $("#newSchoolControlConfirmPassword").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'createNewSchoolControl',
+                        name: $("#newSchoolControlName").val(),
+                        lastname: $("#newSchoolControlLastname").val(),
+                        mothersLN: $("#newSchoolControlMLastname").val(),
+                        phone: $("#newSchoolControlPhone").val(),
+                        email: $("#newSchoolControlEmail").val(),
+                        password: $("#newSchoolControlPassword").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        if (response == "Success") {
+                            $("#addNewSchoolControlModal").modal('hide');
+                            $("#successNewSchoolControl").toast('show');
+
+                            $("#newSchoolControlName").val('');
+                            $("#newSchoolControlLastname").val('');
+                            $("#newSchoolControlMLastname").val('');
+                            $("#newSchoolControlPhone").val('');
+                            $("#newSchoolControlEmail").val('');
+                            $("#newSchoolControlPassword").val('');
+                            $("#newSchoolControlConfirmPassword").val('');
+
+                            loadSchoolControlTable();
+                            $("#successNewAdminCreation").toast('show');
+                        } else {
+                            $("#failedNewSchoolControl").toast('show');
+                        }
+                    }
+                })
+            });
+
+            //Show Detail Modal SchoolControl
+            $(document).on('click', '#schoolControlTableBody tr', function() {
+                localStorage.setItem('schoolControlRow', this.id);
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'loadSchoolControlDetails',
+                        id_user: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#schoolControlDetailsModalBody").html(response);
+                        $("#schoolControlDetailsModal").modal('show');
+                    }
+                })
+            });
+
+            //Hide Detail Modal SchoolControl
+            $(document).on('click', '#closeSchoolControlDetailsModal', function() {
+                $("#schoolControlDetailsModal").modal('hide');
+            });
+
+            //Load Update Modal SchoolControl
+            $(document).on('click', '#editSchoolControlBtn', function() {
+                $("#schoolControlDetailsModal").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'loadUpdateModalSchoolControl',
+                        id_user: localStorage.getItem('schoolControlRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#editSchoolControlBody").html(response);
+                        $("#editSchoolControlModal").modal('show');
+                    }
+                })
+            });
+
+            function loadUpdateSchoolControlModalFunc() {
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'loadUpdateModalSchoolControl',
+                        id_user: localStorage.getItem('schoolControlRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#editSchoolControlBody").html(response);
+                        $("#editSchoolControlModal").modal('show');
+                    }
+                })
+            }
+
+            //Hide Update Modal
+            $(document).on('click', '#editSchoolControlClose', function() {
+                $("#editSchoolControlModal").modal('hide');
+                $("#schoolControlDetailsModal").modal('show');
+            });
+
+            $(document).on('click', '#editSchoolControlButton', function() {
+
+                if ($("#editSchoolControlName").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlName").focus()
+                    return;
+                }
+                if ($("#editSchoolControlLastname").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlLastname").focus()
+                    return;
+                }
+                if ($("#editSchoolControlMLastname").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlMLastname").focus()
+                    return;
+                }
+                if ($("#editSchoolControlPhone").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlPhone").focus()
+                    return;
+                }
+                if ($("#editSchoolControlEmail").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlEmail").focus()
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'updateSchoolControlInfo',
+                        name: $("#editSchoolControlName").val(),
+                        last_name: $("#editSchoolControlLastname").val(),
+                        mothersL: $("#editSchoolControlMLastname").val(),
+                        phone: $("#editSchoolControlPhone").val(),
+                        email: $("#editSchoolControlEmail").val(),
+                        id_user: localStorage.getItem('schoolControlRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        if (response == 'Success') {
+                            $("#editSchoolControlModal").modal('hide');
+                            $("#schoolControlDetailsModal").modal('show');
+                            loadSchoolControlTable();
+                            $("#successUpdateSchoolControlDate").toast('show');
+                        } else {
+                            $("#failedUpdateSchoolControl").toast('show');
+                        }
+                    }
+                })
+
+            });
         });
     </script>
 </body>

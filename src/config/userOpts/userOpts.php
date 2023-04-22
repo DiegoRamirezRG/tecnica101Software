@@ -269,5 +269,3 @@ $godBottomOpts = array(
         'id' => 'logoutBottom'
     )
 );
-
-?>

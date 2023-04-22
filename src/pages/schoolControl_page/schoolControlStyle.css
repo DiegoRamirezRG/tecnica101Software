@@ -1,0 +1,30 @@
+.sizableBtnSchoolControl:before {
+    content: "Añadir Administrativo";
+}
+
+@media (max-width: 1400px) {
+    .sizableBtnSchoolControl:before {
+        content: "Añadir";
+    }
+}
+
+@media (max-width: 1000px) {
+    .sizableBtnSchoolControl:before {
+        content: "Añadir";
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 800px) {
+    .sizableBtnSchoolControl:before {
+        content: "Añadir";
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 416px) {
+    .sizableBtnSchoolControl {
+        width: 100%;
+        font-size: 10px;
+    }
+}
