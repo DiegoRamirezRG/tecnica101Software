@@ -242,7 +242,7 @@ $type = $_SESSION['sessionUser']['type'];
                 loadHome();
             });
 
-            $(document).on('click', '   ', function(){
+            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
                 loadStudnets();
                 loadStudentData();
             })
@@ -905,22 +905,22 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#assignTeacherSendBtn', function(){
 
                 if($("#selectedShift").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('El turno no puede ser vacio');
                     $("#selectedShift").focus();
                     return;
                 }
                 if($("#selectedGrade").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('El grado no puede ser vacio');
                     $("#selectedGrade").focus();
                     return;
                 }
                 if($("#selectedGroup").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('El grupo no puede ser vacio');
                     $("#selectedGroup").focus();
                     return;
                 }
                 if($("#selectedClass").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('La clase no puede ser vacia');
                     $("#selectedClass").focus();
                     return;
                 }
