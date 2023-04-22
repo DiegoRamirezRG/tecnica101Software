@@ -23,7 +23,7 @@ if($_POST['function'] == 'loadTable'){
         }
 
         if(isset($_POST['class']) AND $_POST['class'] != ""){
-            $classFilter = " AND (ct.name LIKE '%".$_POST['class']."%'";
+            $classFilter = " AND (ct.name LIKE '%".$_POST['class']."%')";
         }
 
         if(isset($_POST['name']) AND $_POST['name'] != ""){
