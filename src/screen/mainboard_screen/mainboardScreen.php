@@ -33,17 +33,32 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../pages/home_page/homeStyle.css">
     <link rel="stylesheet" href="../../pages/student_page/studentStyle.css">
     <link rel="stylesheet" href="../../pages/teacher_page/teacherStyle.css">
+    <link rel="stylesheet" href="../../pages/cycle_page/cycleStyle.css">
+    <link rel="stylesheet" href="../../pages/config_page/configStyle.css">
+    <link rel="stylesheet" href="../../pages/schoolControl_page/schoolControlStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
-
+    <!---Bootstrap--->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+    <!---Lottie Files--->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!---Cropper--->
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.js"></script>
+
+    <!---Drop zone--->
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     <?php 
@@ -93,6 +108,7 @@ $type = $_SESSION['sessionUser']['type'];
     ?>
 
 
+    <!---Modal Calls--->
     <?php createModal();?>
     <?php editUserModal();?>
     <?php alertUpdateData();?>
@@ -105,23 +121,52 @@ $type = $_SESSION['sessionUser']['type'];
     <?php loadTeacherDetailsModal();?>
     <?php assignClassTeacher();?>
     <?php editTeacher();?>
+    <?php newClassModal();?>
+    <?php loadEditClassModal();?>
+    <?php confirmationFinishCycle();?>
+    <?php confirmationPLusFinishCycle();?>
+    <?php loadingModal();?>
+    <?php changeProfilePassword();?>
+    <?php loadCropImage();?>
+    <?php addNewSchoolControlModal(); ?>
+    <?php loadSchoolControlDetailsModal(); ?>
+    <?php editSchoolControl(); ?>
 
 
+    <!---Error Toast Declaration--->
     <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedAddConduct', 'Error al agregar Conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedNewStudent', 'Error al agregar al Estudiante', 'Ha ocurrido un error al nuevo estudiante, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedNewTeacher', 'Error al agregar al Profesor', 'Ha ocurrido un error al nuevo profesor, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedAssignClass', 'Error al asignar la Materia', 'Ha ocurrido un error al asignar la materia al profesor, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedNewClass', 'Error al agregar la Data', 'Ha ocurrido un error al agregar la data de la nueva materia, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedUpdateClass', 'Error al modificar la Data', 'Ha ocurrido un error al modificar la data de la materia, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedFinishCycle', 'Error al terminar el Ciclo escolar', 'Ha ocurrido un error al terminar el ciclo escolar, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdateProfile', 'Error al acutializar el perfil', 'Ha ocurrido un error actualizar perfil, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdatePassword', 'Error al acutializar la contraseña', 'Ha ocurrido un error al actualizar la contraseña, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdateProfileImage', 'Error al acutializar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, porfavor comuniquese con el administrador'); ?>
+    <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedUpdateSchoolControl', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del Administrativo, si esto persiste, comunicate con el administrador.'); ?>
 
 
+    <!---Success Toast Declaration--->
     <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
     <?php showSucessToast('successConductUpdate', 'Agregado de data exitosa', 'La conducta se agrego correctamente')?>
     <?php showSucessToast('successNewStudent', 'Agregado de data exitosa', 'El alumno se agrego correctamente')?>
     <?php showSucessToast('successNewTeacher', 'Agregado de data exitosa', 'El profesor se agrego correctamente')?>
     <?php showSucessToast('successNewAssignClass', 'Agregado de data exitosa', 'Se le asigno la materia al profesor correctamente')?>
     <?php showSucessToast('successUpdateDate', 'Agregado de data exitosa', 'Se actualizaco al profesor correctamente')?>
+    <?php showSucessToast('successnewClass', 'Agregado de data exitosa', 'Se agrego la nueva materia correctamente')?>
+    <?php showSucessToast('successUpdateClass', 'Agregado de data exitosa', 'Se actualizo la materia correctamente')?>
+    <?php showSucessToast('successFinishCycle', 'Fin de Ciclo Exitoso', 'Felicidades !!!')?>
+    <?php showSucessToast('successUpdateProfile', 'Actualizado de data Exitoso', 'Se actualizo el perfil correctamente')?>
+    <?php showSucessToast('successUpdatePassword', 'Actualizado de data Exitoso', 'Se actualizo la contrasñea correctamente')?>
+    <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
+    <?php showSucessToast('successUpdateSchoolControlDate', 'Agregado de data exitosa', 'Se actualizaco al administrativo correctamente') ?>
+    <?php showSucessToast('successNewAdminCreation', 'Agregado de data exitosa', 'Se registro al administrativo correctamente') ?>
 
+    <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
 
@@ -130,7 +175,35 @@ $type = $_SESSION['sessionUser']['type'];
 
             loadDOM();
 
+
+
+            // Session Functions
+            // Session Functions
+            // Session Functions
+
+            //Logout Function
             $("#logout").on('click', function(){
+                $.ajax({
+                    type: "POST",
+                    url: "../../controller/login_controller/loginController.php",
+                    data: ({
+                        function: "LOGOUT"
+                    }),
+                    dataType: "html",
+                    async: false,
+                    success: function(result){
+                        if(result == 'Failed'){
+                            $("#failedLogout").toast('show');
+                        }else{
+                            localStorage.clear();
+                            location.reload();
+                        }
+                    }
+                })
+            });
+
+            //Logout Bottom Function
+            $("#logoutBottom").on('click', function(){
                 $.ajax({
                     type: "POST",
                     url: "../../controller/login_controller/loginController.php",
@@ -149,23 +222,459 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
-            $("#logoutBottom").on('click', function(){
+            //Loading Components functions
+            //Loading Components functions
+            //Loading Components functions
+
+            function loadDOM(){
+                const DOMPage = localStorage.getItem('currentPage');
+                if(DOMPage === null){
+                    loadHome();
+                }else if(DOMPage === 'homePage'){
+                    loadHome();
+                }else if(DOMPage === 'studentPage'){
+                    loadStudnets();
+                    loadStudentData();
+                }else if(DOMPage === 'teacherPage'){
+                    loadTeachers();
+                    loadTeachersTable();
+                }else if(DOMPage === 'cyclePage'){
+                    loadCycleAdmin();
+                }else if(DOMPage === 'settingsPage'){
+                    loadSettings();
+                }else if (DOMPage === 'schoolControlPage') {
+                    loadSchoolControl();
+                    loadSchoolControlTable();
+                }
+            }
+
+            //Trigger clicks to load
+            $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
+                loadHome();
+            });
+
+            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
+                loadStudnets();
+                loadStudentData();
+            })
+
+            $(document).on('click', '#teachersCardComponent, #teachers, #teachersBottom', function(){
+                loadTeachers();
+                loadTeachersTable();
+            });
+
+            $(document).on('click', '#cycleCardComponent, #cycle', function(){
+                loadCycleAdmin();
+            });
+
+            $(document).on('click', '#settings, #settingsCardComponent', function(){
+                loadSettings();
+            });
+            
+            $(document).on('click', '#adminsCardComponent, #admins, #adminsBottom', function() {
+                loadSchoolControl();
+                loadSchoolControlTable();
+            });
+
+            //Function to load
+            function loadHome(){
+                $("#MainContent").load('../../pages/home_page/homePage.php');
+                localStorage.setItem('currentPage', 'homePage');
+            }
+
+            function loadStudnets(){
+                $("#MainContent").load('../../pages/student_page/studentPage.php');
+                localStorage.setItem('currentPage', 'studentPage');
+            }
+
+            function loadTeachers(){
+                $("#MainContent").load('../../pages/teacher_page/teacherPage.php');
+                localStorage.setItem('currentPage', 'teacherPage');
+            }
+
+            function loadCycleAdmin(){
+                $("#MainContent").load('../../pages/cycle_page/cyclePage.php');
+                localStorage.setItem('currentPage', 'cyclePage');
+            }
+
+            function loadSettings(){
+                $("#MainContent").load('../../pages/config_page/configPage.php');
+                localStorage.setItem('currentPage', 'settingsPage');
+            }
+            
+            function loadSchoolControl() {
+                $("#MainContent").load('../../pages/schoolControl_page/schoolControlPage.php')
+                localStorage.setItem('currentPage', 'schoolControlPage');
+            }
+
+            //Config Profile
+            //Config Profile
+            //Config Profile
+
+            $(document).on('click', '#updateProfileBtn', function(){
+
+
+                if($("#updateProfileName").val() == ""){
+                    alert('El Nombre no puede ser vacio');
+                    $("#updateProfileName").focus();
+                    return;
+                }
+                if($("#updateProfileLastName").val() == ""){
+                    alert('El Apeido Paterno no puede ser vacio');
+                    $("#updateProfileLastName").focus();
+                    return;
+                }
+                if($("#updateProfileMothersLastName").val() == ""){
+                    alert('El Apeido Materno no puede ser vacio');
+                    $("#updateProfileMothersLastName").focus();
+                    return;
+
+                }
+                if($("#updateProfilePhone").val() == ""){
+                    alert('El Telefono no puede ser vacio');
+                    $("#updateProfilePhone").focus();
+                    return;
+                }
+
+                $("#loadingFInish").modal('show');
+
                 $.ajax({
-                    type: "POST",
-                    url: "../../controller/login_controller/loginController.php",
+                    method: 'POST',
+                    url: '../../controller/config_controller/configController.php',
                     data: ({
-                        function: "LOGOUT"
+                        function: 'updateProfileData',
+                        name: $("#updateProfileName").val(),
+                        last_name: $("#updateProfileLastName").val(),
+                        mothersLast_name: $("#updateProfileMothersLastName").val(),
+                        phone: $("#updateProfilePhone").val()
                     }),
-                    dataType: "html",
-                    async: false,
-                    success: function(result){
-                        if(result == 'Failed'){
-                            $("#failedLogout").toast('show');
-                        }else{
+                    dataType: 'html',
+                    async: true,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successUpdateProfile").toast('show');
                             location.reload();
+                        }else{
+                            $("#failedUpdateProfile").toast('show');
+                        }
+                    }
+                });
+            });
+
+            //Open Change Password Modal
+            $(document).on('click', '#changeProfilePasswordActionBtn', function(){
+                $("#changeProfilePasswordModal").modal('show');
+            });
+
+            //Close Change Password Modal
+            $(document).on('click', '#closeChangePasswordModal', function(){
+                $("#changeProfilePasswordModal").modal('hide');
+            });
+
+            //Change Password Function
+            $(document).on('click', '#changePasswordsButnModal', function(){
+                if($("#currentPassword").val() == ""){
+                    alert('El no puede ser vacio')
+                    $("#currentPassword").focus();
+                    return;
+                }
+                if($("#newChangePassword").val() == ""){
+                    alert('El no puede ser vacio')                
+                    $("#newChangePassword").focus();
+                    return;
+                }
+                if($("#newChangePasswordConfirm").val() == ""){
+                    alert('El no puede ser vacio')                
+                    $("#newChangePasswordConfirm").focus();
+                    return;
+                }
+
+                if($("#newChangePassword").val() != $("#newChangePasswordConfirm").val()){
+                    alert('Las contraseñas no coinciden');
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/config_controller/configController.php',
+                    data: ({
+                        function: 'updatePassword',
+                        currentPassword: $("#currentPassword").val(),
+                        newPassword: $("#newChangePassword").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successUpdatePassword").toast('show');
+                            $("#currentPassword").val('');
+                            $("#newChangePassword").val('');
+                            $("#newChangePasswordConfirm").val('');
+                            $("#changeProfilePasswordModal").modal('hide');
+                        }else{
+                            $("#failedUpdatePassword").toast('show');
                         }
                     }
                 })
+            });
+
+            //Upload a image
+            //Initialize var
+
+            var modalCrop = $('#cropProfileImageModal');
+            var imageCrop = document.getElementById('sample_image');
+            var cropper;
+
+            //GET img and open Modal
+            $(document).on('change', '#file', function(event){
+                var files = event.target.files;
+
+                var done = function(url){
+                    imageCrop.src = url;
+                    modalCrop.modal('show');
+                }
+
+                if(files && files.length > 0){
+                    reader = new FileReader();
+                    reader.onload = function(event){
+                        done(reader.result);
+                    }
+                    reader.readAsDataURL(files[0]);
+                }
+            });
+
+            //On open modal
+            $("#cropProfileImageModal").on('shown.bs.modal', function(){
+                cropper = new Cropper(imageCrop, {
+                    aspectRatio: 1,
+                    viewMode: 3,
+                    preview:'.preview'
+                });
+            }).on('hidden.bs.modal', function(){
+                cropper.destroy();
+                cropper = null;
+            });
+
+            $("#cropProfileBtn").on('click', function(){
+                canvas = cropper.getCroppedCanvas({
+                    width:400,
+                    height:400
+                });
+
+                canvas.toBlob(function(blob){
+                    url = URL.createObjectURL(blob);
+                    var reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = function(){
+                        base64data = reader.result;
+                        $.ajax({
+                            method: 'POST',
+                            url: '../../controller/config_controller/configController.php',
+                            data: ({
+                                function: 'loadImage',
+                                image: base64data
+                            }),
+                            async: true,
+                            success: function(response){
+                                if(response){
+                                    modalCrop.modal('hide');
+                                    loadSettings();
+                                    $('#output').attr('src', response);
+                                    $("#successUpdateProfileImage").toast('show');
+                                }else{
+                                    $("#failedUpdateProfileImage").toast('show')
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+
+            ///Scholar Cycle
+            ///Scholar Cycle
+            ///Scholar Cycle
+
+            //Load Clases Option
+            $(document).on('click', '#adminClasses', function(){
+                loadClassesCycle();
+                LoadClassessTableCyclo();
+            });
+
+            //Search Debounce
+            $(document).on('keyup', '#classSearchedCycle', function(){
+                LoadClassessTableCyclo();
+            })
+
+            //Show New class Modal
+            $(document).on('click', '#addNewClassCycle', function(){
+                $("#newClassModal").modal('show');
+            });
+
+            //Hide New Class Modal
+            $(document).on('click', '#closeNewClassModal', function(){
+                $("#newClassModal").modal('hide');
+            });
+
+            //Add New Class
+            $(document).on('click', '#addNewClassTriggerCycle', function(){
+
+                if($("#newClassInputName").val() == ""){
+                    alert('El nombre no puede estar vacio');
+                    $("#newClassInputName").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'createNewClass',
+                        name: $("#newClassInputName").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Sucess'){
+                            $("#newClassInputName").val('');
+                            $("#successnewClass").toast('show');
+                            $("#newClassModal").modal('hide');
+                            LoadClassessTableCyclo();
+                        }else{
+                            console.log(response);
+                            $("#failedNewClass").toast('show');
+                        }
+                    }
+                })
+
+            })
+
+            //Load Classes
+            function loadClassesCycle(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'loadClassesContainer'
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#loadOptionsContainer").html(response);
+                    }
+                })
+            }
+
+            //Load Classes Table Body
+            function LoadClassessTableCyclo(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'loadTableBody',
+                        name: $("#classSearchedCycle").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classesCycleTableBody").html(response);
+                    }
+                })
+            }
+
+            //Click on TR of classes body
+            $(document).on('click', '#classesCycleTableBody tr', function(){
+                name = $(this).text().replace(/\n|\r/g, '').trim().replace(/\s+/g, ' ');
+                id = $(this).attr('id');
+                localStorage.setItem('selectedClassId', id);
+                localStorage.setItem('selectedClassName', name);
+                loadEditClassModal();
+            });
+
+            //Close edit Class Modal
+            $(document).on('click', "#closeEditClassModal", function(){
+                $("#editClassModal").modal('hide');
+                localStorage.setItem('selectedClassId', '');
+                localStorage.setItem('selectedClassName', '');
+            })
+
+            //Load Edit Class Modal Function
+            function loadEditClassModal(){
+                $("#editClassInputName").val(localStorage.getItem('selectedClassName'));
+                $("#editClassModal").modal('show');
+            }
+
+            //Update Class Name 
+            $(document).on('click', '#editClassTriggerCycle', function(){
+                if($("#editClassInputName").val() == ""){
+                    alert('El nombre de la materia no puede ser vacio');
+                    $("#editClassInputName").focus();
+                    return;
+                }
+                
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'updateClassNameData',
+                        name: $("#editClassInputName").val(),
+                        id_class: localStorage.getItem('selectedClassId')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successUpdateClass").toast('show');
+                            localStorage.setItem('selectedClassId', '');
+                            localStorage.setItem('selectedClassName', '');
+                            $("#editClassModal").modal('hide');
+                            LoadClassessTableCyclo();
+                        }else{
+                            $("#failedUpdateClass").toast('show');
+                        }
+                    }
+                })
+            });
+
+            //Finish Cycle
+            $(document).on('click', '#finishCycleBtn', function(){
+                $("#confirmFinishCycle").modal('show');
+            });
+
+            //Cancel Finish Cycle
+            $(document).on('click', '#cancelConfirmFinishCycle', function(){
+                $("#confirmFinishCycle").modal('hide');
+            });
+
+            //Finish Cycle Plus
+            $(document).on('click', '#confirmFinishCycle', function(){
+                $("#confirmFinishCycle").modal('hide');
+                $("#confirmPlusFinishCycle").modal('show');
+            });
+
+            //Cancel Finish Cycle Plus
+            $(document).on('click', '#cancelConfirmPlusFinishCycle', function(){
+                $("#confirmPlusFinishCycle").modal('hide');
+            });
+
+            //Confirm Finish Cycle
+            $(document).on('click', '#yeahIWannFinishCycle', function(){
+                $("#confirmPlusFinishCycle").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/cycle_controller/cycleController.php',
+                    data: ({
+                        function: 'finishCycle',
+                    }),
+                    dataType: 'html',
+                    async: true,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successFinishCycle").toast('show');
+                        }else{
+                            $("#failedFinishCycle").toast('show');
+                        }
+                    }
+                });
             });
 
             ///TEACHER
@@ -481,6 +990,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
             
+            //Update Modal Load and Show
             function loadUpdateModalFunc(){
                 $.ajax({
                     method: 'POST',
@@ -504,6 +1014,7 @@ $type = $_SESSION['sessionUser']['type'];
                 $("#teacherDetailsModal").modal('show');
             });
 
+            //Edit teacher Button Trigger
             $(document).on('click', '#editTeacherButton', function(){
                 
                 if($("#editTeacherName").val() == ""){
@@ -560,9 +1071,10 @@ $type = $_SESSION['sessionUser']['type'];
 
             });
 
-            /////
-            /////
-            /////
+            ///// STUDENT
+            ///// STUDENT
+            ///// STUDENT
+
             //Edit Student Data
             $(document).on('click', "#editData", function(){
                 $("#modal").hide();
@@ -664,7 +1176,6 @@ $type = $_SESSION['sessionUser']['type'];
 
             //Conudcta
             $(document).on('click', "#seeConduct", function(){
-
                 $("#modal").modal('hide');
                 $.ajax({
                     method: 'POST',
@@ -682,6 +1193,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Add Conduct
             $(document).on('click', '#addNewConductData', function(){
                 $("#conductModal").modal('hide');
                 $.ajax({
@@ -700,6 +1212,7 @@ $type = $_SESSION['sessionUser']['type'];
                 }) 
             });
 
+            //Send Conduct to BD
             $("#submitConduct").on('click', function(){
 
                 let selected = $('#selectedSubmitAs option:selected');
@@ -750,24 +1263,29 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             })
 
+            //Close conduct modal
             $("#addConductModalClose").on('click', function(){
                 $("#addConductModal").modal('hide');
                 $("#conductModal").modal('show');
             })
 
+            //Close and show modal student
             $(document).on('click', '#conducModalClose', function(){
                 $("#conductModal").modal('hide');
                 $("#modal").modal('show');
             });
 
+            //Load Conduct Detail
             $("#conductModal").on('shown.bs.modal', function(){
                 loadHistoricConductTableBody(localStorage.getItem('clickedRow'));
             });
 
+            //Filter fOR Conduct
             $(document).on('change', '#selectedFilter', function(){
                 loadHistoricConductTableBody(localStorage.getItem('clickedRow'));
             });
 
+            //Load conduct detail
             function loadHistoricConductTableBody(student_id){
                 $.ajax({
                     method: 'POST',
@@ -784,8 +1302,6 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             }
-
-
 
             //Asistencia
             $(document).on('click', "#assitanceM, #assitanceH", function(){
@@ -809,15 +1325,18 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Hide Assistance show student Modal
             $(document).on('click', '#assitanceModal', function(){
                 $("#assistance").modal('hide');
                 $("#modal").modal('show');
             })
 
+            //Load Assistance Detail
             $("#assistance").on('shown.bs.modal', function(){
                 loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
             })
 
+            //Change live searched date 
             $(document).on('change', "#searchedDate", function(){
                 let date = $(this).val();
                 if(date!=""){
@@ -827,18 +1346,21 @@ $type = $_SESSION['sessionUser']['type'];
                 }
             });
 
+            //Change live searched month
             $(document).on('change', '#selectedMonth', function(){
                 if($(this).val() != ""){
                     loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
                 }
             });
 
+            //Change live searched class
             $(document).on('change', '#selectedClass', function(){
                 if($(this).val() != ""){
                     loadHistoricData(localStorage.getItem('clickedRow'), localStorage.getItem('assistanceTableMethod'));
                 }
             });
 
+            //Update the assitenace
             $(document).on('change', '#tableActionAssistance tr td select', function(){
                 $.ajax({
                     method: 'POST',
@@ -859,6 +1381,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Load assistance detail Modal
             function loadHistoricData(id_student, method){
                 $.ajax({
                     method: 'POST',
@@ -879,8 +1402,7 @@ $type = $_SESSION['sessionUser']['type'];
                 });
             }
 
-            //Update data
-
+            //Update User data
             $(document).on('click', '#confirm', function(){
 
                 let name = $("#updatedName").val();
@@ -952,35 +1474,42 @@ $type = $_SESSION['sessionUser']['type'];
                 
             })
             
+            //Close Modal
             $(document).on('click', '#closeSuccess', function(){
                 closeAllModals();
                 loadStudentData();
             });
 
+            //Close failed
             $(document).on('click', '#closeFailed', function(){
                 closeAllModals();
                 loadStudentData();
             })
 
+            //Update data modal trigger
             $(document).on('click', "#updateData", function(){
                 $("#editStudentDataModal").modal('hide');
                 $("#confirmUpdate").modal('show');
             })
 
+            //Cancel update open student modal
             $(document).on('click','#cancelUpdate', function(){
                 $("#editStudentDataModal").modal('hide');
                 $("#modal").show();
             })
 
+            //cancel confirm update, edit student show
             $(document).on('click', '#cancelConfirm', function(){
                 $("#confirmUpdate").hide();
                 $("#editStudentDataModal").modal('show');
             })
 
+            //Close student modal
             $(document).on('click', "#closeModalStudent", function(){
                 closeAllModals();
             })
 
+            //Close all modals Force
             function closeAllModals(){
                 $("#modal").modal('hide');
                 $("#editStudentDataModal").modal('hide');
@@ -989,61 +1518,16 @@ $type = $_SESSION['sessionUser']['type'];
                 $("#alertFailedData").modal('hide');
             }
 
+            //Show succes update modal
             function showSucess(){
                 $("#confirmUpdate").hide();
                 $("#successUpdate").modal('show');
             }
 
+            //Show Failed Update modal
             function showFailed(){
                 $("#confirmUpdate").hide();
                 $("#alertFailedData").modal('show');
-            }
-
-            //Loading Components functions
-
-            function loadDOM(){
-                const DOMPage = localStorage.getItem('currentPage');
-                if(DOMPage === null){
-                    loadHome();
-                }else if(DOMPage === 'homePage'){
-                    loadHome();
-                }else if(DOMPage === 'studentPage'){
-                    loadStudnets();
-                    loadStudentData();
-                }else if(DOMPage === 'teacherPage'){
-                    loadTeachers();
-                    loadTeachersTable();
-                }
-            }
-
-            $(document).on('click', '#homeCardComponent, #home, #homeBottom', function(){
-                loadHome();
-            });
-
-            $(document).on('click', '#studentsCardComponent, #students, #studentsBottom', function(){
-                loadStudnets();
-                loadStudentData();
-            })
-
-            $(document).on('click', '#teachersCardComponent, #teachers, #teachersBottom', function(){
-                loadTeachers();
-                loadTeachersTable();
-            });
-
-
-            function loadHome(){
-                $("#MainContent").load('../../pages/home_page/homePage.php');
-                localStorage.setItem('currentPage', 'homePage');
-            }
-
-            function loadStudnets(){
-                $("#MainContent").load('../../pages/student_page/studentPage.php');
-                localStorage.setItem('currentPage', 'studentPage');
-            }
-
-            function loadTeachers(){
-                $("#MainContent").load('../../pages/teacher_page/teacherPage.php');
-                localStorage.setItem('currentPage', 'teacherPage');
             }
 
             //Live Tipe Student Searcher
@@ -1051,16 +1535,17 @@ $type = $_SESSION['sessionUser']['type'];
                 loadStudentData();
             })
 
+            //Live tipe student filter
             $(document).on('change', "#filterTurno, #filterGrado, #filterGrupo", function(){
                 loadStudentData();
             });
 
             //Handle Click Row TR
-
             $("#modal").on('shown.bs.modal', function(){
                 loadStudentAssistance(localStorage.getItem('clickedRow'));
             })
 
+            //Load modal Student Detail
             $(document).on('click', '#studentTableBody tr', function(){
                 localStorage.setItem('clickedRow', this.id);
                 $.ajax({
@@ -1079,6 +1564,7 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             });
 
+            //Load Student detail modal asistance section
             function loadStudentAssistance(id){
                 $.ajax({
                     method: 'POST',
@@ -1096,7 +1582,6 @@ $type = $_SESSION['sessionUser']['type'];
             }
 
             //Load data Tables
-
             function loadStudentData(){
 
                 let nameSearched = '';
@@ -1137,6 +1622,252 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             }
+            
+            ///SchoolControl
+            ///SchoolControl
+            ///SchoolControl
+
+            //Show New SchoolControl Modal
+            $(document).on('click', '#newSchoolControlBtn', function() {
+                $("#addNewSchoolControlModal").modal('show');
+            });
+
+            //Hide New SchoolControl Modal
+            $(document).on('click', '#addNewSchoolControlClose', function() {
+                $("#addNewSchoolControlModal").modal('hide');
+            });
+
+            //Lunch live search
+            $(document).on('keyup', '#schoolControlSearched', function() {
+                loadSchoolControlTable();
+            })
+
+            //LoadSchoolControlTable
+            function loadSchoolControlTable() {
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'schoolControlLoadTable',
+                        name: $("#schoolControlSearched").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#schoolControlTableBody").html(response);
+                    }
+                })
+            };
+
+            //Register a New SchoolControl User
+            $(document).on('click', '#newSchoolControlButton', function() {
+
+                if ($("#newSchoolControlName").val() == "") {
+                    alert('El nombre no puede ser vacio');
+                    $("#newSchoolControlName").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlLastname").val() == "") {
+                    alert('El Apellido Paterno no puede ser vacio');
+                    $("#newSchoolControlLastname").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlMLastname").val() == "") {
+                    alert('El Apellido Materno no puede ser vacio');
+                    $("#newSchoolControlMLastname").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlPhone").val() == "") {
+                    alert('El Telefono no puede ser vacio');
+                    $("#newSchoolControlPhone").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlEmail").val() == "") {
+                    alert('El Correo no puede ser vacio');
+                    $("#newSchoolControlEmail").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlPassword").val() == "") {
+                    alert('La Contraseña no puede ser vacia');
+                    $("#newSchoolControlPassword").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlConfirmPassword").val() == "") {
+                    alert('La Confirmacion de Contraseña no puede ser vacia');
+                    $("#newSchoolControlConfirmPassword").focus();
+                    return;
+                }
+
+                if ($("#newSchoolControlPassword").val() != $("#newSchoolControlConfirmPassword").val()) {
+                    alert('Las Contraseñas no coinciden');
+                    $("#newSchoolControlPassword").focus();
+                    $("#newSchoolControlConfirmPassword").focus();
+                    return;
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'createNewSchoolControl',
+                        name: $("#newSchoolControlName").val(),
+                        lastname: $("#newSchoolControlLastname").val(),
+                        mothersLN: $("#newSchoolControlMLastname").val(),
+                        phone: $("#newSchoolControlPhone").val(),
+                        email: $("#newSchoolControlEmail").val(),
+                        password: $("#newSchoolControlPassword").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        if (response == "Success") {
+                            $("#addNewSchoolControlModal").modal('hide');
+                            $("#successNewSchoolControl").toast('show');
+
+                            $("#newSchoolControlName").val('');
+                            $("#newSchoolControlLastname").val('');
+                            $("#newSchoolControlMLastname").val('');
+                            $("#newSchoolControlPhone").val('');
+                            $("#newSchoolControlEmail").val('');
+                            $("#newSchoolControlPassword").val('');
+                            $("#newSchoolControlConfirmPassword").val('');
+
+                            loadSchoolControlTable();
+                            $("#successNewAdminCreation").toast('show');
+                        } else {
+                            $("#failedNewSchoolControl").toast('show');
+                        }
+                    }
+                })
+            });
+
+            //Show Detail Modal SchoolControl
+            $(document).on('click', '#schoolControlTableBody tr', function() {
+                localStorage.setItem('schoolControlRow', this.id);
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'loadSchoolControlDetails',
+                        id_user: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#schoolControlDetailsModalBody").html(response);
+                        $("#schoolControlDetailsModal").modal('show');
+                    }
+                })
+            });
+
+            //Hide Detail Modal SchoolControl
+            $(document).on('click', '#closeSchoolControlDetailsModal', function() {
+                $("#schoolControlDetailsModal").modal('hide');
+            });
+
+            //Load Update Modal SchoolControl
+            $(document).on('click', '#editSchoolControlBtn', function() {
+                $("#schoolControlDetailsModal").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'loadUpdateModalSchoolControl',
+                        id_user: localStorage.getItem('schoolControlRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#editSchoolControlBody").html(response);
+                        $("#editSchoolControlModal").modal('show');
+                    }
+                })
+            });
+
+            function loadUpdateSchoolControlModalFunc() {
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'loadUpdateModalSchoolControl',
+                        id_user: localStorage.getItem('schoolControlRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        $("#editSchoolControlBody").html(response);
+                        $("#editSchoolControlModal").modal('show');
+                    }
+                })
+            }
+
+            //Hide Update Modal
+            $(document).on('click', '#editSchoolControlClose', function() {
+                $("#editSchoolControlModal").modal('hide');
+                $("#schoolControlDetailsModal").modal('show');
+            });
+
+            $(document).on('click', '#editSchoolControlButton', function() {
+
+                if ($("#editSchoolControlName").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlName").focus()
+                    return;
+                }
+                if ($("#editSchoolControlLastname").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlLastname").focus()
+                    return;
+                }
+                if ($("#editSchoolControlMLastname").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlMLastname").focus()
+                    return;
+                }
+                if ($("#editSchoolControlPhone").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlPhone").focus()
+                    return;
+                }
+                if ($("#editSchoolControlEmail").val() == "") {
+                    alert('Error Campos Vacios');
+                    $("#editSchoolControlEmail").focus()
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/schoolControl_controller/schoolControlController.php',
+                    data: ({
+                        function: 'updateSchoolControlInfo',
+                        name: $("#editSchoolControlName").val(),
+                        last_name: $("#editSchoolControlLastname").val(),
+                        mothersL: $("#editSchoolControlMLastname").val(),
+                        phone: $("#editSchoolControlPhone").val(),
+                        email: $("#editSchoolControlEmail").val(),
+                        id_user: localStorage.getItem('schoolControlRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response) {
+                        if (response == 'Success') {
+                            $("#editSchoolControlModal").modal('hide');
+                            $("#schoolControlDetailsModal").modal('show');
+                            loadSchoolControlTable();
+                            $("#successUpdateSchoolControlDate").toast('show');
+                        } else {
+                            $("#failedUpdateSchoolControl").toast('show');
+                        }
+                    }
+                })
+
+            });
         });
     </script>
 </body>

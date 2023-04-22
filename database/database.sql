@@ -107,12 +107,3 @@ CREATE TABLE student_guides_table (
     download_url TEXT,
     class_teacher_fk INT
 );
-
-DROP TABLE IF EXISTS student_contact_table;
-CREATE TABLE student_contact_table (
-    id_student_contact INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    student_fk INT,
-    name VARCHAR(150),
-    phone INT(10),
-    relation VARCHAR(100)
-);
