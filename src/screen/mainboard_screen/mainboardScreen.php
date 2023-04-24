@@ -133,6 +133,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php loadSchoolControlDetailsModal(); ?>
     <?php editSchoolControl(); ?>
     <?php classModalDetailOpen();?>
+    <?php allGroupAttendance();?>
 
 
     <!---Error Toast Declaration--->
@@ -152,6 +153,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedUpdateSchoolControl', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del Administrativo, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedDownloadPlans', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de planeacion, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedDownloadGuides', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de la guia, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedDownloadWorks', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de los trabajos, si esto persiste, comunicate con el administrador.'); ?>
 
 
     <!---Success Toast Declaration--->
@@ -171,6 +173,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successNewAdminCreation', 'Agregado de data exitosa', 'Se registro al administrativo correctamente') ?>
     <?php showSucessToast('successDownloadPlans', 'Descargado de data exitosa', 'Se descargo el archivo de planeacion correctamente') ?>
     <?php showSucessToast('successDownloadGuides', 'Descargado de data exitosa', 'Se descargo el archivo de la guia correctamente') ?>
+    <?php showSucessToast('successDownloadWorks', 'Descargado de data exitosa', 'Se descargo el archivo de los trabajos correctamente') ?>
 
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -2073,12 +2076,39 @@ $type = $_SESSION['sessionUser']['type'];
                         a.remove();
                         URL.revokeObjectURL(url);
 
-                        $("#successDownloadGuides").toast('show');
+                        $("#successDownloadWorks").toast('show');
                     }else{
-                        $("#failedDownloadGuides").toast('show');
+                        $("#failedDownloadWorks").toast('show');
+                        
                     }
                 }
                 xhr.send(body);
+            })
+
+            //Open Attendance Modal and close ClassDetailModal
+            $(document).on('click', '#attendanceCoordButtonClassDetailsModal', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadAttendanceModalBody',
+                        class_id: $(this).attr('data-idClass')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        console.log(response);
+                        $("#classAttendanceModalBody").html(response);
+                        $("#modalClassAttendanceModal").modal('show');
+                    }
+                })
+            })
+
+            //Close Attendance Modal and Open ClassDetail
+            $(document).on('click', '#closeModalClassAttendance', function(){
+                $("#modalClassAttendanceModal").modal('hide');
+                $("#modalClassDetailOpen").modal('show');
             })
 
             //Close Class Modal

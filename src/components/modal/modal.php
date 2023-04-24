@@ -720,4 +720,21 @@ function classModalDetailOpen(){
     <?php
 }
 
+function allGroupAttendance(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="modalClassAttendanceModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body" id="classAttendanceModalBody">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button btn-danger" class="btn btn-secondary" id="closeModalClassAttendance">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 ?>

@@ -216,4 +216,169 @@ if($_POST['function'] == 'loadStudents'){
         echo $th;
     }
 }
+
+if($_POST['function'] == 'loadAttendanceModalBody'){
+    try {
+
+        $uniqueDays = array();
+        $attendanceByStudent = array();
+
+        $queryStudents = "SELECT DISTINCT CONCAT(s.name, ' ', s.last_name, ' ', s.mothersLast_name) AS student_name, s.id_student
+        FROM student_table s 
+        JOIN class_teacher_table ctt ON s.grade_fk = ctt.grade_fk AND s.group_fk = ctt.group_fk AND s.shift_fk = ctt.shift_fk 
+        JOIN attendance_table at ON ctt.id_class_teacher = at.class_teacher_fk AND s.id_student = at.student_fk
+        WHERE ctt.id_class_teacher = ".$_POST['class_id']." ORDER BY s.last_name ASC, at.day ASC";
+
+        $queryAttendance = "SELECT s.id_student, at.day, at.status, at.id_attendance
+        FROM student_table s 
+        JOIN class_teacher_table ctt ON s.grade_fk = ctt.grade_fk AND s.group_fk = ctt.group_fk AND s.shift_fk = ctt.shift_fk 
+        JOIN attendance_table at ON ctt.id_class_teacher = at.class_teacher_fk AND s.id_student = at.student_fk
+        WHERE ctt.id_class_teacher = ".$_POST['class_id']." ORDER BY s.last_name ASC, at.day ASC";
+
+        $result = $conn->query($queryStudents);
+        $resultAttendance = $conn->query($queryAttendance);
+
+        if($result && mysqli_num_rows($result) > 0 && $resultAttendance && mysqli_num_rows($resultAttendance)){
+
+            foreach ($resultAttendance as $attendance) {
+                $day = $attendance['day'];
+                if (!in_array($day, $uniqueDays)) {
+                    $uniqueDays[] = $day;
+                }
+            }
+
+            foreach ($resultAttendance as $attendance) {
+                $studentId = $attendance['id_student'];
+                $day = $attendance['day'];
+                $status = $attendance['status'];
+                if (!isset($attendanceByStudent[$studentId])) {
+                    $attendanceByStudent[$studentId] = array();
+                }
+                $attendanceByStudent[$studentId][] = array(
+                    'day' => $day,
+                    'status' => $status
+                );
+            }
+
+            ?>
+            <div class="attendanceContaienr">
+                <div class="col d-flex flex-column justify-content-center align-content-center">
+                    <div class="row justify-content-center">
+                        <div class="col-10 text-center">
+                            <h1 class="display-4">Asistencia del Grupo</h1>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center sinpadding">
+                        <div class="col-12 col-md-10 attendaceTableContainer">
+                            <div class="row mt-4 no-gutters">
+                                <div class="col-8 col-sm-4 m-0 p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Nombre</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="responsiveTableBody">
+                                            <?php
+                                                foreach ($result as $names) {
+                                                    ?>
+                                                        <tr id="<?php echo $names['id_student']?>">
+                                                            <td><?php echo $names['student_name']?></td>
+                                                        </tr>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-4 col-md-8 m-0 p-0 tableAttendanceContent">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <?php 
+                                                    for ($i=0; $i < count($uniqueDays) ; $i++) {
+                                                        ?>
+                                                        <td><?php $dateFormat = explode('-', $uniqueDays[$i]); echo $dateFormat[1]."/".$dateFormat[2]?></td>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                foreach ($attendanceByStudent as $row){
+                                                    ?>
+                                                    <tr>
+                                                        <?php
+                                                            foreach ($row as $data){
+                                                                ?>
+                                                                    <td><?php echo substr($data['status'], 0, 1);?></td>
+                                                                <?php
+                                                            }
+                                                        ?>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }else{
+            ?>
+            <div class="attendanceContaienr">
+                <div class="col d-flex flex-column justify-content-center align-content-center">
+                    <div class="row justify-content-center">
+                        <div class="col-10 bg-info text-center">
+                            <h1 class="display-4">Asistencia del Grupo</h1>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center sinpadding">
+                        <div class="col-12 col-md-10 attendaceTableContainer">
+                            <div class="row no-gutters">
+                                <div class="col-4 m-0 p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Nombre</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>No se ha tomado asistencia</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col m-0 p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Fecha</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>No se ha tomado asistencia</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
 ?>
