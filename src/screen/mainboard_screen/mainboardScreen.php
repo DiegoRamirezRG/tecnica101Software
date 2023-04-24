@@ -134,6 +134,8 @@ $type = $_SESSION['sessionUser']['type'];
     <?php editSchoolControl(); ?>
     <?php classModalDetailOpen();?>
     <?php allGroupAttendance();?>
+    <?php conductModalCoor();?>
+    <?php addConductModalCoor();?>
 
 
     <!---Error Toast Declaration--->
@@ -257,6 +259,9 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if(DOMPage === 'groupPage'){
                     loadGroups();
                     loadClasses();
+                }else if(DOMPage === 'conductPage'){
+                    loadConducts();
+                    loadConductTableCoordinador();
                 }
             }
 
@@ -293,6 +298,11 @@ $type = $_SESSION['sessionUser']['type'];
                 loadClasses();
             })
 
+            $(document).on('click', '#conductCardComponent, #conduct, #conductBottom', function(){
+                loadConducts();
+                loadConductTableCoordinador();
+            })
+
             //Function to load
             function loadHome(){
                 $("#MainContent").load('../../pages/home_page/homePage.php');
@@ -327,6 +337,11 @@ $type = $_SESSION['sessionUser']['type'];
             function loadGroups(){
                 $("#MainContent").load('../../pages/group_page/groupPage.php');
                 localStorage.setItem('currentPage', 'groupPage');
+            }
+
+            function loadConducts(){
+                $("#MainContent").load('../../pages/conduct_page/conductPage.php');
+                localStorage.setItem('currentPage', 'conductPage');
             }
 
             //Config Profile
@@ -2115,6 +2130,185 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#closeModalClassDetailOpen', function(){
                 $("#modalClassDetailOpen").modal('hide');
             })
+
+            ///Conduct
+            ///Conduct
+            ///Conduct
+
+            //Load conduct table
+            function loadConductTableCoordinador(){
+                let nameSearched = '';
+                let groupSearched = '';
+                let gradeSearched = '';
+                let shiftSearched = '';
+
+                if($("#searchStudentConductCoor").val() !== '' && $("#searchStudentConductCoor").val() !== undefined){
+                    nameSearched = $("#searchStudentConductCoor").val();
+                }
+
+                if($("#filterConductByShift").val() !== '' && $("#filterConductByShift").val() !== undefined){
+                    shiftSearched = $("#filterConductByShift").val();
+                }
+
+                if($("#filterConductByGrade").val() !== '' && $("#filterConductByGrade").val() !== undefined){
+                    gradeSearched = $("#filterConductByGrade").val();
+                }
+
+                if($("#filterConductByGroup").val() !== '' && $("#filterConductByGroup").val() !== undefined){
+                    groupSearched = $("#filterConductByGroup").val();
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadStudentData',
+                        name: nameSearched,
+                        turno: shiftSearched,
+                        grado: gradeSearched,
+                        grupo: groupSearched
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(data){
+                        $("#conductStudentTableBody").html(data);
+                    }
+                })
+            }
+
+            //Handle Live Type Searcher
+            $(document).on('keyup', '#searchStudentConductCoor', function(){
+                loadConductTableCoordinador();
+            })
+
+            //Handle change input filter
+            $(document).on('change', '#filterConductByShift, #filterConductByGrade, #filterConductByGroup', function(){
+                loadConductTableCoordinador();
+            })
+
+            //Open a ConductModal
+            $(document).on('click', '#conductStudentTableBody tr', function(){
+                localStorage.setItem('clickedRow', this.id);
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/conduct_controller/conductController.php',
+                    data: ({
+                        function: 'loadConductModal',
+                        id_student: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#conductModalBodyCoor").html(response);
+                        $("#conductModalCoor").modal('show');
+                    }
+                })
+            })
+
+            //Close a ConductModal
+            $(document).on('click', '#conducModalCloseCoor', function(){
+                $("#conductModalCoor").modal('hide');
+            })
+
+            //Load Conduct Table
+            $("#conductModalCoor").on('shown.bs.modal', function(){
+                loadHistoricConductTableBodyCoor(localStorage.getItem('clickedRow'));
+            });
+
+            //Load conduct detail
+            function loadHistoricConductTableBodyCoor(student_id){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadConductTableBody',
+                        id_student: student_id,
+                        where: $("#selectedFilterCoor").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#conductTableBodyCoor").html(response);
+                    }
+                })
+            }
+
+            //Add Conduct
+            $(document).on('click', '#addNewConductDataCoor', function(){
+                $("#conductModalCoor").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/conduct_controller/conductController.php',
+                    data: ({
+                        function: 'loadSubmitAsConductCoor',
+                        id_student: localStorage.getItem('clickedRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#submitAsCoor").html(response);
+                        $("#addConductModalCoor").modal('show');
+                    }
+                }) 
+            });
+
+            //Send Conduct to BD
+            $("#submitConductCoor").on('click', function(){
+
+                let selected = $('#selectedSubmitAsCoor option:selected');
+                let entity = selected.data('entity');
+
+                if($("#idScoreConductCoor").val() == ""){
+                    alert('El Puntaje no puede ser vacio');
+                    $("#idScoreConductCoor").focus();
+                    return;
+                }
+
+                if($("#newConductDescCoor").val() == ""){
+                    alert('La Descripcion no puede estar vacia');
+                    $("#newConductDescCoor").focus();
+                    return;
+                }
+
+                if($("#selectedSubmitAsCoor").val() == ""){
+                    alert('Necesita tener un tipo de usuario seleccionado');
+                    $("#submitAsCoor").focus();
+                    return;
+                }
+                
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: "submitNewConductData",
+                        id_user: localStorage.getItem('clickedRow'),
+                        description: $("#newConductDescCoor").val(),
+                        value: $("#idScoreConductCoor").val(),
+                        asValue: $("#selectedSubmitAsCoor").val(),
+                        asEntity: entity
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successConductUpdate").toast('show')
+                            $("#addConductModalCoor").modal('hide');
+                            $("#conductModalCoor").modal('show');
+                        }else{
+                            $("#failedAddConduct").toast('show');
+                            console.log(response);
+                        }
+                    }
+                })
+            })
+
+            //Close Send to Bd Conduct
+            $(document).on('click', '#addConductModalCloseCoor', function(){
+                $("#addConductModalCoor").modal('hide');
+                $("#conductModalCoor").modal('show');
+            })
+
         });
     </script>
 </body>

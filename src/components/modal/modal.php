@@ -148,6 +148,24 @@ function conductModal()
 <?php
 }
 
+function conductModalCoor()
+{
+?>
+    <div class="modal fade" tabindex="-1" id="conductModalCoor" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="conductModalBodyCoor">
+
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-danger" id="conducModalCloseCoor">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+}
+
 function addConductModal()
 {
 ?>
@@ -187,6 +205,52 @@ function addConductModal()
                 </div>
                 <div class="modal-footer text-center">
                     <button type="button" class="btn btn-danger" id="addConductModalClose">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+}
+
+function addConductModalCoor()
+{
+?>
+    <div class="modal fade" tabindex="-1" id="addConductModalCoor" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col">
+                        <div class="row mt-3">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" for="idScoreConduct"><i class='bx bxs-face fs-1'></i></span>
+                                <select class="form-select" aria-label="Default select example" id="idScoreConductCoor">
+                                    <option selected value="">Selecciona El Puntaje</option>
+                                    <option value="Malo">Malo</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Bueno">Bueno</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="form-group">
+                                <label for="newConductDesc">Descripcion</label>
+                                <textarea class="form-control mt-1" id="newConductDescCoor" rows="3" placeholder="El alumno hizo . . ."></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="form-group" id="submitAsCoor">
+
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="form-group d-flex justify-content-center">
+                                <button class="btn btn-success" id="submitConductCoor">Añadir Conducta</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-danger" id="addConductModalCloseCoor">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -726,7 +790,7 @@ function allGroupAttendance(){
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-body" id="classAttendanceModalBody">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button btn-danger" class="btn btn-secondary" id="closeModalClassAttendance">Cerrar</button>

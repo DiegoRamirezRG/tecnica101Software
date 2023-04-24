@@ -702,7 +702,7 @@ if($_POST['function'] == "submitNewConductData"){
         if(mysqli_affected_rows($conn) > 0){
             echo "Success";
         }else{
-            echo "Failed";
+            echo $query;
         }
 
     } catch (\Throwable $th) {
