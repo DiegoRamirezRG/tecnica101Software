@@ -1,5 +1,15 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if($_SESSION['sessionUser']['type'] == 'Control'){
+    $disable = false;
+}else{
+    $disable = true;
+}
+
 function createModal()
 {
 ?>
@@ -690,6 +700,23 @@ function loadCropImage(){
                 </div>
             </div>
         </div>
+    <?php
+}
+
+function classModalDetailOpen(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="modalClassDetailOpen" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body" id="classDetailModalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button btn-danger" class="btn btn-secondary" id="closeModalClassDetailOpen">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <?php
 }
 

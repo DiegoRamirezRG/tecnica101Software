@@ -17,7 +17,14 @@ session_start();
                             <span>Cambiar Perfil</span>
                         </label>
                         <input id="file" type="file"/>
-                        <img src="../../examples/userIcons/<?php echo $_SESSION['sessionUser']['id_user']?>/<?php echo $_SESSION['sessionUser']['id_user']?>.png" id="output" width="200" />
+                        <img src="<?php 
+                        $archivo = '../../examples/userIcons/'.$_SESSION['sessionUser']['id_user'].'/'.$_SESSION['sessionUser']['id_user'].'.png';
+                        $default = '../../examples/userIcons/default.png';
+                        if(file_exists($archivo)){
+                            echo $archivo;
+                        }else{
+                            echo $default;
+                        } ?>" id="output" width="200" />
                     </div>
                 </div>
                 <div class="row w-100 text-center">

@@ -1,0 +1,144 @@
+.cardsClassContainer{
+    height: 55vh;
+    width: 100%;
+    overflow-y: scroll;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(auto, max-content);
+    grid-gap: 10px;
+}
+
+.classCard{
+    height: 100px;
+    padding: 10px 20px;
+    transition: 0.3s all ease;
+    border-radius: 15px !important;
+}
+
+.classCard:hover{
+    cursor: pointer;
+    border: 5px solid #dc3545;
+}
+
+.iconClassContainer{
+    height: 80%;
+    width: 20%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconClassContainer i{
+    color: white;
+    background-color: #dc3545;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.infoClassContainer .infoClassContainer{
+    padding: 0px !important;
+}
+
+.className p{
+    font-size: 30px;
+    margin-bottom: 0px;
+}
+
+.classMaxContainer{
+    height: 70vh;
+    width: 100%;
+}
+
+.customRowContent{
+    display: flex;
+    transition: 0.3s all ease;
+}
+
+.ASSI:before{
+    content: 'Tomar Asistencia';
+}
+
+.PLAN:before{
+    content: 'Subir Planeaciones';
+}
+
+.ESTU:before{
+    content: 'Subir Guia de Estudio';
+}
+
+.TRAB:before{
+    content: 'Subir Trabajos';
+}
+
+.ASSICor:before{
+    content: 'Ver Asistencias';
+}
+.PLANCor:before{
+    content: 'Descargar Planeaciones';
+}
+.ESTUCor:before{
+    content: 'Descargar Guia de Estudio';
+}
+.TRABCor:before{
+    content: 'Descargar Trabajos';
+}
+
+.tableCotnainerClassDeails{
+    height: 30vh;
+    overflow-y: scroll;
+}
+
+@media (max-width: 800px) {
+    .cardsClassContainer{
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+
+    .iconClassContainer i{
+        padding: 5px !important;
+    }
+
+    .classCard:hover{
+        cursor: pointer !important;
+    }
+
+    .responsiveOptionClassDetailButton{
+        font-size: 15px !important;
+    }
+
+    .ASSI:before{
+        content: 'Asistencia';
+    }
+
+    .PLAN:before{
+        content: 'Planeaciones';
+    }
+
+    .ESTU:before{
+        content: 'Guias';
+    }
+
+    .TRAB:before{
+        content: 'Trabajos';
+    }
+
+    .ASSICor:before{
+        content: 'Asistencias';
+    }
+    .PLANCor:before{
+        content: 'Planeacion';
+    }
+    .ESTUCor:before{
+        content: 'Guia';
+    }
+    .TRABCor:before{
+        content: 'Trabajos';
+    }
+}
+
+@media (max-width: 1200px) {
+    .cardsClassContainer{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

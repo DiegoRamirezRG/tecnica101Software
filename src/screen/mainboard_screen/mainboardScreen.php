@@ -36,6 +36,7 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../pages/cycle_page/cycleStyle.css">
     <link rel="stylesheet" href="../../pages/config_page/configStyle.css">
     <link rel="stylesheet" href="../../pages/schoolControl_page/schoolControlStyle.css">
+    <link rel="stylesheet" href="../../pages/group_page/groupStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -131,6 +132,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php addNewSchoolControlModal(); ?>
     <?php loadSchoolControlDetailsModal(); ?>
     <?php editSchoolControl(); ?>
+    <?php classModalDetailOpen();?>
 
 
     <!---Error Toast Declaration--->
@@ -148,6 +150,8 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedUpdateProfileImage', 'Error al acutializar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, porfavor comuniquese con el administrador'); ?>
     <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedUpdateSchoolControl', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del Administrativo, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedDownloadPlans', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de planeacion, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedDownloadGuides', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de la guia, si esto persiste, comunicate con el administrador.'); ?>
 
 
     <!---Success Toast Declaration--->
@@ -165,6 +169,8 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
     <?php showSucessToast('successUpdateSchoolControlDate', 'Agregado de data exitosa', 'Se actualizaco al administrativo correctamente') ?>
     <?php showSucessToast('successNewAdminCreation', 'Agregado de data exitosa', 'Se registro al administrativo correctamente') ?>
+    <?php showSucessToast('successDownloadPlans', 'Descargado de data exitosa', 'Se descargo el archivo de planeacion correctamente') ?>
+    <?php showSucessToast('successDownloadGuides', 'Descargado de data exitosa', 'Se descargo el archivo de la guia correctamente') ?>
 
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -245,6 +251,9 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if (DOMPage === 'schoolControlPage') {
                     loadSchoolControl();
                     loadSchoolControlTable();
+                }else if(DOMPage === 'groupPage'){
+                    loadGroups();
+                    loadClasses();
                 }
             }
 
@@ -276,6 +285,11 @@ $type = $_SESSION['sessionUser']['type'];
                 loadSchoolControlTable();
             });
 
+            $(document).on('click', '#groupsBottom, #groupsCardComponent, #groups', function(){
+                loadGroups();
+                loadClasses();
+            })
+
             //Function to load
             function loadHome(){
                 $("#MainContent").load('../../pages/home_page/homePage.php');
@@ -305,6 +319,11 @@ $type = $_SESSION['sessionUser']['type'];
             function loadSchoolControl() {
                 $("#MainContent").load('../../pages/schoolControl_page/schoolControlPage.php')
                 localStorage.setItem('currentPage', 'schoolControlPage');
+            }
+
+            function loadGroups(){
+                $("#MainContent").load('../../pages/group_page/groupPage.php');
+                localStorage.setItem('currentPage', 'groupPage');
             }
 
             //Config Profile
@@ -1868,6 +1887,204 @@ $type = $_SESSION['sessionUser']['type'];
                 })
 
             });
+
+            ///Coordinador
+            ///Coordinador
+            ///Coordinador
+
+            //Load Clases Cards
+            function loadClasses(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadClassesCards',
+                        grado: $("#filterTurnoGrupoSelectClasses").val(),
+                        grupo: $("#filterGradoGrupoSelectClasses").val(),
+                        turno: $("#filterGrupoGrupoSelectClasses").val(),
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#grupoContainerCards").html(response);
+                    }
+                })
+            }
+
+            //Load Student Table in Class Detail
+            function loadClassDetailStudents(class_id){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadStudents',
+                        class_teacher_id: class_id,
+                        searchedStudent: $("#searchedStudentClassDetailModal").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classDetailStudentTableBody").html(response);
+                    }
+                })
+            }
+
+            //Click on Class 
+            $(document).on('click', '.classCard', function(){
+                localStorage.setItem('currentClassDetail', $(this).attr('id'));
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadClassDetailModal',
+                        classId: $(this).attr('id')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classDetailModalBody").html(response);
+                        $("#modalClassDetailOpen").modal('show');
+                    }
+                })
+            });
+
+            //Filter Classes
+            $(document).on('change', '#filterTurnoGrupoSelectClasses, #filterGradoGrupoSelectClasses, #filterGrupoGrupoSelectClasses', function(){
+                loadClasses();
+            })
+            
+            //Search an student
+            $(document).on('keyup', '#searchedStudentClassDetailModal', function(){
+                loadClassDetailStudents(localStorage.getItem('currentClassDetail'));
+            })
+
+            //Load Class Detail Students Table
+            $("#modalClassDetailOpen").on('shown.bs.modal', function(){
+                loadClassDetailStudents(localStorage.getItem('currentClassDetail'));
+            });
+            
+            //Click on student row
+            $(document).on('click', '#classDetailStudentTableBody tr', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                localStorage.setItem('clickedRow', this.id);
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadModalBody',
+                        id_alumno: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(modalBody){
+                        $("#modalBody").html(modalBody);
+                        $("#modal").modal('show');
+                    }
+                })
+            })
+
+            //Download the Plans
+            $(document).on('click', '#downloadPlanCoordButtonClassDetailsModal', function(){
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'blob';
+                // xhr.responseType = 'html';
+
+                const body = JSON.stringify({
+                    function: 'downloadPlanneacion',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const url = window.URL.createObjectURL(xhr.response);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Planeacion.pdf';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                        $("#successDownloadPlans").toast('show');
+                    }else{
+                        $("#failedDownloadPlans").toast('show');
+                    }
+                }
+                xhr.send(body);
+            })
+
+            //Download the Guides
+            $(document).on('click', '#downloadGuidesCoordButtonClassDetailsModal', function(){
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'blob';
+                // xhr.responseType = 'html';
+
+                const body = JSON.stringify({
+                    function: 'downloadGuides',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const url = window.URL.createObjectURL(xhr.response);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Guia.pdf';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                        $("#successDownloadGuides").toast('show');
+                    }else{
+                        $("#failedDownloadGuides").toast('show');
+                    }
+                }
+                xhr.send(body);
+            })
+
+            //Download the work
+            $(document).on('click', '#downloadWorksCoordButtonClassDetailsModal', function(){
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'arraybuffer';
+
+                const body = JSON.stringify({
+                    function: 'downloadWorks',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Works.xlsx';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        URL.revokeObjectURL(url);
+
+                        $("#successDownloadGuides").toast('show');
+                    }else{
+                        $("#failedDownloadGuides").toast('show');
+                    }
+                }
+                xhr.send(body);
+            })
+
+            //Close Class Modal
+            $(document).on('click', '#closeModalClassDetailOpen', function(){
+                $("#modalClassDetailOpen").modal('hide');
+            })
         });
     </script>
 </body>
