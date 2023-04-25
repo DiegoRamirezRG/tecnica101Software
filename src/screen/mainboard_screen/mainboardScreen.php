@@ -2345,15 +2345,38 @@ $type = $_SESSION['sessionUser']['type'];
                 })
             }
 
+            $(document).on('change', '#filterTurnoGrupoPlanDownload, #filterGradoGrupoPlanDownload, #filterGrupoGrupoPlanDownload', function(){
+                loadClassesDownload();
+            })
+
             //Click on download All the 
-            $(document).on('click', '*', function(){
-                console.log('Download All');
+            $(document).on('click', '#downloadAll', function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../examples/downloadZipController.php',
+                    data: ({
+                        function: 'downloadAllPlans'
+                    }),
+                    success: function(fileName){
+                        if(fileName == 'Failed'){
+                        $("#failedDownloadPlans").toast('show');
+                        }else{
+                            var a = document.createElement('a');
+                            a.href = '../../examples/files/'+fileName;
+                            a.download = fileName;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            $("#successDownloadPlans").toast('show');
+                        }
+                    }
+                })
             })
 
             //Click on Download
             $(document).on('click', '.classCardDownload', function(){
 
-                if(this.id == '*'){
+                if(this.id == 'downloadAll'){
                     return;
                 }
 

@@ -40,7 +40,7 @@ if($_POST['function'] == 'loadClassesCards'){
         $result = $conn->query($query);
         if($result && mysqli_num_rows($result) > 0){
             createClassCardDownload(array(
-                'id_class_teacher' => '*',
+                'id_class_teacher' => 'downloadAll',
                 'class_name' => 'Descargar Todas',
                 'shift_name' => 'Planeaciones',
                 'grade_name' => '*',
