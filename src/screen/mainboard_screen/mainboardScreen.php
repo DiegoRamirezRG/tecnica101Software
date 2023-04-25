@@ -37,6 +37,7 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../pages/config_page/configStyle.css">
     <link rel="stylesheet" href="../../pages/schoolControl_page/schoolControlStyle.css">
     <link rel="stylesheet" href="../../pages/group_page/groupStyle.css">
+    <link rel="stylesheet" href="../../pages/plans_page/plansStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -262,6 +263,9 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if(DOMPage === 'conductPage'){
                     loadConducts();
                     loadConductTableCoordinador();
+                }else if(DOMPage === 'plansPage'){
+                    loadPlans();
+                    loadClassesDownload();
                 }
             }
 
@@ -303,6 +307,11 @@ $type = $_SESSION['sessionUser']['type'];
                 loadConductTableCoordinador();
             })
 
+            $(document).on('click', '#plans, #plansCardComponent', function(){
+                loadPlans();
+                loadClassesDownload();
+            })
+
             //Function to load
             function loadHome(){
                 $("#MainContent").load('../../pages/home_page/homePage.php');
@@ -342,6 +351,11 @@ $type = $_SESSION['sessionUser']['type'];
             function loadConducts(){
                 $("#MainContent").load('../../pages/conduct_page/conductPage.php');
                 localStorage.setItem('currentPage', 'conductPage');
+            }
+
+            function loadPlans(){
+                $("#MainContent").load('../../pages/plans_page/plansPage.php');
+                localStorage.setItem('currentPage', 'plansPage');
             }
 
             //Config Profile
@@ -2113,7 +2127,6 @@ $type = $_SESSION['sessionUser']['type'];
                     dataType: 'html',
                     async: false,
                     success: function(response){
-                        console.log(response);
                         $("#classAttendanceModalBody").html(response);
                         $("#modalClassAttendanceModal").modal('show');
                     }
@@ -2307,6 +2320,72 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#addConductModalCloseCoor', function(){
                 $("#addConductModalCoor").modal('hide');
                 $("#conductModalCoor").modal('show');
+            })
+
+            //Planeaciones Page
+            //Planeaciones Page
+            //Planeaciones Page
+
+            //Load conduct table
+            function loadClassesDownload(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/plans_controller/plansController.php',
+                    data: ({
+                        function: 'loadClassesCards',
+                        grado: $("#filterTurnoGrupoPlanDownload").val(),
+                        grupo: $("#filterGradoGrupoPlanDownload").val(),
+                        turno: $("#filterGrupoGrupoPlanDownload").val(),
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#grupoContainerCardsPlanDownload").html(response);
+                    }
+                })
+            }
+
+            //Click on download All the 
+            $(document).on('click', '*', function(){
+                console.log('Download All');
+            })
+
+            //Click on Download
+            $(document).on('click', '.classCardDownload', function(){
+
+                if(this.id == '*'){
+                    return;
+                }
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.setRequestHeader("Content-Disposition", "attachment; filename=carpeta_comprimida.zip");
+                xhr.responseType = 'blob';
+
+                const body = JSON.stringify({
+                    function: 'downloadPlanneacion',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const url = window.URL.createObjectURL(xhr.response);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Planeacion.pdf';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                        $("#successDownloadPlans").toast('show');
+                    }else{
+                        $("#failedDownloadPlans").toast('show');
+                    }
+                }
+                xhr.send(body);
             })
 
         });

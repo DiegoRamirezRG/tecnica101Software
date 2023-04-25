@@ -1,0 +1,39 @@
+.classCardDownload{
+    height: 100px;
+    padding: 10px 20px;
+    transition: 0.3s all ease;
+    border-radius: 15px !important;
+}
+
+.classCardDownload:hover{
+    cursor: pointer;
+    border: 5px solid #dc3545;
+}
+
+.iconClassContainer{
+    height: 80%;
+    width: 20%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconClassContainer i{
+    color: white;
+    background-color: #dc3545;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+@media (max-width: 800px) {
+    .infoClassContainer p{
+        font-size: 20px !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .infoClassContainer p{
+        font-size: 25px;
+    }
+}
