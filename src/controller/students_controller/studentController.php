@@ -1,8 +1,16 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 include_once('../../config/database/conexion.php');
+
+if($_SESSION['sessionUser']['type'] == 'Control'){
+    $disable = false;
+}else{
+    $disable = true;
+}
 
 if($_POST['function'] == 'loadStudentData'){
     try {
@@ -74,7 +82,7 @@ if($_POST['function'] == 'loadModalBody'){
                             <span class="badge rounded-pill bg-danger fs-5"><?php echo $row['grupo']?></span>
                         </div>
                         <div class="col-12 col-sm-7 d-flex justify-content-center justify-content-sm-end">
-                            <button class="btn btn-outline-warning btn-rounded w-75 w-md-50 w-lg-25 adaptapBtn" id="editData">Editar</button>
+                            <button class="btn btn-outline-warning btn-rounded w-75 w-md-50 w-lg-25 adaptapBtn" id="editData" style="<?php echo ($disable) ? 'display: none;' : ''?>">Editar</button>
                         </div>
                     </div>
                 </div>
@@ -107,7 +115,7 @@ if($_POST['function'] == 'loadModalBody'){
                                 </div>
                                 <div class="col-4">
                                     <div class="row">
-                                        <button class="btn btn-outline-danger" id="assitanceM" btnAction="modificar">Modificar</button>
+                                        <button class="btn btn-outline-danger" id="assitanceM" btnAction="modificar" style="<?php echo ($disable) ? 'display: none;' : ''?>">Modificar</button>
                                     </div>
                                     <div class="row">
                                         <button class="btn btn-outline-success mt-2" id="assitanceH" btnAction="historico">Historico</button>
@@ -694,7 +702,7 @@ if($_POST['function'] == "submitNewConductData"){
         if(mysqli_affected_rows($conn) > 0){
             echo "Success";
         }else{
-            echo "Failed";
+            echo $query;
         }
 
     } catch (\Throwable $th) {

@@ -109,6 +109,7 @@ require_once('../../components/toast/toast.php');
                     dataType: "html",
                     async: false,
                     success: function(response){
+                        console.log(response);
                         if (response == 'Failed') {
                             $("#badLogin").toast('show');
                             return false;
