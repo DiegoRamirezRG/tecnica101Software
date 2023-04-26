@@ -114,7 +114,7 @@ if($_POST['function'] == 'loadClassDetailModal'){
                         <div class="row">
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
-                                    <button class="btn btn-success w-75 responsiveOptionClassDetailButton ASSI"></button>
+                                    <button class="btn btn-success w-75 responsiveOptionClassDetailButton ASSI" id="takeAssistanceButton"></button>
                                 </div>
                             </div>
                             <div class="col-6 col-md-12">
@@ -408,6 +408,84 @@ if($_POST['function'] == 'loadAttendanceModalBody'){
         }
     } catch (\Throwable $th) {
         echo $th;
+    }
+}
+
+if($_POST['function'] == 'loadAssistanceTable'){
+    try {
+
+        $queryValidator = "SELECT s.id_student, CONCAT(s.last_name, ' ', s.mothersLast_name, ' ', s.name) AS fullname, LEFT(a.status, 1) as val, a.id_attendance
+        FROM class_teacher_table ct
+        JOIN student_table s ON ct.grade_fk = s.grade_fk AND ct.group_fk = s.group_fk AND ct.shift_fk = s.shift_fk
+        JOIN attendance_table a ON a.student_fk = s.id_student AND a.class_teacher_fk = ct.id_class_teacher
+        WHERE ct.id_class_teacher = ".$_POST['idClass']."
+        AND a.day = CURDATE()
+        ORDER BY s.last_name ASC";
+
+        $queryInsertDefault = "INSERT INTO attendance_table (day, class_teacher_fk, student_fk, status)
+        SELECT DATE(NOW()), ct.id_class_teacher, s.id_student, 'Asistencia'
+        FROM class_teacher_table ct
+        JOIN student_table s ON ct.grade_fk = s.grade_fk AND ct.group_fk = s.group_fk AND ct.shift_fk = s.shift_fk
+        LEFT JOIN attendance_table a ON a.student_fk = s.id_student AND a.class_teacher_fk = ct.id_class_teacher AND a.day = CURDATE()
+        WHERE ct.id_class_teacher = ".$_POST['idClass']." AND a.id_attendance IS NULL";
+
+        $resultValidator = $conn->query($queryValidator);
+
+        if($resultValidator && mysqli_num_rows($resultValidator) > 0){
+            foreach ($resultValidator as $data ) {
+                ?>
+                    <tr>
+                        <td><?php echo $data['fullname']?></td>
+                        <td>
+                            <button id="<?php echo $data['id_attendance']?>" data-action="Asistencia" class="takeAttendanceBtn btn" style="background-color: <?php echo getColor($data['val'])?>;">
+                                <?php echo $data['val']?>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php
+            }
+        }else{
+            $queryInsert = $conn->query($queryInsertDefault);
+            if(mysqli_affected_rows($conn) > 0){
+
+                $finalResult = $conn->query($queryValidator);
+                foreach ($finalResult as $finalData) {
+                    ?>
+                    <tr>
+                        <td><?php echo $finalData['fullname']?></td>
+                        <td>
+                            <button id="<?php echo $finalData['id_attendance']?>" data-action="Asistencia" class="takeAttendanceBtn btn" style="background-color: <?php echo getColor($finalData['val'])?>;">
+                                <?php echo $finalData['val']?>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            }
+        }
+
+    } catch (\Throwable $th) {
+        echo $th;
+    }
+}
+
+function getColor($type){
+    switch ($type) {
+        case 'A':
+            return '#5cb85c';
+            break;
+        case 'F':
+            return '#A63D40';
+            break;
+        case 'R':
+            return '#f0ad4e';
+            break;
+        case 'J':
+            return '#0275d8';
+            break;
+        case 'B':
+            return '#FF9505';
+            break;
     }
 }
 

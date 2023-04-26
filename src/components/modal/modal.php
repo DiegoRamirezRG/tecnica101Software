@@ -823,12 +823,38 @@ function uploadFilesModal(){
 }
 
 function takeAssistanceModal(){
+
+    $fecha = date('Y-m-d'); 
+    $day = date('d', strtotime($fecha));
+    $month = date('F', strtotime($fecha));
+    $mes = getMesEnEspanol($month);
+
     ?>
     <div class="modal fade" tabindex="-1" id="modalTakeAssitance" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body" id="takeAssitanceModalBody">
-
+                    <div style="height: 60vh;">
+                        <div class="col">
+                            <div class="row text-center">
+                                <h1>Tomar Asistencia</h1>
+                                <h3 class="text-danger"><strong>Dia: <?php echo $day.' de '.$mes?></strong></h3>
+                            </div>
+                            <div class="row p-2 p-md-5">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-10">Alumno</th>
+                                            <th class="col-2">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="modalTakeAssistanceTable">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button btn-danger" class="btn btn-secondary" id="closeModalTakeAssistance">Cerrar</button>
@@ -837,6 +863,37 @@ function takeAssistanceModal(){
         </div>
     </div>
     <?php
+}
+
+function getMesEnEspanol($mesEnIngles) {
+    switch(strtolower($mesEnIngles)) {
+        case 'january':
+            return 'Enero';
+        case 'february':
+            return 'Febrero';
+        case 'march':
+            return 'Marzo';
+        case 'april':
+            return 'Abril';
+        case 'may':
+            return 'Mayo';
+        case 'june':
+            return 'Junio';
+        case 'july':
+            return 'Julio';
+        case 'august':
+            return 'Agosto';
+        case 'september':
+            return 'Septiembre';
+        case 'october':
+            return 'Octubre';
+        case 'november':
+            return 'Noviembre';
+        case 'december':
+            return 'Diciembre';
+        default:
+            return '';
+    }
 }
 
 ?>

@@ -138,6 +138,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php conductModalCoor();?>
     <?php addConductModalCoor();?>
     <?php uploadFilesModal();?>
+    <?php takeAssistanceModal();?>
 
 
     <!---Error Toast Declaration--->
@@ -159,6 +160,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedDownloadGuides', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de la guia, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedDownloadWorks', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de los trabajos, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedUpload', 'Error al subir el archivo', 'Ha ocurrido un error al subir el archivo, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedTakeAssisatnce', 'Error al tomar asistancia', 'Ha ocurrido un error al tomar asistencia, si esto persiste, comunicate con el administrador.'); ?>
 
 
     <!---Success Toast Declaration--->
@@ -1427,7 +1429,6 @@ $type = $_SESSION['sessionUser']['type'];
                     dataType: 'html',
                     async: false,
                     success: function(msg){
-                        console.log(msg);
                         if(msg === 'Success'){
                             $("#toastSuccessUpdate").toast('show');
                         }
@@ -2438,6 +2439,34 @@ $type = $_SESSION['sessionUser']['type'];
                 $("#modalClassDetailOpen").modal('show');
             })
 
+            //Open Take Assistance
+            $(document).on('click', '#takeAssistanceButton', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                $("#modalTakeAssitance").modal('show');
+            })
+
+            //Close Take Assitantece
+            $(document).on('click', '#closeModalTakeAssistance', function(){
+                $("#modalTakeAssitance").modal('hide');
+                $("#modalClassDetailOpen").modal('show');
+            })
+
+            $("#modalTakeAssitance").on('show.bs.modal', function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadAssistanceTable',
+                        idClass: localStorage.getItem('currentClassDetail')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#modalTakeAssistanceTable").html(response);
+                    }
+                })
+            })
+
         });
     </script>
     <script>
@@ -2452,7 +2481,7 @@ $type = $_SESSION['sessionUser']['type'];
             function getAcceptedFiles(acceptedFiles){
                 var myDropzone = new Dropzone('.dropzone', {
                     url: '../../examples/uploadDocFunctions.php',
-                    dictDefaultMessage: 'Deja caer aqui o da click para seleccionar el archivo PDF',
+                    dictDefaultMessage: 'Deja caer aqui o da click para seleccionar el archivo.',
                     maxFiles: 1,
                     acceptedFiles: acceptedFiles,
                     success: function(file, response){
@@ -2472,6 +2501,45 @@ $type = $_SESSION['sessionUser']['type'];
                     }
                 })
             }
+        })
+    </script>
+    <script>
+        const options = [
+            {'text': 'A', 'value': 'Asistencia', 'color': '#5cb85c', 'text-color': '#000'},
+            {'text': 'F', 'value': 'Falta', 'color': '#A63D40', 'text-color': '#fff'},
+            {'text': 'R', 'value': 'Retraso', 'color': '#f0ad4e', 'text-color': '#000'},
+            {'text': 'J', 'value': 'Justificacion', 'color': '#0275d8', 'text-color': '#000'},
+            {'text': 'B', 'value': 'Baja', 'color': '#FF9505', 'text-color': '#000'}
+        ]
+        var optionIndex = 1;
+        
+        $(document).on('click', '.takeAttendanceBtn', function(){
+            const currentOption = options[optionIndex];
+            this.style.backgroundColor = currentOption['color'];
+            this.style.color= currentOption['text-color'];
+            this.textContent = currentOption['text'];
+            this.setAttribute('data-action', currentOption['value']);
+            optionIndex = (optionIndex + 1) % options.length;
+
+            $.ajax({
+                method: 'POST',
+                url: '../../controller/students_controller/studentController.php',
+                data: ({
+                    function: 'updateAssistance',
+                    updated: $(this).attr('data-action'),
+                    asistanceId: $(this).attr('id')
+                }),
+                dataType: 'html',
+                async: false,
+                success: function(msg){
+                    if(msg === 'Success'){
+
+                    }else{
+                        $("#failedTakeAssisatnce").toast('show');
+                        console.log('Error');
+                    }
+                }
+            })
         })
     </script>
 </body>

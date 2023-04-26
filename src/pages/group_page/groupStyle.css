@@ -104,6 +104,7 @@
     overflow: scroll;
 }
 
+
 @media (max-width: 800px) {
     .cardsClassContainer{
         grid-template-columns: repeat(1, 1fr) !important;
