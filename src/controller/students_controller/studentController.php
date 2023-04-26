@@ -1,8 +1,16 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 include_once('../../config/database/conexion.php');
+
+if($_SESSION['sessionUser']['type'] == 'Control'){
+    $disable = false;
+}else{
+    $disable = true;
+}
 
 if($_POST['function'] == 'loadStudentData'){
     try {
@@ -74,7 +82,7 @@ if($_POST['function'] == 'loadModalBody'){
                             <span class="badge rounded-pill bg-danger fs-5"><?php echo $row['grupo']?></span>
                         </div>
                         <div class="col-12 col-sm-7 d-flex justify-content-center justify-content-sm-end">
-                            <button class="btn btn-outline-warning btn-rounded w-75 w-md-50 w-lg-25 adaptapBtn" id="editData">Editar</button>
+                            <button class="btn btn-outline-warning btn-rounded w-75 w-md-50 w-lg-25 adaptapBtn" id="editData" style="<?php echo ($disable) ? 'display: none;' : ''?>">Editar</button>
                         </div>
                     </div>
                 </div>
@@ -107,7 +115,7 @@ if($_POST['function'] == 'loadModalBody'){
                                 </div>
                                 <div class="col-4">
                                     <div class="row">
-                                        <button class="btn btn-outline-danger" id="assitanceM" btnAction="modificar">Modificar</button>
+                                        <button class="btn btn-outline-danger" id="assitanceM" btnAction="modificar" style="<?php echo ($disable) ? 'display: none;' : ''?>">Modificar</button>
                                     </div>
                                     <div class="row">
                                         <button class="btn btn-outline-success mt-2" id="assitanceH" btnAction="historico">Historico</button>
@@ -171,36 +179,53 @@ if($_POST['function'] == 'loadAssistance'){
         $today = date("Y-m-d");
         $first_day_of_week = date('Y-m-d', strtotime("monday this week"));
 
-        $assistanceQuery = "SELECT day, student_fk, LEFT(status, 1) as status FROM attendance_table WHERE day >= '".$first_day_of_week."' AND day <= '".$today."' AND student_fk = ".$_POST['id_alumno']." ORDER BY day ASC";
+        $resultAssistanceQuery = "SELECT student_fk, day, AVG(CASE WHEN status = 'Retraso' THEN 2 WHEN status = 'Falta' THEN 4 WHEN status = 'Asistencia' THEN 5 WHEN status = 'Justificacion' THEN 3 WHEN status = 'Baja' THEN 1 ELSE 0 END) as avg_status, WEEKDAY(day) as day_number
+        FROM attendance_table
+        WHERE day >= '".$first_day_of_week."' AND day <= '".$today."' AND student_fk = ".$_POST['id_alumno']." GROUP BY day
+        ORDER BY day ASC;";
 
-        $assistanceResult = $conn->query($assistanceQuery);
+        $assistanceResult = $conn->query($resultAssistanceQuery);
 
 
-        if($assistanceResult->num_rows > 0){
+        if($assistanceResult && mysqli_num_rows($assistanceResult)){
+            foreach ($assistanceResult as $tempVar)
 
-            while($row = mysqli_fetch_array($assistanceResult)){
-                foreach ($assistanceResult as $row) {
-                    array_push($carryDb, $row);
-                }
+            $dataArray =array(
+                array(
+                    'day' => 'L',
+                    'student_fk' => $tempVar['student_fk'],
+                    'status' => '-'
+                ),array(
+                    'day' => 'M',
+                    'student_fk' => $tempVar['student_fk'],
+                    'status' => '-'
+                ),array(
+                    'day' => 'M',
+                    'student_fk' => $tempVar['student_fk'],
+                    'status' => '-'
+                ),array(
+                    'day' => 'J',
+                    'student_fk' => $tempVar['student_fk'],
+                    'status' => '-'
+                ),
+                array(
+                    'day' => 'V',
+                    'student_fk' => $tempVar['student_fk'],
+                    'status' => '-'
+                )
+            );
+
+            foreach ($assistanceResult as $dataFish) {
+                $dataArray[$dataFish['day_number']] = array(
+                    'day' => getDay($dataFish['day_number']),
+                    'student_fk' => $dataFish['student_fk'],
+                    'status' => getAttendanceType($dataFish['avg_status'])
+                );
             }
 
-            for ($i = 0; $i < 5; $i++) {
-                if(isset($carryDb[$i])){
-                    $carryDay = $carryDb[$i]['day'];
-                    array_push($dayCount, $carryDb[$i]);
-                }else{
-                    $carryDay = date('Y-m-d', strtotime($carryDay . ' +1 day'));
-                    array_push($dayCount, array(
-                        'day' => $carryDay,
-                        'student_fk' => $_POST['id_alumno'],
-                        'status' => '-'
-                    ));
-                }
-            }
-
-            foreach($dayCount as $day){
+            foreach($dataArray as $day){
                 ?>
-                <td><?php echo $day['status']?></td>
+                    <td><?php echo $day['status'] ?></td>
                 <?php
             }
 
@@ -224,6 +249,40 @@ if($_POST['function'] == 'loadAssistance'){
         }
     } catch (\Throwable $th) {
         echo  $th;
+    }
+}
+
+function getDay($day){
+    switch ($day) {
+        case '0':
+            return 'L';
+            break;
+        case '1':
+            return 'M';
+            break;
+        case '2':
+            return 'M';
+            break;
+        case '3':
+            return 'j';
+            break;
+        case '4':
+            return 'v';
+            break;
+    }
+}
+
+function getAttendanceType($avgStatus) {
+    if ($avgStatus <= 1.5) {
+        return "B";
+    } elseif ($avgStatus <= 2.5) {
+        return "R";
+    } elseif ($avgStatus <= 3.5) {
+        return "J";
+    } elseif ($avgStatus <= 4.5) {
+        return "F";
+    } else {
+        return "A";
     }
 }
 
@@ -508,7 +567,7 @@ if($_POST['function'] == 'updateAssistance'){
         if(mysqli_affected_rows($conn)  > 0){
             echo 'Success';
         }else{
-            echo 'Failed';
+            echo $query;
         }
     } catch (\Throwable $th) {
         echo $th;
@@ -694,7 +753,7 @@ if($_POST['function'] == "submitNewConductData"){
         if(mysqli_affected_rows($conn) > 0){
             echo "Success";
         }else{
-            echo "Failed";
+            echo $query;
         }
 
     } catch (\Throwable $th) {
