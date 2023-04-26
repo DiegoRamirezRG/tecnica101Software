@@ -15,7 +15,7 @@ require_once('../../components/toast/toast.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Layout</title>
+    <title>Login Tecnica</title>
     <link rel="icon" href="../../assets/img/tecnicaMainLogo.svg" type="image/svg+xml">
 
     <link rel="stylesheet" href="./loginStyle.css">
@@ -81,6 +81,7 @@ require_once('../../components/toast/toast.php');
     </div>
     <?php  showToast('emptyEmail', 'Email Vacio', 'El email no puede estar vacio'); ?>
     <?php  showToast('emptyPassword', 'Contraseña Vacia', 'La contraseña no puede estar vacia'); ?>
+    <?php  showToast('badLogin', 'Error al hacer login', 'Error al hacer login, revisa tus credenciales y si el error persiste, contacta con el adminsitrador'); ?>
     <script>
         $(document).ready(function(){
 
@@ -107,14 +108,13 @@ require_once('../../components/toast/toast.php');
                         password: $("#passwordInput").val()
                     }),
                     dataType: "html",
-                    async: false,
+                    async: true,
                     success: function(response){
-                        console.log(response);
-                        if (response == 'Failed') {
-                            $("#badLogin").toast('show');
-                            return false;
-                        } else if (response == 'Success') {
+                        
+                        if (response == 'Success') {
                             window.location = '../mainboard_screen/mainboardScreen.php';
+                        }else{
+                            $("#badLogin").toast('show');
                         }
                     }
                 })
