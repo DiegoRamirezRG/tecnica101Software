@@ -137,6 +137,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php allGroupAttendance();?>
     <?php conductModalCoor();?>
     <?php addConductModalCoor();?>
+    <?php uploadFilesModal();?>
 
 
     <!---Error Toast Declaration--->
@@ -157,6 +158,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedDownloadPlans', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de planeacion, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedDownloadGuides', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de la guia, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedDownloadWorks', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de los trabajos, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedUpload', 'Error al subir el archivo', 'Ha ocurrido un error al subir el archivo, si esto persiste, comunicate con el administrador.'); ?>
 
 
     <!---Success Toast Declaration--->
@@ -177,6 +179,7 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successDownloadPlans', 'Descargado de data exitosa', 'Se descargo el archivo de planeacion correctamente') ?>
     <?php showSucessToast('successDownloadGuides', 'Descargado de data exitosa', 'Se descargo el archivo de la guia correctamente') ?>
     <?php showSucessToast('successDownloadWorks', 'Descargado de data exitosa', 'Se descargo el archivo de los trabajos correctamente') ?>
+    <?php showSucessToast('successUpload', 'Subida de archivo exitosa', 'Se subio el archivo correctamente') ?>
 
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -2411,7 +2414,65 @@ $type = $_SESSION['sessionUser']['type'];
                 xhr.send(body);
             })
 
+            //Teachers Function
+            //Teachers Function
+            //Teachers Function
+
+            //Open Upload Modal
+            $(document).on('click', '#uploadPlaneations, #uploadGuides, #uploadWorks', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                localStorage.setItem('uploadFunction', $(this).attr('data-typeUpload'));
+                $("#uploadModal").modal('show');
+            })
+
+            //On Closing Modal
+            $("#uploadModal").on('hidden.bs.modal', function(){
+                $("#modalClassDetailOpen").modal('show');
+                var myDropzone = Dropzone.forElement(".dropzone");
+                myDropzone.destroy();
+            })
+
+            //Close Upload Modal
+            $(document).on('click', '#closeModalUpload', function(){
+                $("#uploadModal").modal('hide');
+                $("#modalClassDetailOpen").modal('show');
+            })
+
         });
+    </script>
+    <script>
+        //All the dropzone Functions
+        Dropzone.autoDiscover = false;
+        $(document).ready(function(){
+
+            $("#uploadModal").on('shown.bs.modal', function(){
+                getAcceptedFiles(localStorage.getItem('uploadFunction') == 'Works' ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf',)
+            })
+
+            function getAcceptedFiles(acceptedFiles){
+                var myDropzone = new Dropzone('.dropzone', {
+                    url: '../../examples/uploadDocFunctions.php',
+                    dictDefaultMessage: 'Deja caer aqui o da click para seleccionar el archivo PDF',
+                    maxFiles: 1,
+                    acceptedFiles: acceptedFiles,
+                    success: function(file, response){
+                        console.log(response);
+                        if (response.status == "success") {
+                            $("#uploadModal").modal('hide');
+                            $("#successUpload").toast('show');
+                        }else{
+                            $("#failedUpload").toast('show');
+                        }
+                    },
+                    init: function() {
+                        this.on("sending", function(file, xhr, formData) {
+                            formData.append("function", localStorage.getItem('uploadFunction'));
+                            formData.append("classId", localStorage.getItem('currentClassDetail'));
+                        });
+                    }
+                })
+            }
+        })
     </script>
 </body>
 </html>

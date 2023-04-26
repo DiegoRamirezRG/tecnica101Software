@@ -789,12 +789,50 @@ function allGroupAttendance(){
     <div class="modal fade" tabindex="-1" id="modalClassAttendanceModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-body" id="classAttendanceModalBody">
+                <div class="modal-body" id="classAttendanceModalBody">
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button btn-danger" class="btn btn-secondary" id="closeModalClassAttendance">Cerrar</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button btn-danger" class="btn btn-secondary" id="closeModalClassAttendance">Cerrar</button>
+        </div>
+    </div>
+    <?php
+}
+
+function uploadFilesModal(){
+    ?>
+    <div class="modal fade" id="uploadModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="uploadModalBody">
+                    <form class="dropzone">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button btn-danger" class="btn btn-secondary" id="closeModalUpload">Cerrar</button>
+                </div>
             </div>
+        </div>
+    </div>
+    <?php
+}
+
+function takeAssistanceModal(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="modalTakeAssitance" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="takeAssitanceModalBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button btn-danger" class="btn btn-secondary" id="closeModalTakeAssistance">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>

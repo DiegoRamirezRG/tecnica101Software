@@ -8,9 +8,9 @@ include_once('../../config/database/conexion.php');
 include_once('../../components/card/card.php');
 
 if($_SESSION['sessionUser']['type'] == 'Maestro'){
-    $disable = false;
-}else{
     $disable = true;
+}else{
+    $disable = false;
 }
 
 
@@ -21,20 +21,26 @@ if($_POST['function'] == 'loadClassesCards'){
         $gradoWhere = "";
         $grupoWhere = "";
         $turnoWhere = "";
+        $teacherWhere = "";
 
         if(isset($_POST['grado']) && $_POST['grado'] != ''){
             $where = "WHERE ";
-            $gradoWhere = " AND gt.name LIKE '"."%".$_POST['grado']."%"."' ";
+            $gradoWhere = "gt.name LIKE '%" . $_POST['grado'] . "%' ";
         }
-
+        
         if(isset($_POST['grupo']) && $_POST['grupo'] != ''){
-            $where = "WHERE ";
-            $grupoWhere = " AND gp.name LIKE '"."%".$_POST['grupo']."%"."' ";
+            $where = empty($where) ? "WHERE " : $where . "AND ";
+            $grupoWhere = "gp.name LIKE '%" . $_POST['grupo'] . "%' ";
         }
-
+        
         if(isset($_POST['turno']) && $_POST['turno'] != ''){
-            $where = "WHERE ";
-            $turnoWhere = " AND sf.name LIKE '"."%".$_POST['turno']."%"."' ";
+            $where = empty($where) ? "WHERE " : $where . "AND ";
+            $turnoWhere = "sf.name LIKE '%" . $_POST['turno'] . "%' ";
+        }
+        
+        if($_SESSION['sessionUser']['type'] == 'Maestro'){
+            $where = empty($where) ? "WHERE " : $where . "AND ";
+            $teacherWhere = "ctt.teacher_fk = ".$_SESSION['sessionUser']['id_user'];
         }
         
         $query = "SELECT ctt.id_class_teacher, ct.name as class_name, gt.name as grade_name, gr.name as group_name, st.name as shift_name
@@ -42,7 +48,7 @@ if($_POST['function'] == 'loadClassesCards'){
         JOIN class_table ct ON ctt.class_fk = ct.id_class
         JOIN grade_table gt ON ctt.grade_fk = gt.id_grade
         JOIN group_table gr ON ctt.group_fk = gr.id_group
-        JOIN shift_table st ON ctt.shift_fk = st.id_shift ".$where.$gradoWhere.$grupoWhere.$turnoWhere;
+        JOIN shift_table st ON ctt.shift_fk = st.id_shift " . $where . $gradoWhere . $grupoWhere . $turnoWhere . $teacherWhere;
 
         $result = $conn->query($query);
         if($result && mysqli_num_rows($result) > 0){
@@ -50,7 +56,11 @@ if($_POST['function'] == 'loadClassesCards'){
                 createClassCard($data);
             }
         }else{
-            echo "No existen materias con los filtros seleccionados";
+            if($_SESSION['sessionUser']['type'] == 'Maestro'){
+                echo "Usted no tiene clases aun";
+            }else{
+                echo "No existen clases con esos filtros";
+            }
         }
 
     } catch (\Throwable $th) {
@@ -92,7 +102,15 @@ if($_POST['function'] == 'loadClassDetailModal'){
             </div>
             <div class="mt-3 mt-md-5 customRowContent flex-wrap">
                 <div class="col-12 col-md-4">
-                    <div style="<?php echo ($disable) ? 'display: none;' : ''?>">
+                    <div style="<?php 
+                    
+                    if($_SESSION['sessionUser']['type'] == 'Maestro'){
+                        echo "";
+                    }else{
+                        echo "display: none;";
+                    }
+
+                    ?>">
                         <div class="row">
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
@@ -101,24 +119,30 @@ if($_POST['function'] == 'loadClassDetailModal'){
                             </div>
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
-                                    <button class="btn btn-primary w-75 responsiveOptionClassDetailButton PLAN"></button>
+                                    <button class="btn btn-primary w-75 responsiveOptionClassDetailButton PLAN" id="uploadPlaneations" data-typeUpload="Planeations"></button>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
-                                    <button class="btn btn-secondary w-75 responsiveOptionClassDetailButton ESTU"></button>
+                                    <button class="btn btn-secondary w-75 responsiveOptionClassDetailButton ESTU" id="uploadGuides" data-typeUpload="Guides"></button>
                                 </div>
                             </div>
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
-                                    <button class="btn btn-danger w-75 responsiveOptionClassDetailButton TRAB"></button>
+                                    <button class="btn btn-danger w-75 responsiveOptionClassDetailButton TRAB" id="uploadWorks" data-typeUpload="Works"></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div style="<?php echo ($disable) ? '' : 'display: none;'?>">
+                    <div style="<?php 
+                        if($_SESSION['sessionUser']['type'] == 'Maestro'){
+                            echo "display: none;";
+                        }else{
+                            echo "";
+                        }
+                    ?>">
                         <div class="row">
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
@@ -127,11 +151,17 @@ if($_POST['function'] == 'loadClassDetailModal'){
                             </div>
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
-                                    <button class="btn btn-primary w-75 responsiveOptionClassDetailButton PLANCor" id="downloadPlanCoordButtonClassDetailsModal" data-idTeacher="<?php echo $data['teacher_id']?>" data-idClass="<?php echo $_POST['classId']?>"></button>
+                                    <button class="btn btn-danger w-75 responsiveOptionClassDetailButton TRABCor" id="downloadWorksCoordButtonClassDetailsModal" data-idTeacher="<?php echo $data['teacher_id']?>" data-idClass="<?php echo $_POST['classId']?>"></button>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="<?php
+                            if($_SESSION['sessionUser']['type'] != 'Coordinador'){
+                                echo "display: none;";
+                            }else{
+                                echo "";
+                            }
+                        ?>">
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
                                     <button class="btn btn-secondary w-75 responsiveOptionClassDetailButton ESTUCor" id="downloadGuidesCoordButtonClassDetailsModal" data-idTeacher="<?php echo $data['teacher_id']?>" data-idClass="<?php echo $_POST['classId']?>"></button>
@@ -139,7 +169,7 @@ if($_POST['function'] == 'loadClassDetailModal'){
                             </div>
                             <div class="col-6 col-md-12">
                                 <div class="row justify-content-center mb-3">
-                                    <button class="btn btn-danger w-75 responsiveOptionClassDetailButton TRABCor" id="downloadWorksCoordButtonClassDetailsModal" data-idTeacher="<?php echo $data['teacher_id']?>" data-idClass="<?php echo $_POST['classId']?>"></button>
+                                    <button class="btn btn-primary w-75 responsiveOptionClassDetailButton PLANCor" id="downloadPlanCoordButtonClassDetailsModal" data-idTeacher="<?php echo $data['teacher_id']?>" data-idClass="<?php echo $_POST['classId']?>"></button>
                                 </div>
                             </div>
                         </div>
