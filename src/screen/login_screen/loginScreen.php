@@ -54,9 +54,6 @@ require_once('../../components/toast/toast.php');
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 30px; margin-bottom: 10px">
-                        <a class="text-center" href="" style="color: #dc3545; ">Olvide mi contraseña</a>
-                    </div>
                 </div>
                 <div class="row d-flex flex-row justify-content-center align-items-center" style="height: 18%">
                     <div class="col-12 col-sm-9 col-lg-6">
