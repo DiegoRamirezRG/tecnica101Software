@@ -113,6 +113,10 @@ if($_POST['function'] == 'updateClassNameData'){
 if($_POST['function'] == 'finishCycle'){
     try {
 
+        $worksDir = "../../examples/works";
+        $plansDir = "../../examples/plans";
+        $guidesDir = "../../examples/guides";
+
         $deleteConduct = "DELETE FROM conduct_table WHERE student_fk IN (SELECT id_student FROM student_table WHERE grade_fk = 3)";
         $deleteStudents = "DELETE FROM student_table WHERE grade_fk = 3";
         $deleteTableTeacherClass = "DELETE FROM attendance_table";
@@ -134,7 +138,18 @@ if($_POST['function'] == 'finishCycle'){
         $conn->query($deleteTableGuides);
         $conn->query($updateOtherStudents);
 
+
         if($conn->commit()){
+
+            borrarArchivos($worksDir);
+            createFolder($worksDir);
+
+            borrarArchivos($plansDir);
+            createFolder($plansDir);
+            
+            borrarArchivos($guidesDir);
+            createFolder($guidesDir);
+
             echo "Success";
         }else{
             echo "Failed";
@@ -143,6 +158,25 @@ if($_POST['function'] == 'finishCycle'){
     } catch (\Throwable $th) {
         mysqli_rollback($conn);
         echo 'Failed: ' . $th->getMessage();
+    }
+}
+
+function borrarArchivos($carpeta) {
+    foreach(glob($carpeta.'/*') as $archivo) {
+        if(is_dir($archivo)) {
+            borrarArchivos($archivo);
+        } else {
+            unlink($archivo);
+        }
+    }
+    rmdir($carpeta);
+}
+
+function createFolder($folder){
+    if(!is_dir($folder)){
+        mkdir($folder, 0777, true);
+    }else{
+
     }
 }
 

@@ -183,6 +183,9 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successDownloadWorks', 'Descargado de data exitosa', 'Se descargo el archivo de los trabajos correctamente') ?>
     <?php showSucessToast('successUpload', 'Subida de archivo exitosa', 'Se subio el archivo correctamente') ?>
 
+    <!---Warning Toast--->
+    <?php showWarningToast('loadingWarningToast', 'Cargando', 'Se esta terminando el cyclo, espere por favor');?>
+
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
     <script src="../../components/navbar/navbar.js"></script>
@@ -715,6 +718,7 @@ $type = $_SESSION['sessionUser']['type'];
             //Confirm Finish Cycle
             $(document).on('click', '#yeahIWannFinishCycle', function(){
                 $("#confirmPlusFinishCycle").modal('hide');
+                $("#loadingWarningToast").toast('show')
                 $.ajax({
                     method: 'POST',
                     url: '../../controller/cycle_controller/cycleController.php',
@@ -1935,9 +1939,9 @@ $type = $_SESSION['sessionUser']['type'];
                     url: '../../controller/group_controller/groupController.php',
                     data: ({
                         function: 'loadClassesCards',
-                        grado: $("#filterTurnoGrupoSelectClasses").val(),
-                        grupo: $("#filterGradoGrupoSelectClasses").val(),
-                        turno: $("#filterGrupoGrupoSelectClasses").val(),
+                        turno: $("#filterTurnoGrupoSelectClasses").val(),
+                        grado: $("#filterGradoGrupoSelectClasses").val(),
+                        grupo: $("#filterGrupoGrupoSelectClasses").val(),
                     }),
                     dataType: 'html',
                     async: false,
@@ -2536,7 +2540,7 @@ $type = $_SESSION['sessionUser']['type'];
 
                     }else{
                         $("#failedTakeAssisatnce").toast('show');
-                        console.log('Error');
+                        console.log(msg);
                     }
                 }
             })

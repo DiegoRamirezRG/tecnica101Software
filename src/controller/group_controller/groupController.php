@@ -17,30 +17,25 @@ if($_SESSION['sessionUser']['type'] == 'Maestro'){
 if($_POST['function'] == 'loadClassesCards'){
     try {
 
-        $where = "";
         $gradoWhere = "";
         $grupoWhere = "";
         $turnoWhere = "";
         $teacherWhere = "";
 
         if(isset($_POST['grado']) && $_POST['grado'] != ''){
-            $where = "WHERE ";
-            $gradoWhere = "gt.name LIKE '%" . $_POST['grado'] . "%' ";
+            $gradoWhere = " AND gt.name LIKE '%" . $_POST['grado'] . "%' ";
         }
         
         if(isset($_POST['grupo']) && $_POST['grupo'] != ''){
-            $where = empty($where) ? "WHERE " : $where . "AND ";
-            $grupoWhere = "gp.name LIKE '%" . $_POST['grupo'] . "%' ";
+            $grupoWhere = " AND gp.name LIKE '%" . $_POST['grupo'] . "%' ";
         }
         
         if(isset($_POST['turno']) && $_POST['turno'] != ''){
-            $where = empty($where) ? "WHERE " : $where . "AND ";
-            $turnoWhere = "sf.name LIKE '%" . $_POST['turno'] . "%' ";
+            $turnoWhere = " AND st.name LIKE '%" . $_POST['turno'] . "%' ";
         }
         
         if($_SESSION['sessionUser']['type'] == 'Maestro'){
-            $where = empty($where) ? "WHERE " : $where . "AND ";
-            $teacherWhere = "ctt.teacher_fk = ".$_SESSION['sessionUser']['id_user'];
+            $teacherWhere = " AND ctt.teacher_fk = ".$_SESSION['sessionUser']['id_user'];
         }
         
         $query = "SELECT ctt.id_class_teacher, ct.name as class_name, gt.name as grade_name, gr.name as group_name, st.name as shift_name
@@ -48,7 +43,7 @@ if($_POST['function'] == 'loadClassesCards'){
         JOIN class_table ct ON ctt.class_fk = ct.id_class
         JOIN grade_table gt ON ctt.grade_fk = gt.id_grade
         JOIN group_table gr ON ctt.group_fk = gr.id_group
-        JOIN shift_table st ON ctt.shift_fk = st.id_shift " . $where . $gradoWhere . $grupoWhere . $turnoWhere . $teacherWhere;
+        JOIN shift_table st ON ctt.shift_fk = st.id_shift WHERE 1 = 1" . $gradoWhere . $grupoWhere . $turnoWhere . $teacherWhere;
 
         $result = $conn->query($query);
         if($result && mysqli_num_rows($result) > 0){
@@ -57,7 +52,7 @@ if($_POST['function'] == 'loadClassesCards'){
             }
         }else{
             if($_SESSION['sessionUser']['type'] == 'Maestro'){
-                echo "Usted no tiene clases aun";
+                echo "No existen clases con esos filtros";
             }else{
                 echo "No existen clases con esos filtros";
             }

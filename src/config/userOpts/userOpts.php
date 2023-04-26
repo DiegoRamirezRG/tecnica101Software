@@ -19,11 +19,6 @@ $teacherSidebarOpts = array(
         'id' => 'groups'
     ),
     array(
-        'icon' => 'bx-cloud-upload',
-        'title' => 'Planeaciones',
-        'id' => 'uploadPlans'
-    ),
-    array(
         'icon' => 'bx-cog',
         'title' => 'Configuracion',
         'id' => 'settings'
@@ -47,9 +42,9 @@ $teacherBottomOpts = array(
         'id' => 'groupsBottom'
     ),
     array(
-        'icon' => 'bx-cloud-upload',
-        'title' => 'Planeaciones',
-        'id' => 'uploadPlansBottom'
+        'icon' => 'bx-cog',
+        'title' => 'Configuracion',
+        'id' => 'settingsBottom'
     ),
     array(
         'icon' => 'bx-log-out',
