@@ -52,7 +52,7 @@ if($_POST['function'] == 'loadClassesCards'){
             }
         }else{
             if($_SESSION['sessionUser']['type'] == 'Maestro'){
-                echo "No existen clases con esos filtros";
+                echo "Usted no tiene calses asignadas";
             }else{
                 echo "No existen clases con esos filtros";
             }
