@@ -1638,7 +1638,7 @@ $type = $_SESSION['sessionUser']['type'];
             });
 
             //Lunch live search
-            $(document).on('keyup', '#schoolControlSearched', function() {
+            $(document).on('keyup', '#schoolControlSearched, #schoolControlJobSearched', function() {
                 loadSchoolControlTable();
             })
 
@@ -1649,7 +1649,8 @@ $type = $_SESSION['sessionUser']['type'];
                     url: '../../controller/schoolControl_controller/schoolControlController.php',
                     data: ({
                         function: 'schoolControlLoadTable',
-                        name: $("#schoolControlSearched").val()
+                        name: $("#schoolControlSearched").val(),
+                        type: $("#schoolControlJobSearched").val()
                     }),
                     dataType: 'html',
                     async: false,
@@ -1692,6 +1693,12 @@ $type = $_SESSION['sessionUser']['type'];
                     return;
                 }
 
+                if ($("#filterTypeSchoolControl").val() == "") {
+                    alert('El Tipo de Cargo esta vacio');
+                    $("#filterTypeSchoolControl").focus();
+                    return;
+                }
+
                 if ($("#newSchoolControlPassword").val() == "") {
                     alert('La Contraseña no puede ser vacia');
                     $("#newSchoolControlPassword").focus();
@@ -1721,6 +1728,7 @@ $type = $_SESSION['sessionUser']['type'];
                         mothersLN: $("#newSchoolControlMLastname").val(),
                         phone: $("#newSchoolControlPhone").val(),
                         email: $("#newSchoolControlEmail").val(),
+                        type: $("#filterTypeSchoolControl").val(),
                         password: $("#newSchoolControlPassword").val()
                     }),
                     dataType: 'html',
@@ -1735,6 +1743,7 @@ $type = $_SESSION['sessionUser']['type'];
                             $("#newSchoolControlMLastname").val('');
                             $("#newSchoolControlPhone").val('');
                             $("#newSchoolControlEmail").val('');
+                            $("#filterTypeSchoolControl").val('');
                             $("#newSchoolControlPassword").val('');
                             $("#newSchoolControlConfirmPassword").val('');
 

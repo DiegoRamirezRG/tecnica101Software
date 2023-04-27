@@ -427,8 +427,16 @@ function addNewSchoolControlModal()
                         </div>
                         <div class="row">
                             <label class="mb-1">Crendenciales</label>
-                            <div class="col-12 text-center mb-3">
+                            <div class="col-6 text-center mb-3">
                                 <input type="email" class="form-control" placeholder="control@correo.com" id="newSchoolControlEmail">
+                            </div>
+                            <div class="col-6 text-center mb-3">
+                                <select class="form-select" aria-label="Default select example" id="filterTypeSchoolControl">
+                                    <option selected value="">Cargo</option>
+                                    <option value="1">Control</option>
+                                    <option value="2">Coordinador</option>
+                                    <option value="3">Prefecto</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
