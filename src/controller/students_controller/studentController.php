@@ -12,14 +12,20 @@ if($_SESSION['sessionUser']['type'] == 'Control'){
     $disable = true;
 }
 
+if($_SESSION['sessionUser']['type'] == 'Maestro'){
+    $onlyTeacherStudent = true;
+}else{
+    $onlyTeacherStudent = false;
+}
+
 if($_POST['function'] == 'loadStudentData'){
     try {
         $nombreWhere = "";
         $gradoWhere = "";
         $grupoWhere = "";
         $turnoWhere = "";
-
-        
+        $onlyMain = "";
+        $profesorWhere = "";
 
         if($_POST['name'] != ''){
             $nombreWhere = " AND CONCAT(st.name, ' ', st.last_name, ' ', st.mothersLast_name) LIKE '"."%".$_POST['name']."%"."' ";
@@ -37,22 +43,39 @@ if($_POST['function'] == 'loadStudentData'){
             $turnoWhere = " AND sf.name LIKE '"."%".$_POST['turno']."%"."' ";
         }
 
+        if($onlyTeacherStudent){
+            $profesorWhere = " AND ctt.teacher_fk = ".$_SESSION['sessionUser']['id_user']."";
+            $joinTeachers = "LEFT JOIN class_teacher_table ctt ON st.id_student = ctt.student_fk LEFT JOIN teacher_table t ON ctt.teacher_fk = t.id_teacher ";
+        } else {
+            $joinTeachers = "";
+        }
+
 
         $query = "SELECT 
             st.id_student as id, st.name as name, CONCAT(st.last_name,  ' ', st.mothersLast_name) as lastNames, CONCAT(gt.name, '° ', gp.name, ' ', sf.name) as currentStudent
         FROM 
-            student_table as st, group_table as gp, grade_table as gt, shift_table as sf 
+            student_table as st
+            LEFT JOIN group_table as gp ON st.group_fk = gp.id_group
+            LEFT JOIN grade_table as gt ON st.grade_fk = gt.id_grade
+            LEFT JOIN shift_table as sf ON st.shift_fk = sf.id_shift
+            ".$joinTeachers."
         WHERE 
-            st.grade_fk = gt.id_grade AND st.group_fk = gp.id_group AND st.shift_fk = sf.id_shift".$nombreWhere.$gradoWhere.$grupoWhere.$turnoWhere;
+            1 = 1".$nombreWhere.$gradoWhere.$grupoWhere.$turnoWhere.$profesorWhere;
 
         $result = $conn->query($query);
-        foreach ($result as $row ) {
+        if($result && mysqli_num_rows($result) > 0){
+            foreach ($result as $row ) {
+                ?>
+                <tr id="<?php echo $row['id']?>">
+                    <td><?php echo $row['name']?></td>
+                    <td><?php echo $row['lastNames']?></td>
+                    <td><?php echo $row['currentStudent']?></td>
+                </tr>
+                <?php
+            }
+        }else{
             ?>
-            <tr id="<?php echo $row['id']?>">
-                <td><?php echo $row['name']?></td>
-                <td><?php echo $row['lastNames']?></td>
-                <td><?php echo $row['currentStudent']?></td>
-            </tr>
+            <p>No existen alumnos</p>
             <?php
         }
     } catch (\Throwable $th) {
