@@ -5,14 +5,19 @@ include_once('../../config/database/conexion.php');
 if ($_POST['function'] == 'schoolControlLoadTable') {
     try {
         $nameFilter = "";
+        $typeFilter = "";
 
         if (isset($_POST['name']) and $_POST['name'] != "") {
             $nameFilter = " AND CONCAT(ut.name, ' ', ut.last_name, ' ', ut.mothersLast_name) LIKE '%" . $_POST['name'] . "%'";
         }
 
-        $query = "SELECT DISTINCT ut.id_user, CONCAT(ut.name, ' ', ut.last_name, ' ', ut.mothersLast_name) as name
+        if (isset($_POST['type']) and $_POST['type'] != "") {
+            $typeFilter = " AND ut.type LIKE '"."%".$_POST['type']."%"."' ";
+        }
+
+        $query = "SELECT DISTINCT ut.id_user, CONCAT(ut.name, ' ', ut.last_name, ' ', ut.mothersLast_name) as name, ut.type
         FROM user_table as ut 
-        WHERE ut.type = 'Control'" . $nameFilter;
+        WHERE ut.type NOT IN ('Maestro', 'GOD')".$nameFilter.$typeFilter;
 
         $result = $conn->query($query);
 
@@ -22,6 +27,7 @@ if ($_POST['function'] == 'schoolControlLoadTable') {
 ?>
                 <tr id="<?php echo $row['id_user'] ?>">
                     <td><?php echo $row['name'] ?></td>
+                    <td><?php echo $row['type'] ?></td>
                 </tr>
             <?php
             }
@@ -42,7 +48,7 @@ if ($_POST['function'] == 'createNewSchoolControl') {
 
         $encrypted_password = md5($_POST['password']);
 
-        $query = "INSERT INTO user_table (email, password, name, last_name, mothersLast_name, phone, type) VALUE ('" . $_POST['email'] . "', '" . $encrypted_password . "', '" . $_POST['name'] . "', '" . $_POST['lastname'] . "', '" . $_POST['mothersLN'] . "', " . $_POST['phone'] . ", 'Control')";
+        $query = "INSERT INTO user_table (email, password, name, last_name, mothersLast_name, phone, type) VALUE ('" . $_POST['email'] . "', '" . $encrypted_password . "', '" . $_POST['name'] . "', '" . $_POST['lastname'] . "', '" . $_POST['mothersLN'] . "', " . $_POST['phone'] . ", '" . $_POST['type'] . "')";
 
         $result = $conn->query($query);
 

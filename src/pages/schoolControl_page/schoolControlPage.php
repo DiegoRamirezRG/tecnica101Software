@@ -4,8 +4,11 @@
             <h1 class="headerForm">Gestion de Administrativos</h1>
             <div class="col-sm-11 col-xs-11 col-md-10 col-lg-8 pt-4">
                 <div class="row d-flex flex-wrap">
-                    <div class="col-8 col-md-8 d-flex mx-auto">
+                    <div class="col-4 col-md-4 d-flex mx-auto">
                         <input class="form-control me-2" type="search" placeholder="Buscar Personal Administrativo" aria-label="Search" id="schoolControlSearched">
+                    </div>
+                    <div class="col-4 col-md-4 d-flex mx-auto">
+                        <input class="form-control me-2" type="search" placeholder="Buscar Cargo Administrativo" aria-label="Search" id="schoolControlJobSearched">
                     </div>
                     <div class="col-4 col-md-4 d-flex mx-auto justify-content-md-end mt-0 mt-md-0 ">
                         <button class="btn btn-outline-primary sizableBtnSchoolControl" id="newSchoolControlBtn"></button>
@@ -18,6 +21,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Cargo</th>
                     </tr>
                 </thead>
                 <tbody id="schoolControlTableBody" class="tbodyHover">
