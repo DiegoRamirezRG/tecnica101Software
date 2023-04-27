@@ -48,13 +48,13 @@
     overflow-x: hidden;
 }
 
-.card{
+.homeCardClass{
     height: 280px;
     border-radius: 20px !important;
     overflow: hidden;
 }
 
-.card:hover{
+.homeCardClass:hover{
     cursor: pointer !important;
     border: 3px solid #dc3545;
     filter: drop-shadow(0px 4px 10px rgba(220, 53, 69, 0.1));;

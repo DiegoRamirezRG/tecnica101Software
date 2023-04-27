@@ -36,6 +36,8 @@ $type = $_SESSION['sessionUser']['type'];
     <link rel="stylesheet" href="../../pages/cycle_page/cycleStyle.css">
     <link rel="stylesheet" href="../../pages/config_page/configStyle.css">
     <link rel="stylesheet" href="../../pages/schoolControl_page/schoolControlStyle.css">
+    <link rel="stylesheet" href="../../pages/group_page/groupStyle.css">
+    <link rel="stylesheet" href="../../pages/plans_page/plansStyle.css">
 
     <!---Datatables--->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -131,6 +133,12 @@ $type = $_SESSION['sessionUser']['type'];
     <?php addNewSchoolControlModal(); ?>
     <?php loadSchoolControlDetailsModal(); ?>
     <?php editSchoolControl(); ?>
+    <?php classModalDetailOpen();?>
+    <?php allGroupAttendance();?>
+    <?php conductModalCoor();?>
+    <?php addConductModalCoor();?>
+    <?php uploadFilesModal();?>
+    <?php takeAssistanceModal();?>
 
 
     <!---Error Toast Declaration--->
@@ -148,6 +156,11 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showToast('failedUpdateProfileImage', 'Error al acutializar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, porfavor comuniquese con el administrador'); ?>
     <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
     <?php showToast('failedUpdateSchoolControl', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del Administrativo, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedDownloadPlans', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de planeacion, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedDownloadGuides', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de la guia, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedDownloadWorks', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de los trabajos, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedUpload', 'Error al subir el archivo', 'Ha ocurrido un error al subir el archivo, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedTakeAssisatnce', 'Error al tomar asistancia', 'Ha ocurrido un error al tomar asistencia, si esto persiste, comunicate con el administrador.'); ?>
 
 
     <!---Success Toast Declaration--->
@@ -165,6 +178,13 @@ $type = $_SESSION['sessionUser']['type'];
     <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
     <?php showSucessToast('successUpdateSchoolControlDate', 'Agregado de data exitosa', 'Se actualizaco al administrativo correctamente') ?>
     <?php showSucessToast('successNewAdminCreation', 'Agregado de data exitosa', 'Se registro al administrativo correctamente') ?>
+    <?php showSucessToast('successDownloadPlans', 'Descargado de data exitosa', 'Se descargo el archivo de planeacion correctamente') ?>
+    <?php showSucessToast('successDownloadGuides', 'Descargado de data exitosa', 'Se descargo el archivo de la guia correctamente') ?>
+    <?php showSucessToast('successDownloadWorks', 'Descargado de data exitosa', 'Se descargo el archivo de los trabajos correctamente') ?>
+    <?php showSucessToast('successUpload', 'Subida de archivo exitosa', 'Se subio el archivo correctamente') ?>
+
+    <!---Warning Toast--->
+    <?php showWarningToast('loadingWarningToast', 'Cargando', 'Se esta terminando el cyclo, espere por favor');?>
 
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -245,6 +265,15 @@ $type = $_SESSION['sessionUser']['type'];
                 }else if (DOMPage === 'schoolControlPage') {
                     loadSchoolControl();
                     loadSchoolControlTable();
+                }else if(DOMPage === 'groupPage'){
+                    loadGroups();
+                    loadClasses();
+                }else if(DOMPage === 'conductPage'){
+                    loadConducts();
+                    loadConductTableCoordinador();
+                }else if(DOMPage === 'plansPage'){
+                    loadPlans();
+                    loadClassesDownload();
                 }
             }
 
@@ -276,6 +305,21 @@ $type = $_SESSION['sessionUser']['type'];
                 loadSchoolControlTable();
             });
 
+            $(document).on('click', '#groupsBottom, #groupsCardComponent, #groups', function(){
+                loadGroups();
+                loadClasses();
+            })
+
+            $(document).on('click', '#conductCardComponent, #conduct, #conductBottom', function(){
+                loadConducts();
+                loadConductTableCoordinador();
+            })
+
+            $(document).on('click', '#plans, #plansCardComponent', function(){
+                loadPlans();
+                loadClassesDownload();
+            })
+
             //Function to load
             function loadHome(){
                 $("#MainContent").load('../../pages/home_page/homePage.php');
@@ -305,6 +349,21 @@ $type = $_SESSION['sessionUser']['type'];
             function loadSchoolControl() {
                 $("#MainContent").load('../../pages/schoolControl_page/schoolControlPage.php')
                 localStorage.setItem('currentPage', 'schoolControlPage');
+            }
+
+            function loadGroups(){
+                $("#MainContent").load('../../pages/group_page/groupPage.php');
+                localStorage.setItem('currentPage', 'groupPage');
+            }
+
+            function loadConducts(){
+                $("#MainContent").load('../../pages/conduct_page/conductPage.php');
+                localStorage.setItem('currentPage', 'conductPage');
+            }
+
+            function loadPlans(){
+                $("#MainContent").load('../../pages/plans_page/plansPage.php');
+                localStorage.setItem('currentPage', 'plansPage');
             }
 
             //Config Profile
@@ -659,6 +718,7 @@ $type = $_SESSION['sessionUser']['type'];
             //Confirm Finish Cycle
             $(document).on('click', '#yeahIWannFinishCycle', function(){
                 $("#confirmPlusFinishCycle").modal('hide');
+                $("#loadingWarningToast").toast('show')
                 $.ajax({
                     method: 'POST',
                     url: '../../controller/cycle_controller/cycleController.php',
@@ -926,22 +986,22 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#assignTeacherSendBtn', function(){
 
                 if($("#selectedShift").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('El turno no puede ser vacio');
                     $("#selectedShift").focus();
                     return;
                 }
                 if($("#selectedGrade").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('El grado no puede ser vacio');
                     $("#selectedGrade").focus();
                     return;
                 }
                 if($("#selectedGroup").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('El grupo no puede ser vacio');
                     $("#selectedGroup").focus();
                     return;
                 }
                 if($("#selectedClass").val() == ""){
-                    alert('No puede ser vacio');
+                    alert('La clase no puede ser vacia');
                     $("#selectedClass").focus();
                     return;
                 }
@@ -1373,7 +1433,6 @@ $type = $_SESSION['sessionUser']['type'];
                     dataType: 'html',
                     async: false,
                     success: function(msg){
-                        console.log(msg);
                         if(msg === 'Success'){
                             $("#toastSuccessUpdate").toast('show');
                         }
@@ -1877,7 +1936,624 @@ $type = $_SESSION['sessionUser']['type'];
                 })
 
             });
+
+            ///Coordinador
+            ///Coordinador
+            ///Coordinador
+
+            //Load Clases Cards
+            function loadClasses(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadClassesCards',
+                        turno: $("#filterTurnoGrupoSelectClasses").val(),
+                        grado: $("#filterGradoGrupoSelectClasses").val(),
+                        grupo: $("#filterGrupoGrupoSelectClasses").val(),
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#grupoContainerCards").html(response);
+                    }
+                })
+            }
+
+            //Load Student Table in Class Detail
+            function loadClassDetailStudents(class_id){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadStudents',
+                        class_teacher_id: class_id,
+                        searchedStudent: $("#searchedStudentClassDetailModal").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classDetailStudentTableBody").html(response);
+                    }
+                })
+            }
+
+            //Click on Class 
+            $(document).on('click', '.classCard', function(){
+                localStorage.setItem('currentClassDetail', $(this).attr('id'));
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadClassDetailModal',
+                        classId: $(this).attr('id')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classDetailModalBody").html(response);
+                        $("#modalClassDetailOpen").modal('show');
+                    }
+                })
+            });
+
+            //Filter Classes
+            $(document).on('change', '#filterTurnoGrupoSelectClasses, #filterGradoGrupoSelectClasses, #filterGrupoGrupoSelectClasses', function(){
+                loadClasses();
+            })
+            
+            //Search an student
+            $(document).on('keyup', '#searchedStudentClassDetailModal', function(){
+                loadClassDetailStudents(localStorage.getItem('currentClassDetail'));
+            })
+
+            //Load Class Detail Students Table
+            $("#modalClassDetailOpen").on('shown.bs.modal', function(){
+                loadClassDetailStudents(localStorage.getItem('currentClassDetail'));
+            });
+            
+            //Click on student row
+            $(document).on('click', '#classDetailStudentTableBody tr', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                localStorage.setItem('clickedRow', this.id);
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadModalBody',
+                        id_alumno: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(modalBody){
+                        $("#modalBody").html(modalBody);
+                        $("#modal").modal('show');
+                    }
+                })
+            })
+
+            //Download the Plans
+            $(document).on('click', '#downloadPlanCoordButtonClassDetailsModal', function(){
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'blob';
+                // xhr.responseType = 'html';
+
+                const body = JSON.stringify({
+                    function: 'downloadPlanneacion',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const url = window.URL.createObjectURL(xhr.response);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Planeacion.pdf';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                        $("#successDownloadPlans").toast('show');
+                    }else{
+                        $("#failedDownloadPlans").toast('show');
+                    }
+                }
+                xhr.send(body);
+            })
+
+            //Download the Guides
+            $(document).on('click', '#downloadGuidesCoordButtonClassDetailsModal', function(){
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'blob';
+                // xhr.responseType = 'html';
+
+                const body = JSON.stringify({
+                    function: 'downloadGuides',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const url = window.URL.createObjectURL(xhr.response);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Guia.pdf';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                        $("#successDownloadGuides").toast('show');
+                    }else{
+                        $("#failedDownloadGuides").toast('show');
+                    }
+                }
+                xhr.send(body);
+            })
+
+            //Download the work
+            $(document).on('click', '#downloadWorksCoordButtonClassDetailsModal', function(){
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'arraybuffer';
+
+                const body = JSON.stringify({
+                    function: 'downloadWorks',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Works.xlsx';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        URL.revokeObjectURL(url);
+
+                        $("#successDownloadWorks").toast('show');
+                    }else{
+                        $("#failedDownloadWorks").toast('show');
+                        
+                    }
+                }
+                xhr.send(body);
+            })
+
+            //Open Attendance Modal and close ClassDetailModal
+            $(document).on('click', '#attendanceCoordButtonClassDetailsModal', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadAttendanceModalBody',
+                        class_id: $(this).attr('data-idClass')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#classAttendanceModalBody").html(response);
+                        $("#modalClassAttendanceModal").modal('show');
+                    }
+                })
+            })
+
+            //Close Attendance Modal and Open ClassDetail
+            $(document).on('click', '#closeModalClassAttendance', function(){
+                $("#modalClassAttendanceModal").modal('hide');
+                $("#modalClassDetailOpen").modal('show');
+            })
+
+            //Close Class Modal
+            $(document).on('click', '#closeModalClassDetailOpen', function(){
+                $("#modalClassDetailOpen").modal('hide');
+            })
+
+            ///Conduct
+            ///Conduct
+            ///Conduct
+
+            //Load conduct table
+            function loadConductTableCoordinador(){
+                let nameSearched = '';
+                let groupSearched = '';
+                let gradeSearched = '';
+                let shiftSearched = '';
+
+                if($("#searchStudentConductCoor").val() !== '' && $("#searchStudentConductCoor").val() !== undefined){
+                    nameSearched = $("#searchStudentConductCoor").val();
+                }
+
+                if($("#filterConductByShift").val() !== '' && $("#filterConductByShift").val() !== undefined){
+                    shiftSearched = $("#filterConductByShift").val();
+                }
+
+                if($("#filterConductByGrade").val() !== '' && $("#filterConductByGrade").val() !== undefined){
+                    gradeSearched = $("#filterConductByGrade").val();
+                }
+
+                if($("#filterConductByGroup").val() !== '' && $("#filterConductByGroup").val() !== undefined){
+                    groupSearched = $("#filterConductByGroup").val();
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadStudentData',
+                        name: nameSearched,
+                        turno: shiftSearched,
+                        grado: gradeSearched,
+                        grupo: groupSearched
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(data){
+                        $("#conductStudentTableBody").html(data);
+                    }
+                })
+            }
+
+            //Handle Live Type Searcher
+            $(document).on('keyup', '#searchStudentConductCoor', function(){
+                loadConductTableCoordinador();
+            })
+
+            //Handle change input filter
+            $(document).on('change', '#filterConductByShift, #filterConductByGrade, #filterConductByGroup', function(){
+                loadConductTableCoordinador();
+            })
+
+            //Open a ConductModal
+            $(document).on('click', '#conductStudentTableBody tr', function(){
+                localStorage.setItem('clickedRow', this.id);
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/conduct_controller/conductController.php',
+                    data: ({
+                        function: 'loadConductModal',
+                        id_student: this.id
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#conductModalBodyCoor").html(response);
+                        $("#conductModalCoor").modal('show');
+                    }
+                })
+            })
+
+            //Close a ConductModal
+            $(document).on('click', '#conducModalCloseCoor', function(){
+                $("#conductModalCoor").modal('hide');
+            })
+
+            //Load Conduct Table
+            $("#conductModalCoor").on('shown.bs.modal', function(){
+                loadHistoricConductTableBodyCoor(localStorage.getItem('clickedRow'));
+            });
+
+            //Load conduct detail
+            function loadHistoricConductTableBodyCoor(student_id){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: 'loadConductTableBody',
+                        id_student: student_id,
+                        where: $("#selectedFilterCoor").val()
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#conductTableBodyCoor").html(response);
+                    }
+                })
+            }
+
+            //Add Conduct
+            $(document).on('click', '#addNewConductDataCoor', function(){
+                $("#conductModalCoor").modal('hide');
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/conduct_controller/conductController.php',
+                    data: ({
+                        function: 'loadSubmitAsConductCoor',
+                        id_student: localStorage.getItem('clickedRow')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#submitAsCoor").html(response);
+                        $("#addConductModalCoor").modal('show');
+                    }
+                }) 
+            });
+
+            //Send Conduct to BD
+            $("#submitConductCoor").on('click', function(){
+
+                let selected = $('#selectedSubmitAsCoor option:selected');
+                let entity = selected.data('entity');
+
+                if($("#idScoreConductCoor").val() == ""){
+                    alert('El Puntaje no puede ser vacio');
+                    $("#idScoreConductCoor").focus();
+                    return;
+                }
+
+                if($("#newConductDescCoor").val() == ""){
+                    alert('La Descripcion no puede estar vacia');
+                    $("#newConductDescCoor").focus();
+                    return;
+                }
+
+                if($("#selectedSubmitAsCoor").val() == ""){
+                    alert('Necesita tener un tipo de usuario seleccionado');
+                    $("#submitAsCoor").focus();
+                    return;
+                }
+                
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/students_controller/studentController.php',
+                    data: ({
+                        function: "submitNewConductData",
+                        id_user: localStorage.getItem('clickedRow'),
+                        description: $("#newConductDescCoor").val(),
+                        value: $("#idScoreConductCoor").val(),
+                        asValue: $("#selectedSubmitAsCoor").val(),
+                        asEntity: entity
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        if(response == 'Success'){
+                            $("#successConductUpdate").toast('show')
+                            $("#addConductModalCoor").modal('hide');
+                            $("#conductModalCoor").modal('show');
+                        }else{
+                            $("#failedAddConduct").toast('show');
+                            console.log(response);
+                        }
+                    }
+                })
+            })
+
+            //Close Send to Bd Conduct
+            $(document).on('click', '#addConductModalCloseCoor', function(){
+                $("#addConductModalCoor").modal('hide');
+                $("#conductModalCoor").modal('show');
+            })
+
+            //Planeaciones Page
+            //Planeaciones Page
+            //Planeaciones Page
+
+            //Load conduct table
+            function loadClassesDownload(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/plans_controller/plansController.php',
+                    data: ({
+                        function: 'loadClassesCards',
+                        grado: $("#filterTurnoGrupoPlanDownload").val(),
+                        grupo: $("#filterGradoGrupoPlanDownload").val(),
+                        turno: $("#filterGrupoGrupoPlanDownload").val(),
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#grupoContainerCardsPlanDownload").html(response);
+                    }
+                })
+            }
+
+            $(document).on('change', '#filterTurnoGrupoPlanDownload, #filterGradoGrupoPlanDownload, #filterGrupoGrupoPlanDownload', function(){
+                loadClassesDownload();
+            })
+
+            //Click on download All the 
+            $(document).on('click', '#downloadAll', function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../examples/downloadZipController.php',
+                    data: ({
+                        function: 'downloadAllPlans'
+                    }),
+                    success: function(fileName){
+                        if(fileName == 'Failed'){
+                        $("#failedDownloadPlans").toast('show');
+                        }else{
+                            var a = document.createElement('a');
+                            a.href = '../../examples/files/'+fileName;
+                            a.download = fileName;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            $("#successDownloadPlans").toast('show');
+                        }
+                    }
+                })
+            })
+
+            //Click on Download
+            $(document).on('click', '.classCardDownload', function(){
+
+                if(this.id == 'downloadAll'){
+                    return;
+                }
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../../examples/downloadController.php');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.setRequestHeader("Content-Disposition", "attachment; filename=carpeta_comprimida.zip");
+                xhr.responseType = 'blob';
+
+                const body = JSON.stringify({
+                    function: 'downloadPlanneacion',
+                    id_teacher: $(this).attr('data-idTeacher'),
+                    id_class: $(this).attr('data-idClass')
+                });
+
+                xhr.onload = function(){
+                    if (xhr.status === 200) {
+                        const url = window.URL.createObjectURL(xhr.response);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Planeacion.pdf';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                        $("#successDownloadPlans").toast('show');
+                    }else{
+                        $("#failedDownloadPlans").toast('show');
+                    }
+                }
+                xhr.send(body);
+            })
+
+            //Teachers Function
+            //Teachers Function
+            //Teachers Function
+
+            //Open Upload Modal
+            $(document).on('click', '#uploadPlaneations, #uploadGuides, #uploadWorks', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                localStorage.setItem('uploadFunction', $(this).attr('data-typeUpload'));
+                $("#uploadModal").modal('show');
+            })
+
+            //On Closing Modal
+            $("#uploadModal").on('hidden.bs.modal', function(){
+                $("#modalClassDetailOpen").modal('show');
+                var myDropzone = Dropzone.forElement(".dropzone");
+                myDropzone.destroy();
+            })
+
+            //Close Upload Modal
+            $(document).on('click', '#closeModalUpload', function(){
+                $("#uploadModal").modal('hide');
+                $("#modalClassDetailOpen").modal('show');
+            })
+
+            //Open Take Assistance
+            $(document).on('click', '#takeAssistanceButton', function(){
+                $("#modalClassDetailOpen").modal('hide');
+                $("#modalTakeAssitance").modal('show');
+            })
+
+            //Close Take Assitantece
+            $(document).on('click', '#closeModalTakeAssistance', function(){
+                $("#modalTakeAssitance").modal('hide');
+                $("#modalClassDetailOpen").modal('show');
+            })
+
+            $("#modalTakeAssitance").on('show.bs.modal', function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../controller/group_controller/groupController.php',
+                    data: ({
+                        function: 'loadAssistanceTable',
+                        idClass: localStorage.getItem('currentClassDetail')
+                    }),
+                    dataType: 'html',
+                    async: false,
+                    success: function(response){
+                        $("#modalTakeAssistanceTable").html(response);
+                    }
+                })
+            })
+
         });
+    </script>
+    <script>
+        //All the dropzone Functions
+        Dropzone.autoDiscover = false;
+        $(document).ready(function(){
+
+            $("#uploadModal").on('shown.bs.modal', function(){
+                getAcceptedFiles(localStorage.getItem('uploadFunction') == 'Works' ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf',)
+            })
+
+            function getAcceptedFiles(acceptedFiles){
+                var myDropzone = new Dropzone('.dropzone', {
+                    url: '../../examples/uploadDocFunctions.php',
+                    dictDefaultMessage: 'Deja caer aqui o da click para seleccionar el archivo.',
+                    maxFiles: 1,
+                    acceptedFiles: acceptedFiles,
+                    success: function(file, response){
+                        console.log(response);
+                        if (response.status == "success") {
+                            $("#uploadModal").modal('hide');
+                            $("#successUpload").toast('show');
+                        }else{
+                            $("#failedUpload").toast('show');
+                        }
+                    },
+                    init: function() {
+                        this.on("sending", function(file, xhr, formData) {
+                            formData.append("function", localStorage.getItem('uploadFunction'));
+                            formData.append("classId", localStorage.getItem('currentClassDetail'));
+                        });
+                    }
+                })
+            }
+        })
+    </script>
+    <script>
+        const options = [
+            {'text': 'A', 'value': 'Asistencia', 'color': '#5cb85c', 'text-color': '#000'},
+            {'text': 'F', 'value': 'Falta', 'color': '#A63D40', 'text-color': '#fff'},
+            {'text': 'R', 'value': 'Retraso', 'color': '#f0ad4e', 'text-color': '#000'},
+            {'text': 'J', 'value': 'Justificacion', 'color': '#0275d8', 'text-color': '#000'},
+            {'text': 'B', 'value': 'Baja', 'color': '#FF9505', 'text-color': '#000'}
+        ]
+        var optionIndex = 1;
+        
+        $(document).on('click', '.takeAttendanceBtn', function(){
+            const currentOption = options[optionIndex];
+            this.style.backgroundColor = currentOption['color'];
+            this.style.color= currentOption['text-color'];
+            this.textContent = currentOption['text'];
+            this.setAttribute('data-action', currentOption['value']);
+            optionIndex = (optionIndex + 1) % options.length;
+
+            $.ajax({
+                method: 'POST',
+                url: '../../controller/students_controller/studentController.php',
+                data: ({
+                    function: 'updateAssistance',
+                    updated: $(this).attr('data-action'),
+                    asistanceId: $(this).attr('id')
+                }),
+                dataType: 'html',
+                async: false,
+                success: function(msg){
+                    if(msg === 'Success'){
+
+                    }else{
+                        $("#failedTakeAssisatnce").toast('show');
+                        console.log(msg);
+                    }
+                }
+            })
+        })
     </script>
 </body>
 </html>

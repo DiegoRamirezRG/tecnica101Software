@@ -1,5 +1,15 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if($_SESSION['sessionUser']['type'] == 'Control'){
+    $disable = false;
+}else{
+    $disable = true;
+}
+
 function createModal()
 {
 ?>
@@ -138,6 +148,24 @@ function conductModal()
 <?php
 }
 
+function conductModalCoor()
+{
+?>
+    <div class="modal fade" tabindex="-1" id="conductModalCoor" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="conductModalBodyCoor">
+
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-danger" id="conducModalCloseCoor">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+}
+
 function addConductModal()
 {
 ?>
@@ -177,6 +205,52 @@ function addConductModal()
                 </div>
                 <div class="modal-footer text-center">
                     <button type="button" class="btn btn-danger" id="addConductModalClose">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+}
+
+function addConductModalCoor()
+{
+?>
+    <div class="modal fade" tabindex="-1" id="addConductModalCoor" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col">
+                        <div class="row mt-3">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" for="idScoreConduct"><i class='bx bxs-face fs-1'></i></span>
+                                <select class="form-select" aria-label="Default select example" id="idScoreConductCoor">
+                                    <option selected value="">Selecciona El Puntaje</option>
+                                    <option value="Malo">Malo</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Bueno">Bueno</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="form-group">
+                                <label for="newConductDesc">Descripcion</label>
+                                <textarea class="form-control mt-1" id="newConductDescCoor" rows="3" placeholder="El alumno hizo . . ."></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="form-group" id="submitAsCoor">
+
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="form-group d-flex justify-content-center">
+                                <button class="btn btn-success" id="submitConductCoor">Añadir Conducta</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-danger" id="addConductModalCloseCoor">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -699,6 +773,135 @@ function loadCropImage(){
             </div>
         </div>
     <?php
+}
+
+function classModalDetailOpen(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="modalClassDetailOpen" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body" id="classDetailModalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button btn-danger" class="btn btn-secondary" id="closeModalClassDetailOpen">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function allGroupAttendance(){
+    ?>
+    <div class="modal fade" tabindex="-1" id="modalClassAttendanceModal" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="classAttendanceModalBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button btn-danger" class="btn btn-secondary" id="closeModalClassAttendance">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function uploadFilesModal(){
+    ?>
+    <div class="modal fade" id="uploadModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="uploadModalBody">
+                    <form class="dropzone">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button btn-danger" class="btn btn-secondary" id="closeModalUpload">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function takeAssistanceModal(){
+
+    $fecha = date('Y-m-d'); 
+    $day = date('d', strtotime($fecha));
+    $month = date('F', strtotime($fecha));
+    $mes = getMesEnEspanol($month);
+
+    ?>
+    <div class="modal fade" tabindex="-1" id="modalTakeAssitance" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body" id="takeAssitanceModalBody">
+                    <div style="height: 60vh;">
+                        <div class="col">
+                            <div class="row text-center">
+                                <h1>Tomar Asistencia</h1>
+                                <h3 class="text-danger"><strong>Dia: <?php echo $day.' de '.$mes?></strong></h3>
+                            </div>
+                            <div class="row p-2 p-md-5">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-10">Alumno</th>
+                                            <th class="col-2">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="modalTakeAssistanceTable">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button btn-danger" class="btn btn-secondary" id="closeModalTakeAssistance">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function getMesEnEspanol($mesEnIngles) {
+    switch(strtolower($mesEnIngles)) {
+        case 'january':
+            return 'Enero';
+        case 'february':
+            return 'Febrero';
+        case 'march':
+            return 'Marzo';
+        case 'april':
+            return 'Abril';
+        case 'may':
+            return 'Mayo';
+        case 'june':
+            return 'Junio';
+        case 'july':
+            return 'Julio';
+        case 'august':
+            return 'Agosto';
+        case 'september':
+            return 'Septiembre';
+        case 'october':
+            return 'Octubre';
+        case 'november':
+            return 'Noviembre';
+        case 'december':
+            return 'Diciembre';
+        default:
+            return '';
+    }
 }
 
 ?>
