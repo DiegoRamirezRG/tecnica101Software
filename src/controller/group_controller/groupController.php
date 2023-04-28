@@ -233,7 +233,7 @@ if($_POST['function'] == 'loadStudents'){
             }
         }else{
             ?>
-                <td><?php echo $query?></td>
+                <td><?php echo 'La clase no tiene alumnos'?></td>
             <?php
         }
 

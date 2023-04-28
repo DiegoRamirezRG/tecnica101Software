@@ -45,20 +45,20 @@ if($_POST['function'] == 'loadStudentData'){
 
         if($onlyTeacherStudent){
             $profesorWhere = " AND ctt.teacher_fk = ".$_SESSION['sessionUser']['id_user']."";
-            $joinTeachers = "LEFT JOIN class_teacher_table ctt ON st.id_student = ctt.student_fk LEFT JOIN teacher_table t ON ctt.teacher_fk = t.id_teacher ";
+            $joinTeachers = "LEFT JOIN class_teacher_table as ctt ON st.grade_fk = ctt.grade_fk AND st.group_fk = ctt.group_fk AND st.shift_fk = ctt.shift_fk";
         } else {
             $joinTeachers = "";
         }
 
 
-        $query = "SELECT 
+        $query = "SELECT DISTINCT
             st.id_student as id, st.name as name, CONCAT(st.last_name,  ' ', st.mothersLast_name) as lastNames, CONCAT(gt.name, '° ', gp.name, ' ', sf.name) as currentStudent
         FROM 
             student_table as st
             LEFT JOIN group_table as gp ON st.group_fk = gp.id_group
             LEFT JOIN grade_table as gt ON st.grade_fk = gt.id_grade
             LEFT JOIN shift_table as sf ON st.shift_fk = sf.id_shift
-            ".$joinTeachers."
+            ".$joinTeachers."   
         WHERE 
             1 = 1".$nombreWhere.$gradoWhere.$grupoWhere.$turnoWhere.$profesorWhere;
 

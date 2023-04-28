@@ -985,6 +985,11 @@ $type = $_SESSION['sessionUser']['type'];
             //Assign Class ON bd
             $(document).on('click', '#assignTeacherSendBtn', function(){
 
+                $("#selectedShift").val()
+                $("#selectedGrade").val()
+                $("#selectedGroup").val()
+                $("#selectedClass").val()
+
                 if($("#selectedShift").val() == ""){
                     alert('El turno no puede ser vacio');
                     $("#selectedShift").focus();
@@ -2498,7 +2503,6 @@ $type = $_SESSION['sessionUser']['type'];
                     maxFiles: 1,
                     acceptedFiles: acceptedFiles,
                     success: function(file, response){
-                        console.log(response);
                         if (response.status == "success") {
                             $("#uploadModal").modal('hide');
                             $("#successUpload").toast('show');
