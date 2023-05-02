@@ -22,7 +22,7 @@ $type = $_SESSION['sessionUser']['type'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo 'Panel de ' . $type ?></title>
-    <link rel="icon" href="../../assets/img/tecnicaMainLogo.svg" type="image/svg+xml">
+    <link rel="icon" href="../../assets/img/tecnicaMainFavIco.png" type="image/png">
 
     <link rel="stylesheet" href="./mainboardStyle.css">
     <link rel="stylesheet" href="../../components/navbar/navbar.css">

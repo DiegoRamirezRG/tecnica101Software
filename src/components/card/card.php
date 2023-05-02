@@ -3,7 +3,7 @@
 function createCard($props){
     ?>
     <div class="card homeCardClass" id="<?php echo $props['id'].'CardComponent'?>">
-        <img class="card-img-top cardImg" src="https://picsum.photos/286/180" alt="Card image cap">
+        <img class="card-img-top cardImg" src="../../assets/cardIcons/<?php echo $props['image']?>" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">
                 <div class="center text-center">

@@ -359,7 +359,7 @@ if($_POST['function'] == 'loadAttendanceModalBody'){
             <div class="attendanceContaienr">
                 <div class="col d-flex flex-column justify-content-center align-content-center">
                     <div class="row justify-content-center">
-                        <div class="col-10 bg-info text-center">
+                        <div class="col-10 text-center">
                             <h1 class="display-4">Asistencia del Grupo</h1>
                         </div>
                     </div>

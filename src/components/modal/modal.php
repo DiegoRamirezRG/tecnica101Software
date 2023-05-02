@@ -777,7 +777,7 @@ function loadCropImage(){
 
 function classModalDetailOpen(){
     ?>
-    <div class="modal fade" tabindex="-1" id="modalClassDetailOpen" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" tabindex="-1" id="modalClassDetailOpen" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-body" id="classDetailModalBody">

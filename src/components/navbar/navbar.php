@@ -17,7 +17,7 @@ function renderNavBar($opts){
         <header>
             <div class="image-text">
                 <span class="image">
-                    <img src="../../assets/img/tecnicaMainLogo.svg" alt="">
+                    <img src="../../assets/img/tecnicaMainFavIco.png" alt="">
                 </span>
                 <div class="text logo-text">
                     <span class="name">Esc. Secundaria</span>

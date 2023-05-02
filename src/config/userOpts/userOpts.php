@@ -6,22 +6,26 @@ $teacherSidebarOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'home',
+        'image' => 'home.jpg'
     ),
     array (
         'icon' => 'bx-user',
         'title' => 'Alumnos',
-        'id' => 'students'
+        'id' => 'students',
+        'image' => 'students.jpg'
     ),
     array(
         'icon' => 'bx-category',
         'title' => 'Grupos',
-        'id' => 'groups'
+        'id' => 'groups',
+        'image' => 'groups.jpg'
     ),
     array(
         'icon' => 'bx-cog',
         'title' => 'Configuracion',
-        'id' => 'settings'
+        'id' => 'settings',
+        'image' => 'settings.jpeg'
     ),
 );
 
@@ -59,32 +63,38 @@ $controlSidebarOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'home',
+        'image' => 'home.jpg'
     ),
     array (
         'icon' => 'bx-user',
         'title' => 'Alumnos',
-        'id' => 'students'
+        'id' => 'students',
+        'image' => 'students.jpg'
     ),
     array(
         'icon' => 'bx-user-voice',
         'title' => 'Maestros',
-        'id' => 'teachers'
+        'id' => 'teachers',
+        'image' => 'teachers.jpg'
     ),
     array(
         'icon' => 'bx-star',
         'title' => 'Administrativos',
-        'id' => 'admins'
+        'id' => 'admins',
+        'image' => 'admins.jpg'
     ),
     array(
         'icon' => 'bx-timer',
         'title' => 'Ciclo Escolar',
-        'id' => 'cycle'
+        'id' => 'cycle',
+        'image' => 'cycle.jpg'
     ),
     array(
         'icon' => 'bx-cog',
         'title' => 'Configuracion',
-        'id' => 'settings'
+        'id' => 'settings',
+        'image' => 'settings.jpg'
     ),
 );
 
@@ -122,32 +132,38 @@ $coordinadorSidebarOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'home',
+        'image' => 'home.jpg'
     ),
     array (
         'icon' => 'bx-user',
         'title' => 'Alumnos',
-        'id' => 'students'
+        'id' => 'students',
+        'image' => 'students.jpg'
     ),
     array(
         'icon' => 'bx-category',
         'title' => 'Grupos',
-        'id' => 'groups'
+        'id' => 'groups',
+        'image' => 'groups.jpg'
     ),
     array (
         'icon' => 'bx-stats',
         'title' => 'Conductas',
-        'id' => 'conduct'
+        'id' => 'conduct',
+        'image' => 'conduct.jpg'
     ),
     array (
         'icon' => 'bx-notepad',
         'title' => 'Planeaciones',
-        'id' => 'plans'
+        'id' => 'plans',
+        'image' => 'plans.jpg'
     ),
     array(
         'icon' => 'bx-cog',
         'title' => 'Configuracion',
-        'id' => 'settings'
+        'id' => 'settings',
+        'image' => 'settings.jpg'
     ),
 );
 
@@ -185,27 +201,32 @@ $prefectoSidebarOpts = array(
     array(
         'icon' => 'bx-home-alt',
         'title' => 'Home',
-        'id' => 'home'
+        'id' => 'home',
+        'image' => 'home.jpg'
     ),
     array (
         'icon' => 'bx-user',
         'title' => 'Alumnos',
-        'id' => 'students'
+        'id' => 'students',
+        'image' => 'students.jpg'
     ),
     array(
         'icon' => 'bx-category',
         'title' => 'Grupos',
-        'id' => 'groups'
+        'id' => 'groups',
+        'image' => 'groups.jpg'
     ),
     array (
         'icon' => 'bx-stats',
         'title' => 'Conductas',
-        'id' => 'conduct'
+        'id' => 'conduct',
+        'image' => 'conduct.jpg'
     ),
     array(
         'icon' => 'bx-cog',
         'title' => 'Configuracion',
-        'id' => 'settings'
+        'id' => 'settings',
+        'image' => 'settings.jpg'
     ),
 );
 
