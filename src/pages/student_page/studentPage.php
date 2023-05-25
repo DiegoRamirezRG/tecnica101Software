@@ -12,11 +12,11 @@ if($_SESSION['sessionUser']['type'] == 'Control'){
 <div class="container">
     <div class="studentMaxContainer tab-content">
         <div class="filterContainer pt-4">
-            <h1 class="headerForm">Administracion de Alumnos</h1>
+            <h1 class="headerForm">Administración de alumnos</h1>
             <div class="col-sm-11 col-xs-11 col-md-10 col-lg-8 pt-4">
                 <div class="row d-flex flex-wrap">
                     <div class="col-8 col-md-9 ">
-                        <input class="form-control me-2" type="search" placeholder="Buscar Alumno" aria-label="Search" id="searchStudent">
+                        <input class="form-control me-2" type="search" placeholder="Buscar alumno" aria-label="Search" id="searchStudent">
                     </div>
                     <div class="col-4 col-md-3">
                         <button class="btn btn-outline-primary sizableBtn" id="newStudentBtn" style="<?php echo ($disable) ? 'display: none;' : ''?>"></button>

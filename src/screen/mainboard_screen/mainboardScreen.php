@@ -142,49 +142,49 @@ $type = $_SESSION['sessionUser']['type'];
 
 
     <!---Error Toast Declaration--->
-    <?php showToast('failedLogout', 'Error al hacer Logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedAddConduct', 'Error al agregar Conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedNewStudent', 'Error al agregar al Estudiante', 'Ha ocurrido un error al nuevo estudiante, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedNewTeacher', 'Error al agregar al Profesor', 'Ha ocurrido un error al nuevo profesor, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedAssignClass', 'Error al asignar la Materia', 'Ha ocurrido un error al asignar la materia al profesor, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedNewClass', 'Error al agregar la Data', 'Ha ocurrido un error al agregar la data de la nueva materia, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedUpdateClass', 'Error al modificar la Data', 'Ha ocurrido un error al modificar la data de la materia, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedFinishCycle', 'Error al terminar el Ciclo escolar', 'Ha ocurrido un error al terminar el ciclo escolar, porfavor comuniquese con el administrador'); ?>
-    <?php showToast('failedUpdateProfile', 'Error al acutializar el perfil', 'Ha ocurrido un error actualizar perfil, porfavor comuniquese con el administrador'); ?>
-    <?php showToast('failedUpdatePassword', 'Error al acutializar la contraseña', 'Ha ocurrido un error al actualizar la contraseña, porfavor comuniquese con el administrador'); ?>
-    <?php showToast('failedUpdateProfileImage', 'Error al acutializar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, porfavor comuniquese con el administrador'); ?>
-    <?php showToast('failedUpdateTeacher', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedUpdateSchoolControl', 'Error al acutalizar la Data', 'Ha ocurrido un error al actualizar la data del Administrativo, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedDownloadPlans', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de planeacion, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedDownloadGuides', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de la guia, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedDownloadWorks', 'Error al descargar la Data', 'Ha ocurrido un error al descargar el archivo de los trabajos, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedUpload', 'Error al subir el archivo', 'Ha ocurrido un error al subir el archivo, si esto persiste, comunicate con el administrador.'); ?>
-    <?php showToast('failedTakeAssisatnce', 'Error al tomar asistancia', 'Ha ocurrido un error al tomar asistencia, si esto persiste, comunicate con el administrador.'); ?>
+    <?php showToast('failedLogout', 'Error al hacer logout', 'Ha ocurrido un error al hacer logout, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedAddConduct', 'Error al agregar conducta', 'Ha ocurrido un error al agregar la nueva conducta, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedNewStudent', 'Error al agregar al estudiante', 'Ha ocurrido un error al nuevo estudiante, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedNewTeacher', 'Error al agregar al profesor', 'Ha ocurrido un error al nuevo profesor, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedAssignClass', 'Error al asignar la materia', 'Ha ocurrido un error al asignar la materia al profesor, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedUpdateTeacher', 'Error al acutalizar la data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedNewClass', 'Error al agregar la data', 'Ha ocurrido un error al agregar la data de la nueva materia, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedUpdateClass', 'Error al modificar la data', 'Ha ocurrido un error al modificar la data de la materia, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedFinishCycle', 'Error al terminar el ciclo escolar', 'Ha ocurrido un error al terminar el ciclo escolar, por favor comuníquese con el administrador'); ?>
+    <?php showToast('failedUpdateProfile', 'Error al actualizar el perfil', 'Ha ocurrido un error actualizar perfil, por favor comuníquese con el administrador'); ?>
+    <?php showToast('failedUpdatePassword', 'Error al actualizar la contraseña', 'Ha ocurrido un error al actualizar la contraseña, por favor comuníquese con el administrador'); ?>
+    <?php showToast('failedUpdateProfileImage', 'Error al actualizar la imagen de perfil', 'Ha ocurrido un error al actualizar la imagen de perfil, por favor comuníquese con el administrador'); ?>
+    <?php showToast('failedUpdateTeacher', 'Error al actualizar la data', 'Ha ocurrido un error al actualizar la data del profesor, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedUpdateSchoolControl', 'Error al actualizar la data', 'Ha ocurrido un error al actualizar la data del Administrativo, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedDownloadPlans', 'Error al descargar la data', 'Ha ocurrido un error al descargar el archivo de planeación, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedDownloadGuides', 'Error al descargar la data', 'Ha ocurrido un error al descargar el archivo de la guía, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedDownloadWorks', 'Error al descargar la data', 'Ha ocurrido un error al descargar el archivo de los trabajos, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedUpload', 'Error al subir el archivo', 'Ha ocurrido un error al subir el archivo, si esto persiste, comunícate con el administrador'); ?>
+    <?php showToast('failedTakeAssisatnce', 'Error al tomar asistencia', 'Ha ocurrido un error al tomar asistencia, si esto persiste, comunícate con el administrador'); ?>
 
 
     <!---Success Toast Declaration--->
-    <?php showSucessToast('toastSuccessUpdate', 'Actualizacion de data exitosa', 'La asistencia se actualizo correctamente')?>
-    <?php showSucessToast('successConductUpdate', 'Agregado de data exitosa', 'La conducta se agrego correctamente')?>
-    <?php showSucessToast('successNewStudent', 'Agregado de data exitosa', 'El alumno se agrego correctamente')?>
-    <?php showSucessToast('successNewTeacher', 'Agregado de data exitosa', 'El profesor se agrego correctamente')?>
-    <?php showSucessToast('successNewAssignClass', 'Agregado de data exitosa', 'Se le asigno la materia al profesor correctamente')?>
-    <?php showSucessToast('successUpdateDate', 'Agregado de data exitosa', 'Se actualizaco al profesor correctamente')?>
-    <?php showSucessToast('successnewClass', 'Agregado de data exitosa', 'Se agrego la nueva materia correctamente')?>
-    <?php showSucessToast('successUpdateClass', 'Agregado de data exitosa', 'Se actualizo la materia correctamente')?>
-    <?php showSucessToast('successFinishCycle', 'Fin de Ciclo Exitoso', 'Felicidades !!!')?>
-    <?php showSucessToast('successUpdateProfile', 'Actualizado de data Exitoso', 'Se actualizo el perfil correctamente')?>
-    <?php showSucessToast('successUpdatePassword', 'Actualizado de data Exitoso', 'Se actualizo la contrasñea correctamente')?>
-    <?php showSucessToast('successUpdateProfileImage', 'Actualizado de data Exitoso', 'Se actualizo la imagen de perfil correctamente. Por favor recarga con <i>CTRL + F5</i>')?>
-    <?php showSucessToast('successUpdateSchoolControlDate', 'Agregado de data exitosa', 'Se actualizaco al administrativo correctamente') ?>
-    <?php showSucessToast('successNewAdminCreation', 'Agregado de data exitosa', 'Se registro al administrativo correctamente') ?>
-    <?php showSucessToast('successDownloadPlans', 'Descargado de data exitosa', 'Se descargo el archivo de planeacion correctamente') ?>
-    <?php showSucessToast('successDownloadGuides', 'Descargado de data exitosa', 'Se descargo el archivo de la guia correctamente') ?>
-    <?php showSucessToast('successDownloadWorks', 'Descargado de data exitosa', 'Se descargo el archivo de los trabajos correctamente') ?>
-    <?php showSucessToast('successUpload', 'Subida de archivo exitosa', 'Se subio el archivo correctamente') ?>
+    <?php showSucessToast('toastSuccessUpdate','Actualización de datos exitosa', 'La asistencia se actualizó correctamente')?>
+    <?php showSucessToast('successConductUpdate','Agregado de datos exitoso', 'La conducta se agregó correctamente')?>
+    <?php showSucessToast('successNewStudent','Agregado de datos exitoso', 'El alumno se agregó correctamente')?>
+    <?php showSucessToast('successNewTeacher','Agregado de datos exitoso', 'El profesor se agregó correctamente')?>
+    <?php showSucessToast('successNewAssignClass','Agregado de datos exitoso', 'Se le asignó la materia al profesor correctamente')?>
+    <?php showSucessToast('successUpdateDate','Agregado de datos exitoso', 'Se actualizó al profesor correctamente')?>
+    <?php showSucessToast('successnewClass','Agregado de datos exitoso', 'Se agregó la nueva materia correctamente')?>
+    <?php showSucessToast('successUpdateClass','Agregado de datos exitoso', 'Se actualizó la materia correctamente')?>
+    <?php showSucessToast('successFinishCycle','Fin de Ciclo Exitoso', '¡Felicidades!')?>
+    <?php showSucessToast('successUpdateProfile','Actualización de datos exitosa', 'Se actualizó el perfil correctamente')?>
+    <?php showSucessToast('successUpdatePassword','Actualización de datos exitosa', 'Se actualizó la contraseña correctamente')?>
+    <?php showSucessToast('successUpdateProfileImage','Actualización de datos exitosa', 'Se actualizó la imagen de perfil correctamente. Por favor, recarga con <i>CTRL + F5</i>')?>
+    <?php showSucessToast('successUpdateSchoolControlDate','Agregado de datos exitoso', 'Se actualizó al administrativo correctamente')?>
+    <?php showSucessToast('successNewAdminCreation','Agregado de datos exitoso', 'Se registró al administrativo correctamente')?>
+    <?php showSucessToast('successDownloadPlans','Descarga de datos exitosa', 'Se descargó el archivo de planeación correctamente')?>
+    <?php showSucessToast('successDownloadGuides','Descarga de datos exitosa', 'Se descargó el archivo de la guía correctamente')?>
+    <?php showSucessToast('successDownloadWorks','Descarga de datos exitosa', 'Se descargó el archivo de los trabajos correctamente')?>
+    <?php showSucessToast('successUpload','Subida de archivo exitosa', 'Se subió el archivo correctamente')?>
 
     <!---Warning Toast--->
-    <?php showWarningToast('loadingWarningToast', 'Cargando', 'Se esta terminando el cyclo, espere por favor');?>
+    <?php showWarningToast('loadingWarningToast', 'Cargando', 'Se está terminando el ciclo, espere por favor');?>
 
     <!---Navigations JS Call--->
     <script src="../../components/bottonBar/bottomNav.js"></script>
@@ -379,18 +379,18 @@ $type = $_SESSION['sessionUser']['type'];
                     return;
                 }
                 if($("#updateProfileLastName").val() == ""){
-                    alert('El Apeido Paterno no puede ser vacio');
+                    alert('El apellido paterno no puede ser vacio');
                     $("#updateProfileLastName").focus();
                     return;
                 }
                 if($("#updateProfileMothersLastName").val() == ""){
-                    alert('El Apeido Materno no puede ser vacio');
+                    alert('El apellido materno no puede ser vacio');
                     $("#updateProfileMothersLastName").focus();
                     return;
 
                 }
                 if($("#updateProfilePhone").val() == ""){
-                    alert('El Telefono no puede ser vacio');
+                    alert('El teléfono no puede ser vacio');
                     $("#updateProfilePhone").focus();
                     return;
                 }
@@ -433,17 +433,17 @@ $type = $_SESSION['sessionUser']['type'];
             //Change Password Function
             $(document).on('click', '#changePasswordsButnModal', function(){
                 if($("#currentPassword").val() == ""){
-                    alert('El no puede ser vacio')
+                    alert('La contraseña actual no puede ser vacía')
                     $("#currentPassword").focus();
                     return;
                 }
                 if($("#newChangePassword").val() == ""){
-                    alert('El no puede ser vacio')                
+                    alert('La nueva contraseña no puede ser vacía')                
                     $("#newChangePassword").focus();
                     return;
                 }
                 if($("#newChangePasswordConfirm").val() == ""){
-                    alert('El no puede ser vacio')                
+                    alert('La confirmación de nueva contraseña no puede ser vacía')                
                     $("#newChangePasswordConfirm").focus();
                     return;
                 }
@@ -665,7 +665,7 @@ $type = $_SESSION['sessionUser']['type'];
             //Update Class Name 
             $(document).on('click', '#editClassTriggerCycle', function(){
                 if($("#editClassInputName").val() == ""){
-                    alert('El nombre de la materia no puede ser vacio');
+                    alert('El nombre de la materia no puede ser vacío');
                     $("#editClassInputName").focus();
                     return;
                 }
@@ -785,49 +785,49 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#newTeacherButton', function(){
 
                 if($("#newTeacherName").val() == ""){
-                    alert('El nombre no puede ser vacio');
+                    alert('El nombre no puede ser vacío');
                     $("#newTeacherName").focus();
                     return;
                 }
 
                 if($("#newTeacherLastname").val() == ""){
-                    alert('El Apeido Paterno no puede ser vacio');
+                    alert('El apellido paterno no puede ser vacío');
                     $("#newTeacherLastname").focus();
                     return;
                 }
 
                 if($("#newTeacherMLastname").val() == ""){
-                    alert('El Apeido Materno no puede ser vacio');
+                    alert('El apellido materno no puede ser vacío');
                     $("#newTeacherMLastname").focus();
                     return;
                 }
 
                 if($("#newTeacherPhone").val() == ""){
-                    alert('El Telefono no puede ser vacio');
+                    alert('El teléfono no puede ser vacío');
                     $("#newTeacherPhone").focus();
                     return;
                 }
 
                 if($("#newTeacherEmail").val() == ""){
-                    alert('El Correo no puede ser vacio');
+                    alert('El correo no puede ser vacío');
                     $("#newTeacherEmail").focus();
                     return;
                 }
 
                 if($("#newTeacherPassword").val() == ""){
-                    alert('La Contraseña no puede ser vacia');
+                    alert('La contraseña no puede ser vacía');
                     $("#newTeacherPassword").focus();
                     return;
                 }
 
                 if($("#newTeacherConfirmPassword").val() == ""){
-                    alert('La Confirmacion de Contraseña no puede ser vacia');
+                    alert('La confirmación de contraseña no puede ser vacía');
                     $("#newTeacherConfirmPassword").focus();
                     return;
                 }
 
                 if($("#newTeacherPassword").val() != $("#newTeacherConfirmPassword").val()){
-                    alert('Las Contraseñas no coinciden');
+                    alert('Las contraseñas no coinciden');
                     $("#newTeacherPassword").focus();
                     $("#newTeacherConfirmPassword").focus();
                     return;
@@ -991,22 +991,22 @@ $type = $_SESSION['sessionUser']['type'];
                 $("#selectedClass").val()
 
                 if($("#selectedShift").val() == ""){
-                    alert('El turno no puede ser vacio');
+                    alert('El turno no puede ser vacío');
                     $("#selectedShift").focus();
                     return;
                 }
                 if($("#selectedGrade").val() == ""){
-                    alert('El grado no puede ser vacio');
+                    alert('El grado no puede ser vacío');
                     $("#selectedGrade").focus();
                     return;
                 }
                 if($("#selectedGroup").val() == ""){
-                    alert('El grupo no puede ser vacio');
+                    alert('El grupo no puede ser vacío');
                     $("#selectedGroup").focus();
                     return;
                 }
                 if($("#selectedClass").val() == ""){
-                    alert('La clase no puede ser vacia');
+                    alert('La clase no puede ser vacía');
                     $("#selectedClass").focus();
                     return;
                 }
@@ -1083,27 +1083,27 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#editTeacherButton', function(){
                 
                 if($("#editTeacherName").val() == ""){
-                    alert('Error Campos Vacios');
+                    alert('Error el nombre no puede ser vacío');
                     $("#editTeacherName").focus()
                     return;
                 }
                 if($("#editTeacherLastname").val() == ""){
-                    alert('Error Campos Vacios');
+                    alert('Error el apellido paterno no puede ser vacío');
                     $("#editTeacherLastname").focus()
                     return;
                 }
                 if($("#editTeacherMLastname").val() == ""){
-                    alert('Error Campos Vacios');
+                    alert('Error el apellido materno no puede ser vacío');
                     $("#editTeacherMLastname").focus()
                     return;
                 }
                 if($("#editTeacherPhone").val() == ""){
-                    alert('Error Campos Vacios');
+                    alert('Error el teléfono no puede ser vacío');
                     $("#editTeacherPhone").focus()
                     return;
                 }
                 if($("#editTeacherEmail").val() == ""){
-                    alert('Error Campos Vacios');
+                    alert('Error el correo no puede ser vacío');
                     $("#editTeacherEmail").focus()
                     return;
                 }
@@ -1171,37 +1171,37 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', "#newStudentButton", function(){
 
                 if($("#newStudentname").val() == ""){
-                    alert('El Nombre no puede estar vacio');
+                    alert('El nombre no puede estar vacío');
                     $("#newStudentname").focus();
                     return;
                 }
 
                 if($("#newStudentLastname").val() == ""){
-                    alert('El Apeido Paterno no puede estar vacio');
+                    alert('El apellido paterno no puede estar vacío');
                     $("#newStudentLastname").focus();
                     return;
                 }
 
                 if($("#newStudentMLastname").val() == ""){
-                    alert('El Apeido Materno no puede estar vacio');
+                    alert('El apellido materno no puede estar vacío');
                     $("#newStudentMLastname").focus();
                     return;
                 }
 
                 if($("#newStudentShift").val() == ""){
-                    alert('El Turno no puede estar vacio');
+                    alert('El turno no puede estar vacío');
                     $("#newStudentShift").focus();
                     return;
                 }
 
                 if($("#newStudentGrade").val() == ""){
-                    alert('El Grado no puede estar vacio');
+                    alert('El grado no puede estar vacío');
                     $("#newStudentGrade").focus();
                     return;
                 }
 
                 if($("#newStudentGroup").val() == ""){
-                    alert('El Grupo no puede estar vacio');
+                    alert('El grupo no puede estar vacío');
                     $("#newStudentGrade").focus();
                     return;
                 }
@@ -1284,13 +1284,13 @@ $type = $_SESSION['sessionUser']['type'];
                 let entity = selected.data('entity');
 
                 if($("#idScoreConduct").val() == ""){
-                    alert('El Puntaje no puede ser vacio');
+                    alert('El puntaje no puede ser vacío');
                     $("#idScoreConduct").focus();
                     return;
                 }
 
                 if($("#newConductDesc").val() == ""){
-                    alert('La Descripcion no puede estar vacia');
+                    alert('La descripción no puede estar vacía');
                     $("#newConductDesc").focus();
                     return;
                 }
@@ -1477,37 +1477,37 @@ $type = $_SESSION['sessionUser']['type'];
                 let grupo = $("#updatedGrupo").val();
 
                 if(name == ''){
-                    alert('El nombre no puede ser vacio');
+                    alert('El nombre no puede ser vacío');
                     $("#updatedName").focus();
                     return;
                 }
 
                 if(apPat == ''){
-                    alert('El apellido paterno no puede ser vacio');
+                    alert('El apellido paterno no puede ser vacío');
                     $("#updatedLastName").focus();
                     return;
                 }
 
                 if(apMat == ''){
-                    alert('El apellido materno no puede ser vacio');
+                    alert('El apellido materno no puede ser vacío');
                     $("#updatedMotherLastName").focus();
                     return;
                 }
 
                 if(turno == ''){
-                    alert('El turno no puede ser vacio');
+                    alert('El turno no puede ser vacío');
                     $("#updatedTurno").focus();
                     return;
                 }
 
                 if(grado == ''){
-                    alert('El grado no puede ser vacio');
+                    alert('El grado no puede ser vacío');
                     $("#updatedGrado").focus();
                     return;
                 }
 
                 if(grupo == ''){
-                    alert('El grupo no puede ser vacio');
+                    alert('El grupo no puede ser vacío');
                     $("#updatedGrupo").focus();
                     return;
                 }
@@ -1728,55 +1728,55 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#newSchoolControlButton', function() {
 
                 if ($("#newSchoolControlName").val() == "") {
-                    alert('El nombre no puede ser vacio');
+                    alert('El nombre no puede ser vacío');
                     $("#newSchoolControlName").focus();
                     return;
                 }
 
                 if ($("#newSchoolControlLastname").val() == "") {
-                    alert('El Apellido Paterno no puede ser vacio');
+                    alert('El apellido paterno no puede ser vacío');
                     $("#newSchoolControlLastname").focus();
                     return;
                 }
 
                 if ($("#newSchoolControlMLastname").val() == "") {
-                    alert('El Apellido Materno no puede ser vacio');
+                    alert('El apellido materno no puede ser vacío');
                     $("#newSchoolControlMLastname").focus();
                     return;
                 }
 
                 if ($("#newSchoolControlPhone").val() == "") {
-                    alert('El Telefono no puede ser vacio');
+                    alert('El teléfono no puede ser vacío');
                     $("#newSchoolControlPhone").focus();
                     return;
                 }
 
                 if ($("#newSchoolControlEmail").val() == "") {
-                    alert('El Correo no puede ser vacio');
+                    alert('El correo no puede ser vacío');
                     $("#newSchoolControlEmail").focus();
                     return;
                 }
 
                 if ($("#filterTypeSchoolControl").val() == "") {
-                    alert('El Tipo de Cargo esta vacio');
+                    alert('El tipo de cargo esta vacío');
                     $("#filterTypeSchoolControl").focus();
                     return;
                 }
 
                 if ($("#newSchoolControlPassword").val() == "") {
-                    alert('La Contraseña no puede ser vacia');
+                    alert('La contraseña no puede ser vacía');
                     $("#newSchoolControlPassword").focus();
                     return;
                 }
 
                 if ($("#newSchoolControlConfirmPassword").val() == "") {
-                    alert('La Confirmacion de Contraseña no puede ser vacia');
+                    alert('La confirmación de Contraseña no puede ser vacía');
                     $("#newSchoolControlConfirmPassword").focus();
                     return;
                 }
 
                 if ($("#newSchoolControlPassword").val() != $("#newSchoolControlConfirmPassword").val()) {
-                    alert('Las Contraseñas no coinciden');
+                    alert('Las contraseñas no coinciden');
                     $("#newSchoolControlPassword").focus();
                     $("#newSchoolControlConfirmPassword").focus();
                     return;
@@ -1889,27 +1889,27 @@ $type = $_SESSION['sessionUser']['type'];
             $(document).on('click', '#editSchoolControlButton', function() {
 
                 if ($("#editSchoolControlName").val() == "") {
-                    alert('Error Campos Vacios');
+                    alert('El nombre no puede ser vacío');
                     $("#editSchoolControlName").focus()
                     return;
                 }
                 if ($("#editSchoolControlLastname").val() == "") {
-                    alert('Error Campos Vacios');
+                    alert('El apellido paterno no puede ser vacío');
                     $("#editSchoolControlLastname").focus()
                     return;
                 }
                 if ($("#editSchoolControlMLastname").val() == "") {
-                    alert('Error Campos Vacios');
+                    alert('El apellido materno no puede ser vacío');
                     $("#editSchoolControlMLastname").focus()
                     return;
                 }
                 if ($("#editSchoolControlPhone").val() == "") {
-                    alert('Error Campos Vacios');
+                    alert('El teléfono no puede ser vacío');
                     $("#editSchoolControlPhone").focus()
                     return;
                 }
                 if ($("#editSchoolControlEmail").val() == "") {
-                    alert('Error Campos Vacios');
+                    alert('El correo no puede ser vacío');
                     $("#editSchoolControlEmail").focus()
                     return;
                 }
@@ -2294,13 +2294,13 @@ $type = $_SESSION['sessionUser']['type'];
                 let entity = selected.data('entity');
 
                 if($("#idScoreConductCoor").val() == ""){
-                    alert('El Puntaje no puede ser vacio');
+                    alert('El puntaje no puede ser vacío');
                     $("#idScoreConductCoor").focus();
                     return;
                 }
 
                 if($("#newConductDescCoor").val() == ""){
-                    alert('La Descripcion no puede estar vacia');
+                    alert('La descripción no puede estar vacía');
                     $("#newConductDescCoor").focus();
                     return;
                 }

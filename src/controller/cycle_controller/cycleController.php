@@ -16,7 +16,7 @@ if($_POST['function'] == 'loadClassesContainer'){
                             </div>
                         </div>
                         <div class="col-10 col-md-5 d-flex justify-content-center">
-                            <button class="btn btn-primary w-100" id="addNewClassCycle">Añadir Materia</button>
+                            <button class="btn btn-primary w-100" id="addNewClassCycle">Añadir materia</button>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@ if($_POST['function'] == 'loadClassesContainer'){
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Nombre de la Materia</th>
+                        <th>Nombre de la materia</th>
                     </tr>
                 </thead>
                 <tbody id="classesCycleTableBody">

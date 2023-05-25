@@ -16,7 +16,7 @@ require_once('../../components/toast/toast.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Tecnica</title>
-    <link rel="icon" href="../../assets/img/tecnicaMainLogo.svg" type="image/svg+xml">
+    <link rel="icon" href="../../assets/img/tecnicaMainFavIco.png" type="image/png">
 
     <link rel="stylesheet" href="./loginStyle.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -33,8 +33,8 @@ require_once('../../components/toast/toast.php');
                         <img src="../../assets/img/tecnicaLogo.svg" class="img-fluid" alt="">
                     </div>
                     <div class="col col-sm-9 mx-auto mt-4">
-                        <h1 class="welcomeBlack">Bienvenido!</h1>
-                        <p class="messageWelcome">Al sistema de control escolar de la Secundaria Tecnica.</p>
+                        <h1 class="welcomeBlack">¡Bienvenido!</h1>
+                        <p class="messageWelcome">Al sistema de control escolar de la Secundaria Técnica</p>
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center align-items-center mx-auto flex-column w-100">
@@ -57,15 +57,12 @@ require_once('../../components/toast/toast.php');
                 </div>
                 <div class="row d-flex flex-row justify-content-center align-items-center" style="height: 18%">
                     <div class="col-12 col-sm-9 col-lg-6">
-                        <button class="btn btn-lg btn-responsive btn-danger w-75 button" id="loginBtn" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ">Iniciar Sesion</button>
-                    </div>
-                    <div class="col-12 col-sm-9 col-lg-6">
-                        <button class="btn btn-lg btn-responsive btn-outline-danger w-75" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pide Acceso</button>
+                        <button class="btn btn-lg btn-responsive btn-danger w-75 button" id="loginBtn" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ">Iniciar sesión</button>
                     </div>
                 </div>
                 <div class="col-lg-10 col-sm-10 mx-auto">
                     <div class="row">
-                        <p class="disclaimer">Este sistema solo se puede accede una vez la cuenta se encuentre creada por algún administrador. Si usted  no cuenta con una cuenta. Pida acceso o comuníquese con el administrador.</p>
+                        <p class="disclaimer">Este sistema solo se puede acceder una vez la cuenta se encuentre creada por algún administrador. Si usted no cuenta con una cuenta. Pida acceso o comuníquese con el administrador</p>
                     </div>
                 </div>
             </div>
@@ -76,9 +73,9 @@ require_once('../../components/toast/toast.php');
             </div>
         </div>
     </div>
-    <?php  showToast('emptyEmail', 'Email Vacio', 'El email no puede estar vacio'); ?>
-    <?php  showToast('emptyPassword', 'Contraseña Vacia', 'La contraseña no puede estar vacia'); ?>
-    <?php  showToast('badLogin', 'Error al hacer login', 'Error al hacer login, revisa tus credenciales y si el error persiste, contacta con el adminsitrador'); ?>
+    <?php  showToast('emptyEmail', 'Email vacío', 'El email no puede estar vacío'); ?>
+    <?php  showToast('emptyPassword', 'Contraseña vacía', 'La contraseña no puede estar vacía'); ?>
+    <?php  showToast('badLogin', 'Error al hacer login', 'Error al hacer login, revisa tus credenciales y si el error persiste, contacta con el administrador'); ?>
     <script>
         $(document).ready(function(){
 

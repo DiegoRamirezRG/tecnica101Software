@@ -34,7 +34,7 @@ if ($_POST['function'] == 'schoolControlLoadTable') {
         } else {
             ?>
             <tr>
-                <td>No Existen Administrativos Aun</td>
+                <td>No existen administrativos aun</td>
             </tr>
         <?php
         }
@@ -84,7 +84,7 @@ if ($_POST['function'] == 'loadSchoolControlDetails') {
                         <div class="row d-flex justify-content-center">
                             <div class="col-8 col-md-12">
                                 <div class="row">
-                                    <button class="btn btn-primary" id="editSchoolControlBtn">Editar Informacion</button>
+                                    <button class="btn btn-primary" id="editSchoolControlBtn">Editar información</button>
                                 </div>
                             </div>
                         </div>
@@ -112,10 +112,10 @@ if ($_POST['function'] == 'loadUpdateModalSchoolControl') {
         ?>
             <div class="col-12 col-md-10 d-flex flex-column justify-content-center mx-auto">
                 <div class="row mt-3 mb-3 text-center">
-                    <h2>Editar Administrativo</h2>
+                    <h2>Editar administrativo</h2>
                 </div>
                 <div class="row flex-wrap">
-                    <label class="mb-1">Informacion Personal</label>
+                    <label class="mb-1">Información personal</label>
                     <div class="col-12 col-md-6">
                         <div class="input-group mb-3">
                             <input value="<?php echo $data['name'] ?>" type="text" class="form-control" placeholder="Nombre" id="editSchoolControlName">
@@ -135,7 +135,7 @@ if ($_POST['function'] == 'loadUpdateModalSchoolControl') {
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="input-group mb-3">
-                            <input value="<?php echo $data['phone'] ?>" type="tel" class="form-control" placeholder="Telefono" id="editSchoolControlPhone">
+                            <input value="<?php echo $data['phone'] ?>" type="tel" class="form-control" placeholder="Teléfono" id="editSchoolControlPhone">
                         </div>
                     </div>
                 </div>
@@ -147,7 +147,7 @@ if ($_POST['function'] == 'loadUpdateModalSchoolControl') {
                 </div>
                 <div class="row mt-5 mb-3">
                     <div class="col text-center">
-                        <button class="btn btn-primary" id="editSchoolControlButton">Editar Administrativo</button>
+                        <button class="btn btn-primary" id="editSchoolControlButton">Editar administrativo</button>
                     </div>
                 </div>
             </div>

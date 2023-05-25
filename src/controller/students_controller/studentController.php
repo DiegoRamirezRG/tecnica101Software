@@ -114,7 +114,7 @@ if($_POST['function'] == 'loadModalBody'){
                 <div class="col">
                     <div class="container d-sm-block d-lg-flex justify-content-between">
                         <div class="col-xs-12 col-s-12 col-md-12 col-lg-8 col-xl-7">
-                            <h5>Asistencia Semanal</h5>
+                            <h5>Asistencia semanal</h5>
                             <div class="row align-items-center">
                                 <div class="col-8">
                                     <!---Tabla dias de la semana--->
@@ -168,7 +168,7 @@ if($_POST['function'] == 'loadModalBody'){
                                     ?></p>
                                 </div>
                                 <div class="div"></div>
-                                <button class="btn btn-outline-primary w-75" id="seeConduct">Ver Conducta</button>
+                                <button class="btn btn-outline-primary w-75" id="seeConduct">Ver conducta</button>
                             </div>
                         </div>
                     </div>
@@ -639,7 +639,7 @@ if($_POST['function'] == 'loadConductModal'){
                                     <tr>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Estado</th>
-                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Descripción</th>
                                     </tr>
                                 </thead>
                                 <tbody id="conductTableBody">
@@ -650,7 +650,7 @@ if($_POST['function'] == 'loadConductModal'){
                     </div>
                     <div class="row d-flex justify-content-center mt-3">
                         <div class="col-sm-10 col-md-6 col-12">
-                            <button class="btn btn-primary w-100" id="addNewConductData">Añadir Registro</button>
+                            <button class="btn btn-primary w-100" id="addNewConductData">Añadir registro</button>
                         </div>
                         <div class="col-sm-10 col-md-6 col-12 mt-3 mt-md-0">
                             <select class="form-select w-100" aria-label="Default select example" id="selectedFilter">
@@ -744,7 +744,7 @@ if($_POST['function'] == 'loadSubmitAsConduct'){
         }else{
             ?>
                 <select class="form-select" aria-label="Default select example" id="selectedSubmitAs">
-                    <option selected value="">Agregar Conducta Como</option>    
+                    <option selected value="">Agregar conducta como</option>    
                     <option data-entity="Other" value="<?php echo $_SESSION['sessionUser']['id_user']?>"><?php echo $_SESSION['sessionUser']['type']?></option>
                 </select>
             <?php

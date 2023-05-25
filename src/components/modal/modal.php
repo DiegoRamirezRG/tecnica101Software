@@ -57,7 +57,7 @@ function alertUpdateData()
                     <h4 class="modal-title text-danger text-center"><b>¿Estás seguro de que deseas actualizar la información de este alumno?</b></h4>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">¡Advertencia! ¿Está seguro de querer actualizar la información del alumno? Esta acción modificará permanentemente los datos del estudiante en el sistema. Asegúrese de verificar cuidadosamente la información antes de confirmar la actualización.</p>
+                    <p class="text-center">¡Advertencia! ¿Está seguro de querer actualizar la información del alumno? Esta acción modificará permanentemente los datos del estudiante en el sistema. Asegúrese de verificar cuidadosamente la información antes de confirmar la actualización</p>
                 </div>
                 <div class="modal-footer text-center">
                     <button type="button" class="btn btn-warning" id="confirm">Confirmar</button>
@@ -77,7 +77,7 @@ function alertSuccessData()
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-success text-center"><b>La informacion se actualizo correctamente</b></h4>
+                    <h4 class="modal-title text-success text-center"><b>La información se actualizo correctamente</b></h4>
                 </div>
                 <div class="modal-body">
                     <p class="text-center">¡Actualización exitosa! La información del alumno ha sido actualizada correctamente en el sistema. ¡Gracias por mantener los datos actualizados!</p>
@@ -98,10 +98,10 @@ function alertFailedData()
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header d-flex mx-auto">
-                    <h4 class="modal-title text-danger text-center mx-auto"><b>Ocurrio un Error al actualizar la informacion</b></h4>
+                    <h4 class="modal-title text-danger text-center mx-auto"><b>Ocurrió un Error al actualizar la información</b></h4>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">Por favor recarga la pagina y vuelve a intentarlo. Si esto perdura contactar con el administrador</p>
+                    <p class="text-center">Por favor recarga la página y vuelve a intentarlo. Si esto perdura contactar con el administrador</p>
                 </div>
                 <div class="modal-footer text-center">
                     <button type="button" class="btn btn-danger" id="closeFailed">Cerrar</button>
@@ -178,7 +178,7 @@ function addConductModal()
                             <div class="input-group mb-3">
                                 <span class="input-group-text" for="idScoreConduct"><i class='bx bxs-face fs-1'></i></span>
                                 <select class="form-select" aria-label="Default select example" id="idScoreConduct">
-                                    <option selected value="">Selecciona El Puntaje</option>
+                                    <option selected value="">Selecciona el puntaje</option>
                                     <option value="Malo">Malo</option>
                                     <option value="Regular">Regular</option>
                                     <option value="Bueno">Bueno</option>
@@ -187,7 +187,7 @@ function addConductModal()
                         </div>
                         <div class="row mt-3">
                             <div class="form-group">
-                                <label for="newConductDesc">Descripcion</label>
+                                <label for="newConductDesc">Descripción</label>
                                 <textarea class="form-control mt-1" id="newConductDesc" rows="3" placeholder="El alumno hizo . . ."></textarea>
                             </div>
                         </div>
@@ -198,7 +198,7 @@ function addConductModal()
                         </div>
                         <div class="row mt-5">
                             <div class="form-group d-flex justify-content-center">
-                                <button class="btn btn-success" id="submitConduct">Añadir Conducta</button>
+                                <button class="btn btn-success" id="submitConduct">Añadir conducta</button>
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,7 @@ function addConductModalCoor()
                             <div class="input-group mb-3">
                                 <span class="input-group-text" for="idScoreConduct"><i class='bx bxs-face fs-1'></i></span>
                                 <select class="form-select" aria-label="Default select example" id="idScoreConductCoor">
-                                    <option selected value="">Selecciona El Puntaje</option>
+                                    <option selected value="">Selecciona el puntaje</option>
                                     <option value="Malo">Malo</option>
                                     <option value="Regular">Regular</option>
                                     <option value="Bueno">Bueno</option>
@@ -233,7 +233,7 @@ function addConductModalCoor()
                         </div>
                         <div class="row mt-3">
                             <div class="form-group">
-                                <label for="newConductDesc">Descripcion</label>
+                                <label for="newConductDesc">Descripción</label>
                                 <textarea class="form-control mt-1" id="newConductDescCoor" rows="3" placeholder="El alumno hizo . . ."></textarea>
                             </div>
                         </div>
@@ -244,7 +244,7 @@ function addConductModalCoor()
                         </div>
                         <div class="row mt-5">
                             <div class="form-group d-flex justify-content-center">
-                                <button class="btn btn-success" id="submitConductCoor">Añadir Conducta</button>
+                                <button class="btn btn-success" id="submitConductCoor">Añadir conducta</button>
                             </div>
                         </div>
                     </div>
@@ -277,14 +277,14 @@ function addNewStudent()
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Apeido Paterno" id="newStudentLastname">
+                                    <input type="text" class="form-control" placeholder="Apellido Paterno" id="newStudentLastname">
                                 </div>
                             </div>
                         </div>
                         <div class="row flex-wrap">
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Apeido Materno" id="newStudentMLastname">
+                                    <input type="text" class="form-control" placeholder="Apellido Materno" id="newStudentMLastname">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -323,7 +323,7 @@ function addNewStudent()
                         </div>
                         <div class="row mt-5 mb-3">
                             <div class="col text-center">
-                                <button class="btn btn-primary" id="newStudentButton">Registrar Alumno</button>
+                                <button class="btn btn-primary" id="newStudentButton">Registrar alumno</button>
                             </div>
                         </div>
                     </div>
@@ -348,10 +348,10 @@ function addNewTeacherModal()
                 <div class="modal-body">
                     <div class="col-12 col-md-10 d-flex flex-column justify-content-center mx-auto">
                         <div class="row mt-3 mb-3 text-center">
-                            <h2>Añadir nuevo Profesor</h2>
+                            <h2>Añadir nuevo profesor</h2>
                         </div>
                         <div class="row flex-wrap">
-                            <label class="mb-1">Informacion Personal</label>
+                            <label class="mb-1">Información personal</label>
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Nombre" id="newTeacherName">
@@ -359,19 +359,19 @@ function addNewTeacherModal()
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Apeido Paterno" id="newTeacherLastname">
+                                    <input type="text" class="form-control" placeholder="Apellido Paterno" id="newTeacherLastname">
                                 </div>
                             </div>
                         </div>
                         <div class="row flex-wrap">
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Apeido Materno" id="newTeacherMLastname">
+                                    <input type="text" class="form-control" placeholder="Apellido Materno" id="newTeacherMLastname">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
-                                    <input type="tel" class="form-control" placeholder="Telefono" id="newTeacherPhone">
+                                    <input type="tel" class="form-control" placeholder="Teléfono" id="newTeacherPhone">
                                 </div>
                             </div>
                         </div>
@@ -393,7 +393,7 @@ function addNewTeacherModal()
                         </div>
                         <div class="row mt-5 mb-3">
                             <div class="col text-center">
-                                <button class="btn btn-primary" id="newTeacherButton">Registrar Profesor</button>
+                                <button class="btn btn-primary" id="newTeacherButton">Registrar profesor</button>
                             </div>
                         </div>
                     </div>
@@ -472,10 +472,10 @@ function addNewSchoolControlModal()
                 <div class="modal-body">
                     <div class="col-12 col-md-10 d-flex flex-column justify-content-center mx-auto">
                         <div class="row mt-3 mb-3 text-center">
-                            <h2>Añadir nuevo Administrativo</h2>
+                            <h2>Añadir nuevo administrativo</h2>
                         </div>
                         <div class="row flex-wrap">
-                            <label class="mb-1">Informacion Personal</label>
+                            <label class="mb-1">Información personal</label>
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Nombre" id="newSchoolControlName">
@@ -495,7 +495,7 @@ function addNewSchoolControlModal()
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="input-group mb-3">
-                                    <input type="tel" class="form-control" placeholder="Telefono" id="newSchoolControlPhone">
+                                    <input type="tel" class="form-control" placeholder="Teléfono" id="newSchoolControlPhone">
                                 </div>
                             </div>
                         </div>
@@ -525,7 +525,7 @@ function addNewSchoolControlModal()
                         </div>
                         <div class="row mt-5 mb-3">
                             <div class="col text-center">
-                                <button class="btn btn-primary" id="newSchoolControlButton">Registrar Administrativo</button>
+                                <button class="btn btn-primary" id="newSchoolControlButton">Registrar administrativo</button>
                             </div>
                         </div>
                     </div>
@@ -583,11 +583,11 @@ function newClassModal(){
                 <div class="modal-body d-flex justify-content-center">
                     <div class="col-12 col-sm-9 mt-3">
                         <div class="row text-center">
-                            <h1>Nueva Materia</h1>
+                            <h1>Nueva materia</h1>
                         </div>
                         <div class="row mt-4">
                             <div class="col">
-                                <label for="newClassInputName" class="form-label">Nombre de la Materia:</label>
+                                <label for="newClassInputName" class="form-label">Nombre de la materia:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Añadir materia" id="newClassInputName">
                                 </div>
@@ -595,7 +595,7 @@ function newClassModal(){
                         </div>
                         <div class="row mt-4 mb-3 d-flex justify-content-center">
                             <div class="col-7">
-                                <button class="btn btn-primary w-100" id="addNewClassTriggerCycle">Añadir Materia</button>
+                                <button class="btn btn-primary w-100" id="addNewClassTriggerCycle">Añadir materia</button>
                             </div>
                         </div>
                     </div>
@@ -617,11 +617,11 @@ function loadEditClassModal(){
                 <div class="modal-body d-flex justify-content-center">
                     <div class="col-12 col-sm-9 mt-3">
                         <div class="row text-center">
-                            <h1>Editar Materia</h1>
+                            <h1>Editar materia</h1>
                         </div>
                         <div class="row mt-4">
                             <div class="col">
-                                <label for="editClassInputName" class="form-label">Nombre de la Materia:</label>
+                                <label for="editClassInputName" class="form-label">Nombre de la materia:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Editar materia" id="editClassInputName">
                                 </div>
@@ -629,7 +629,7 @@ function loadEditClassModal(){
                         </div>
                         <div class="row mt-4 mb-3 d-flex justify-content-center">
                             <div class="col-7">
-                                <button class="btn btn-primary w-100" id="editClassTriggerCycle">Editar Materia</button>
+                                <button class="btn btn-primary w-100" id="editClassTriggerCycle">Editar materia</button>
                             </div>
                         </div>
                     </div>
@@ -670,7 +670,7 @@ function confirmationPLusFinishCycle(){
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-body text-center">
-                <h1 class="modal-title text-danger display-1"><b>¿Esta usted completamente SEGURO?</b></h1>
+                <h1 class="modal-title text-danger display-1"><b>¿Está usted completamente SEGURO?</b></h1>
             </div>
             <div class="modal-footer text-center">
                 <button type="button" class="btn btn-warning" id="yeahIWannFinishCycle">Si</button>
@@ -705,13 +705,13 @@ function changeProfilePassword(){
                 <div class="modal-body d-flex justify-content-center">
                     <div class="col-12 col-sm-9 mt-3">
                         <div class="row text-center">
-                            <h1>Cambiar Contraseña</h1>
+                            <h1>Cambiar contraseña</h1>
                         </div>
                         <div class="row mt-4">
                             <div class="col">
                                 <label for="currentPassword" class="form-label">Ingresa tu contraseña actual</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" placeholder="Contraseña Actual" id="currentPassword">
+                                    <input type="password" class="form-control" placeholder="Contraseña actual" id="currentPassword">
                                 </div>
                             </div>
                         </div>
@@ -719,7 +719,7 @@ function changeProfilePassword(){
                             <div class="col">
                                 <label for="newChangePassword" class="form-label">Ingresa la nueva contraseña</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" placeholder="Nueva Contraseña" id="newChangePassword">
+                                    <input type="password" class="form-control" placeholder="Nueva contraseña" id="newChangePassword">
                                 </div>
                             </div>
                         </div>
@@ -727,13 +727,13 @@ function changeProfilePassword(){
                             <div class="col">
                                 <label for="newChangePasswordConfirm" class="form-label">Confirma la nueva contraseña</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" placeholder="Nueva Contraseña" id="newChangePasswordConfirm">
+                                    <input type="password" class="form-control" placeholder="Nueva contraseña" id="newChangePasswordConfirm">
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-4 mb-3 d-flex justify-content-center">
                             <div class="col-7">
-                                <button class="btn btn-primary w-100" id="changePasswordsButnModal">Cambiar Contraseña</button>
+                                <button class="btn btn-primary w-100" id="changePasswordsButnModal">Cambiar contraseña</button>
                             </div>
                         </div>
                     </div>
@@ -760,7 +760,7 @@ function loadCropImage(){
                             </div>
                             <div class="col-md-4 d-flex flex-column justify-content-start align-items-center">
                                 <div class="preview"></div>
-                                <p class="h5 text-center w-75">Esto sera la foto que se seleccionara</p>
+                                <p class="h5 text-center w-75">Esto será la foto que se seleccionará</p>
                             </div>
                         </div>
                     </div>
@@ -845,7 +845,7 @@ function takeAssistanceModal(){
                     <div style="height: 60vh;">
                         <div class="col">
                             <div class="row text-center">
-                                <h1>Tomar Asistencia</h1>
+                                <h1>Tomar asistencia</h1>
                                 <h3 class="text-danger"><strong>Dia: <?php echo $day.' de '.$mes?></strong></h3>
                             </div>
                             <div class="row p-2 p-md-5">

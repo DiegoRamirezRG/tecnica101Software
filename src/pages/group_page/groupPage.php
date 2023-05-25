@@ -12,7 +12,7 @@ if($_SESSION['sessionUser']['type'] == 'Control'){
 <div class="container">
     <div class="studentMaxContainer tab-content">
         <div class="filterContainer pt-4">
-            <h1 class="headerForm">Administracion de Grupos</h1>
+            <h1 class="headerForm">Administración de grupos</h1>
             <div class="col-sm-11 col-xs-11 col-md-10 col-lg-8 pt-4">
                 <div class="row pt-4">
                     <div class="col">

@@ -50,7 +50,7 @@ if($_POST['function'] == 'loadTable'){
         }else{
             ?>
             <tr>
-                <td>No Existen Maestros Aun</td>
+                <td>No existen maestros aun</td>
             </tr>
             <?php
         }
@@ -102,10 +102,10 @@ if($_POST['function'] == 'loadTeacherDetails') {
                             <div class="row d-flex justify-content-center">
                                     <div class="col-8 col-md-12">
                                         <div class="row">
-                                            <button class="btn btn-primary" id="editTeacherBtn">Editar Informacion</button>
+                                            <button class="btn btn-primary" id="editTeacherBtn">Editar información</button>
                                         </div>
                                         <div class="row mt-3">
-                                            <button class="btn btn-warning" id="assignTeacherBtn">Asignar una Clase</button>
+                                            <button class="btn btn-warning" id="assignTeacherBtn">Asignar una clase</button>
                                         </div>
                                     </div>
                             </div>
@@ -161,7 +161,7 @@ if($_POST['function'] == 'loadTableBody'){
             ?>
             <tr>
                 <td>No tiene</td>
-                <td>Clases Aun</td>
+                <td>clases aun</td>
             </tr>
             <?php
         }
@@ -177,7 +177,7 @@ if($_POST['function'] == 'loadClasses'){
         <div class="container d-flex justify-content-center">
             <div class="col-12 col-md-10">
                 <div class="row text-center mt-3 mb-3 d-flex justify-content-center">
-                    <h1>Asignar Clase</h1>
+                    <h1>Asignar clase</h1>
                     <div class="col-5">
                         <span class="badge rounded-pill bg-success">Maestro</span>
                     </div>
@@ -216,7 +216,7 @@ if($_POST['function'] == 'loadClasses'){
                 </div>
                 <div class="row mt-3 d-flex justify-content-center">
                     <div class="col-12 col-md-5 text-center">
-                        <button class="btn btn-primary" id="assignTeacherSendBtn">Asignar Clase</button>
+                        <button class="btn btn-primary" id="assignTeacherSendBtn">Asignar clase</button>
                     </div>
                 </div>
             </div>
@@ -293,10 +293,10 @@ if($_POST['function'] == 'loadUpdateModal'){
             ?>
                 <div class="col-12 col-md-10 d-flex flex-column justify-content-center mx-auto">
                     <div class="row mt-3 mb-3 text-center">
-                        <h2>Editar Profesor</h2>
+                        <h2>Editar profesor</h2>
                     </div>
                     <div class="row flex-wrap">
-                        <label class="mb-1">Informacion Personal</label>
+                        <label class="mb-1">Información personal</label>
                         <div class="col-12 col-md-6">
                             <div class="input-group mb-3">
                                 <input value="<?php echo $data['name']?>" type="text" class="form-control" placeholder="Nombre" id="editTeacherName">
@@ -304,19 +304,19 @@ if($_POST['function'] == 'loadUpdateModal'){
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="input-group mb-3">
-                                <input value="<?php echo $data['last_name']?>" type="text" class="form-control" placeholder="Apeido Paterno" id="editTeacherLastname">
+                                <input value="<?php echo $data['last_name']?>" type="text" class="form-control" placeholder="Apellido Paterno" id="editTeacherLastname">
                             </div>
                         </div>
                     </div>
                     <div class="row flex-wrap">
                         <div class="col-12 col-md-6">
                             <div class="input-group mb-3">
-                                <input value="<?php echo $data['mothersLast_name']?>" type="text" class="form-control" placeholder="Apeido Materno" id="editTeacherMLastname">
+                                <input value="<?php echo $data['mothersLast_name']?>" type="text" class="form-control" placeholder="Apellido Materno" id="editTeacherMLastname">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="input-group mb-3">
-                                <input value="<?php echo $data['phone']?>" type="tel" class="form-control" placeholder="Telefono" id="editTeacherPhone">
+                                <input value="<?php echo $data['phone']?>" type="tel" class="form-control" placeholder="Teléfono" id="editTeacherPhone">
                             </div>
                         </div>
                     </div>
@@ -328,7 +328,7 @@ if($_POST['function'] == 'loadUpdateModal'){
                     </div>
                     <div class="row mt-5 mb-3">
                         <div class="col text-center">
-                            <button class="btn btn-primary" id="editTeacherButton">Editar Profesor</button>
+                            <button class="btn btn-primary" id="editTeacherButton">Editar profesor</button>
                         </div>
                     </div>
                 </div>

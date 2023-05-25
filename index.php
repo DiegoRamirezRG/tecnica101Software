@@ -13,6 +13,7 @@
     <!-- Linked Bootstrap -->
     <?php require_once('./utils/bootstrap/cssLinked.php')?>
     <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="./src/assets/img/tecnicaMainFavIco.png" type="image/png">
 
 </head>
 <body style="height: 100vh;">

@@ -67,7 +67,7 @@ if($_POST['function'] == 'loadConductModal'){
                     </div>
                     <div class="row d-flex justify-content-center mt-3">
                         <div class="col-sm-10 col-md-6 col-12">
-                            <button class="btn btn-primary w-100" id="addNewConductDataCoor">Añadir Registro</button>
+                            <button class="btn btn-primary w-100" id="addNewConductDataCoor">Añadir registro</button>
                         </div>
                         <div class="col-sm-10 col-md-6 col-12 mt-3 mt-md-0">
                             <select class="form-select w-100" aria-label="Default select example" id="selectedFilterCoor">
@@ -104,7 +104,7 @@ if($_POST['function'] == 'loadSubmitAsConductCoor'){
 
             ?>
             <select class="form-select" aria-label="Default select example" id="selectedSubmitAsCoor">
-                <option selected value="">Agregar Conducta Como</option>
+                <option selected value="">Agregar conducta como</option>
                 <option data-entity="Other" value="<?php echo $_SESSION['sessionUser']['id_user']?>"><?php echo $_SESSION['sessionUser']['type']?></option>
                 <?php
                 
@@ -121,7 +121,7 @@ if($_POST['function'] == 'loadSubmitAsConductCoor'){
         }else{
             ?>
                 <select class="form-select" aria-label="Default select example" id="selectedSubmitAsCoor">
-                    <option selected value="">Agregar Conducta Como</option>    
+                    <option selected value="">Agregar conducta como</option>    
                     <option data-entity="Other" value="<?php echo $_SESSION['sessionUser']['id_user']?>"><?php echo $_SESSION['sessionUser']['type']?></option>
                 </select>
             <?php

@@ -174,7 +174,7 @@ if($_POST['function'] == 'loadClassDetailModal'){
                     <div class="row text-center d-flex justify-content-center">
                         <div class="col-12 col-md-7">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Buscar Alumno" aria-label="Username" id="searchedStudentClassDetailModal">
+                                <input type="text" class="form-control" placeholder="Buscar alumno" aria-label="Username" id="searchedStudentClassDetailModal">
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@ if($_POST['function'] == 'loadClassDetailModal'){
                                 <thead>
                                     <tr>
                                         <th scope="col">
-                                            Nombre del Estudiante
+                                            Nombre del estudiante
                                         </th>
                                     </tr>
                                 </thead>
@@ -290,7 +290,7 @@ if($_POST['function'] == 'loadAttendanceModalBody'){
                 <div class="col d-flex flex-column justify-content-center align-content-center">
                     <div class="row justify-content-center">
                         <div class="col-10 text-center">
-                            <h1 class="display-4">Asistencia del Grupo</h1>
+                            <h1 class="display-4">Asistencia del grupo</h1>
                         </div>
                     </div>
                     <div class="row justify-content-center sinpadding">
@@ -360,7 +360,7 @@ if($_POST['function'] == 'loadAttendanceModalBody'){
                 <div class="col d-flex flex-column justify-content-center align-content-center">
                     <div class="row justify-content-center">
                         <div class="col-10 text-center">
-                            <h1 class="display-4">Asistencia del Grupo</h1>
+                            <h1 class="display-4">Asistencia del grupo</h1>
                         </div>
                     </div>
                     <div class="row justify-content-center sinpadding">
